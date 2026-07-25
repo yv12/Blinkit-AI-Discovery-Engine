@@ -1,0 +1,180 @@
+# Central configuration for the Discovery Engine pipeline.
+# Loaded and validated by src/config.py (types/ranges enforced, edgecases.md X-08).
+# See architecture.md §7 (orchestration) and problemstatement.md §6 (data source).
+
+seed: 42   # applied to every RNG the pipeline touches (edgecases.md R-06)
+
+app:
+  id: com.grofers.customerapp   # Blinkit on Google Play - verify at build time (problemstatement.md §6)
+  country: in
+  lang: en
+
+scrape:
+  lookback_months: 4             # collect all reviews from the last 4 calendar months (per-rating-band)
+  max_per_bucket: 100000         # safety cap per (sort, rating) bucket, sized for full 4-month completeness
+                                  # even on Blinkit's highest-volume band (5-star, measured ~78k/4mo) - see
+                                  # Docs/context.md §5 for the live velocity measurement behind this number.
+  sort:
+    - newest                     # chronological -> lets us stop exactly at the lookback cutoff (edgecases.md S1-12)
+    # "relevance" can be added, but it is NOT chronologically ordered, so it cannot be used to
+    # reliably/completely bound a date window (edgecases.md S1-12) - reviews are still filtered
+    # to the window post-fetch and page-capped by max_per_bucket, but coverage is not guaranteed.
+
+units:
+  min_words: 4                   # reviews with <= 3 words are fully excluded before unit extraction
+                                  # (e.g. "good", "nice", "super app") - low-signal, no complaint/insight
+                                  # content; not counted anywhere downstream (edgecases.md S3-09)
+  min_words_per_unit: 3          # a split fragment shorter than this is discarded, not kept as its own unit
+  max_units_per_review: 5        # cap to prevent over-splitting long reviews into too many fragments (S3-08)
+  use_llm: false                 # rule-based splitting is primary given corpus scale (156k+ reviews) -
+                                  # per-review local LLM calls are not practical at this volume; the LLM
+                                  # is reserved for Stage 7 (community summarization), which only needs one
+                                  # call per cluster, not per review (edgecases.md S3-01)
+
+models:
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+  llm_model: llama3              # local Ollama model name; see edgecases.md S3-01/S7-01 for fallback behavior
+  embed_batch_size: 128           # sentence-transformers encode() batch size (edgecases.md S4-05, memory/speed knob)
+
+graph:
+  knn_k: 15
+  similarity_threshold: 0.5
+
+clustering:
+  louvain_resolution: 1.0
+  min_community_size: 3
+
+summarize:
+  use_llm: false                  # primary path is local TF-IDF + rating-derived labeling (edgecases.md
+                                   # S7-01) - verified Ollama is NOT reachable on this machine, so this is
+                                   # also what actually runs, not just a theoretical fallback. Set true
+                                   # (with Ollama running locally, serving `models.llm_model`) to use
+                                   # LLM-generated labels/descriptions instead - sentiment always stays
+                                   # rating-derived regardless of this flag (S7-06).
+  max_representatives: 8          # candidate pool per theme, ranked by similarity-to-centroid (S7-04)
+  max_quotes: 3                   # representative_quotes cap per theme (drawn from the pool above)
+  max_tfidf_terms: 4              # top TF-IDF terms used to build the fallback label (S7-01)
+  long_tail_llm_batch_size: 25    # communities per batched LLM call when labeling the long tail with
+                                   # use_llm=true (one call per batch, not per community)
+
+filtering:
+  min_relevance_score: 0.15       # Minimum semantic similarity to a research question required to keep a review.
+                                  # Reviews failing this threshold against ALL questions are discarded before engine.
+
+insights:
+  # Theme creation stays fully bottom-up (Louvain, S5/S6) - the 8 research questions are never an
+  # input to clustering/summarization. This section is a purely post-hoc tagging step over the
+  # already-formed themes.json (Stage 7 output): each theme/emerging_signal's own label+description
+  # text is embedded with `models.embedding_model` (same local model as Stage 4, no new dependency,
+  # no LLM) and compared via cosine similarity to each research question's topic description below.
+  similarity_threshold: 0.30      # min cosine similarity to count as evidence for a question (S8-01/S8-02);
+                                   # tuned empirically against the real 40 themes - see context.md §11 for
+                                   # the observed similarity distribution behind this number.
+  top_themes_count: 5             # headline "top themes by size" slice (member_count desc) - independent
+                                   # of research-question mapping, just the biggest signals overall.
+  max_verbatims_per_question: 5
+  question_queries:               # short topic descriptions - NOT the literal RQ questions - embedded and
+                                   # compared against each theme/signal's label+description. Index i (0-based)
+                                   # corresponds to question_id i+1. Deliberately phrased as topic/noun-phrase
+                                   # descriptions rather than interrogative sentences: they embed closer to
+                                   # short theme labels (also noun-phrase-like, e.g. "customer / service /
+                                   # support") than a "What prevents...?" question would (S8-08 - this is a
+                                   # fixed, documented mapping input, so results are deterministic/reproducible).
+    - "Repeat purchases from the same familiar categories; brand loyalty; routine reordering habits"
+    - "Barriers and reasons preventing exploration of new product categories"
+    - "How users discover new products: browsing, search, recommendations, banners, notifications"
+    - "Habitual, routine-driven shopping behavior and convenience"
+    - "Information, details, or trust signals needed before trying a new product category"
+    - "Recurring frustrations and complaints: delivery, quality, app experience, customer service"
+    - "User segments more open to trying new things versus sticking to routine"
+    - "Unmet needs, missing features, or product gaps mentioned repeatedly"
+  question_required_sentiment:    # optional per-question sentiment gate, applied *in addition to* the
+                                   # similarity threshold above (null = no gate). Added after empirically
+                                   # observing that embedding similarity alone matches on shared topic
+                                   # nouns (e.g. "delivery", "app") regardless of polarity - a clearly
+                                   # *positive* theme like "app / delivery / fast / best" scored 0.575
+                                   # against Q6 ("frustrations"), higher than most genuinely negative
+                                   # themes. Q6 is the one question whose framing is inherently polarized
+                                   # (frustrations are, by definition, not positive), so it's gated on the
+                                   # theme's/signal's own rating-derived sentiment (never LLM-derived,
+                                   # consistent with S7-06) rather than trusting label-text similarity alone.
+    - null   # Q1
+    - null   # Q2
+    - null   # Q3
+    - null   # Q4
+    - null   # Q5
+    - negative   # Q6 - frustrations must actually be negative-sentiment, not just delivery/app-themed
+    - null   # Q7
+    - null   # Q8
+
+validation:
+  spot_check_sample_size_per_theme: 5   # random units sampled per theme for human spot-checking (S9-04);
+                                          # written once to data/spot_check_sample.json and never
+                                          # regenerated automatically so manual labels aren't lost - delete
+                                          # the file yourself to force a fresh sample.
+  dominant_share_threshold: 0.6         # a single time-cohort or review-length segment holding >= this
+                                          # share of a theme's members marks that axis "segment_specific"
+                                          # (S9-05). Deliberately NOT applied to rating bands - for
+                                          # sentiment-driven themes, rating concentration is an expected,
+                                          # healthy signal (e.g. a "customer service complaints" theme
+                                          # *should* skew 1-star), not evidence of instability. Rating
+                                          # distribution is still reported, just not judged by this rule.
+  short_unit_max_words: 6               # review-length cohort boundaries for triangulation (S9-xx);
+  medium_unit_max_words: 15             # <= short_unit_max_words = "short", <= medium = "medium", else "long"
+
+llm_synthesis:
+  # Stage 11 (optional, NOT part of `python -m src.pipeline`'s S1-S9) - src/llm_synthesis.py.
+  # Deliberate, explicit deviation from the "fully local" design principle (architecture.md
+  # §1), made with the user: this stage calls the remote Groq API (OpenAI-compatible, free
+  # tier, no credit card) to *infer* indirect/implicit behavioral patterns from review text
+  # (e.g. "choice overload", "no trust in unfamiliar brands") that literal TF-IDF labels and
+  # embedding-similarity matching (Stage 7/8) cannot surface by construction - those methods
+  # only ever find literal recurring vocabulary, never synthesize an abstract explanation.
+  # Requires GROQ_API_KEY in a project-root `.env` file (gitignored, never committed).
+  # Zero-cost is preserved (Groq's free tier has no per-token charge, only rate limits) but
+  # "fully local"/offline is not - this stage requires network access and is opt-in only.
+  model: llama-3.1-8b-instant     # by far the largest free-tier *daily token* budget (500K TPD,
+                                    # non-reasoning) of any model tried - see README.md §12 for the
+                                    # comparison. `openai/gpt-oss-120b` produced visibly deeper
+                                    # inferences in testing (esp. for Q2/Q5/Q7 indirect barriers)
+                                    # but is a hidden-reasoning-token model that burns its 200K TPD
+                                    # budget in ~1,500 units - not enough to cover a useful sample
+                                    # in one run. Swap in for a smaller, higher-quality run if
+                                    # wanted (reduce sample_size to ~1500 accordingly).
+  temperature: 0                   # + a fixed seed per request - determinism mitigation
+                                    # (README.md §8), same principle as summarize.py's Ollama path.
+  sample_size: 4000                # cap on how many units get sent to the LLM at all - the
+                                    # candidate pool is NOT a plain random sample: it prioritizes
+                                    # every unit already flagged "uncategorized" by Stage 8 (the
+                                    # units the deterministic pipeline explicitly couldn't place),
+                                    # then tops up with a seeded stratified-by-rating sample.
+  batch_size: 20                   # excerpts per LLM call - measured empirically at ~1,400 tokens/
+                                    # call (933 prompt + ~500 completion) for llama-3.1-8b-instant
+                                    # at this batch size (README.md §12).
+  requests_per_minute: 4           # real ceiling is the model's 6,000 TPM budget, not its 30 RPM
+                                    # cap: ~1,400 tokens/call means >4-5 calls/min will reliably hit
+                                    # 429s. Set conservatively; 429s still degrade gracefully via
+                                    # Retry-After-aware backoff if this estimate drifts.
+  max_retries: 4                   # retries per batch on 429/5xx before skipping it (logged, not fatal).
+  pattern_cluster_threshold: 0.60  # cosine similarity (local embedding model, no extra API calls)
+                                    # above which two LLM-generated pattern phrases are merged into
+                                    # one canonical pattern during aggregation.
+  max_patterns_per_question: 8     # cap on distinct inferred patterns kept per question.
+  max_quotes_per_pattern: 3        # verbatim quotes cited per pattern (always real unit text).
+  min_pattern_support: 2           # a pattern backed by only 1 hit is dropped as noise.
+  min_quote_words: 5               # hits whose source excerpt has fewer words than this are
+                                    # dropped before aggregation - found empirically that very
+                                    # short/vague excerpts (e.g. "sometimes they does", "I don't
+                                    # know how to improve my self") cause the model to fall back
+                                    # to a generic catch-all inference instead of a real
+                                    # specific one, which then falsely clusters into one large,
+                                    # low-signal "pattern" (README.md \u00a712 real-finding note).
+
+paths:
+  data_dir: data                 # gitignored; regenerated by the pipeline (edgecases.md R-05)
+                                  # All other artifact paths (reviews.jsonl, units.jsonl, ...) are
+                                  # derived from this one directory in src/config.py:_build_paths -
+                                  # including the optional Phase 9 second-source files
+                                  # (Mouthshut_reviews.csv, raw_mouthshut.jsonl - see README.md §13,
+                                  # Docs/edgecases.md Stage 1b). No config key needed to enable it;
+                                  # dropping the CSV into data_dir is sufficient.

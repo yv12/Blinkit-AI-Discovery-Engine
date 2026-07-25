@@ -1,0 +1,646 @@
+# Discovery Engine — Blinkit Review Analysis
+
+An **AI-powered discovery engine** that scrapes Google Play Store reviews of
+**Blinkit** (`com.grofers.customerapp`), clusters them into themes via a local
+embedding → similarity-graph → community-detection pipeline, and produces
+evidence-backed answers to 8 research questions about why users don't explore
+new product categories. Built to a **zero-cost, fully local** stack — no
+paid APIs, no paid models. Originally single-source (Google Play only);
+**§13 documents a deliberate, user-directed addendum** that merges in a second,
+pre-scraped source (a Mouthshut review-forum CSV) when `data/Mouthshut_reviews.csv`
+is present — fully optional, zero effect on the pipeline if that file is absent.
+
+See `Docs/problemstatement.md` for the full spec, `Docs/architecture.md` for
+the module/data-flow design, and `Docs/Implementation-plan.md` for phase-by-
+phase build history and verification notes.
+
+---
+
+## 1. What you get
+
+- `data/*.jsonl` / `*.json` — durable artifacts for every pipeline stage (raw
+  reviews → normalized reviews → atomic units → embeddings → similarity graph
+  → communities → labeled themes → question-mapped insights → validation
+  report).
+- `app.py` — a Streamlit app to browse themes, drill into verbatim quotes,
+  and read each research question's evidence-backed answer.
+- `notebook.ipynb` — a dependency-light (pandas + stdlib) notebook fallback
+  that answers the same questions from the same artifacts, for evaluators
+  who prefer a static/portable format.
+
+---
+
+## 2. Prerequisites
+
+- **Python 3.10+** (developed/verified on 3.10.7; both Windows and
+  Linux/macOS are supported — see the Windows-specific note in §3).
+- ~2 GB free disk for the full corpus + derived artifacts (the real run
+  described in Implementation-plan.md produces ~350 MB of `data/`).
+- No GPU required — everything runs on CPU.
+- **Ollama is optional.** The pipeline is fully functional and produces the
+  documented results with `use_llm: false` everywhere in `config.yaml`
+  (the actual default, and the path that was verified end-to-end on the
+  real corpus). Install Ollama only if you want LLM-generated theme labels
+  instead of the local TF-IDF/rating-derived fallback — see §5.
+
+---
+
+## 3. Setup
+
+```bash
+# 1. Clone and enter the repo
+git clone <this-repo-url>
+cd "Discovery Engine"
+
+# 2. Create and activate a virtual environment
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+# Linux/macOS:
+source .venv/bin/activate
+
+# 3. Install pinned dependencies (single invocation — see note below)
+pip install -r requirements.txt
+```
+
+**Install everything with one `pip install -r requirements.txt` call**, not
+package-by-package, and don't mix `--user` and system-wide installs for
+`numpy`/`torch`/`transformers`. On Windows, if `torch` lands in a *different*
+`site-packages` root than `numpy` (e.g. one user-installed, one
+system-installed), its native DLLs can fail to load at import time
+(`OSError: [WinError 1114] A dynamic link library (DLL) initialization
+routine failed`) even though the install itself reports success — the fix is
+reinstalling `torch` into the same `site-packages` root as the rest, e.g.:
+
+```bash
+pip install --user torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu
+```
+
+`requirements.txt` already pins the CPU-only PyTorch wheel index
+(`--extra-index-url https://download.pytorch.org/whl/cpu`), so a normal
+`pip install -r requirements.txt` in a clean venv does not hit this — it's
+only a risk if you install packages individually or mix install scopes
+afterward.
+
+**Verify the install:**
+
+```bash
+python -c "import src.config, src.schema; print('ok')"
+```
+
+---
+
+## 4. Configuration
+
+All tunables live in `config.yaml` (loaded/validated by `src/config.py` —
+a bad or out-of-range value fails loudly at startup, it never silently
+corrupts a downstream stage). Key sections:
+
+| Section | What it controls |
+|---|---|
+| `seed` | Global random seed, applied to every RNG the pipeline touches (see §7, Determinism). |
+| `app` | Play Store app id/country/lang (`com.grofers.customerapp`, `in`, `en`). |
+| `scrape` | Lookback window in months, per-bucket safety cap, sort modes. |
+| `units` | Low-signal review cutoff, min words per split fragment, max units/review, `use_llm` (rule-based splitting is the default and only verified path at corpus scale). |
+| `models` | Embedding model name, local LLM model name (for Ollama), embed batch size. |
+| `graph` | kNN `k` and cosine similarity threshold. |
+| `clustering` | Louvain resolution, minimum community size. |
+| `summarize` | `use_llm` toggle, representative/quote counts, TF-IDF term count. |
+| `insights` | Similarity threshold for question-mapping, per-question topic queries, optional sentiment gate. |
+| `validation` | Spot-check sample size, segment-stability thresholds. |
+| `paths` | `data/` output directory (gitignored, regenerated by the pipeline). |
+
+You normally don't need to change anything to reproduce the documented
+results — the shipped `config.yaml` is exactly what was used for the real
+run described in `Docs/Implementation-plan.md`.
+
+---
+
+## 5. (Optional) Install Ollama for LLM-assisted labeling
+
+By default (`summarize.use_llm: false`, `units.use_llm: false`), the
+pipeline never calls an LLM — theme labels come from TF-IDF top terms and
+templated, rating-derived descriptions; sentiment always comes from the
+review rating distribution, never from an LLM. This is the path that was
+actually run and verified against the full 156k-review corpus.
+
+To additionally try LLM-generated theme labels/descriptions per community
+(falling back silently to the extractive result on any failure):
+
+1. Install Ollama from [ollama.com](https://ollama.com) (free, runs locally).
+2. Pull the model referenced by `config.yaml`'s `models.llm_model` (default
+   `llama3`):
+   ```bash
+   ollama pull llama3
+   ```
+3. Make sure the Ollama server is running (it starts automatically on most
+   installs; otherwise `ollama serve`). It's expected at
+   `http://localhost:11434`.
+4. Set `summarize.use_llm: true` in `config.yaml` and re-run the `summarize`
+   stage with `--force` (see §6).
+
+If Ollama isn't reachable, every LLM call degrades to the extractive
+fallback per-community/per-batch and logs a warning — it never crashes the
+pipeline.
+
+---
+
+## 6. Running the pipeline
+
+Run everything end-to-end (stages 1→9, skipping any stage whose output
+artifact already exists in `data/`):
+
+```bash
+python -m src.pipeline
+```
+
+Useful flags:
+
+```bash
+# Rebuild every stage from scratch, ignoring cached artifacts
+python -m src.pipeline --force
+
+# Run a single stage only (still respects the skip-if-exists rule)
+python -m src.pipeline --only embed
+
+# Use a config file at a non-default location
+python -m src.pipeline --config path/to/other-config.yaml
+```
+
+Each stage can also be run/debugged in isolation, e.g.:
+
+```bash
+python -m src.scrape --refresh      # force a fresh scrape
+python -m src.embed
+python -m src.cluster
+```
+
+(every stage module exposes the same `--config`/`--refresh` CLI pattern;
+`scrape.py` additionally supports resuming an interrupted pull without
+`--refresh`, preserving the original lookback cutoff.)
+
+**Order and artifacts** (`src/pipeline.py` orchestrates exactly this order):
+
+| # | Stage | Module | Writes |
+|---|---|---|---|
+| 1 | Scrape | `src/scrape.py` | `data/raw_reviews.jsonl` |
+| 1b | Ingest Mouthshut (optional, §13) | `src/scrape_mouthshut.py` | `data/raw_mouthshut.jsonl` |
+| 2 | Normalize | `src/normalize.py` | `data/reviews.jsonl` |
+| 3 | Unit extraction | `src/units.py` | `data/units.jsonl` |
+| 4 | Embed | `src/embed.py` | `data/embeddings.npy`, `data/unit_index.json` |
+| 5 | Similarity graph | `src/graph.py` | `data/graph.gpickle` |
+| 6 | Community detection | `src/cluster.py` | `data/communities.json` |
+| 7 | Summarize | `src/summarize.py` | `data/themes.json` |
+| 8 | Insight mapping | `src/insights.py` | `data/insights.json` |
+| 9 | Validation | `src/validate.py` | `data/validation.json`, `data/validation_summary.md` |
+
+A full fresh run against the real Blinkit app (156k+ reviews, 4-month
+lookback) takes roughly **20-30 minutes** on a CPU-only machine — scraping
+and the kNN graph build (Stage 5, brute-force cosine kNN since `faiss` is
+optional/not installed by default) dominate the wall time; embedding runs
+at ~200 units/sec.
+
+Expect `data/` to end up around this shape (sizes from the verified real
+run):
+
+```
+data/
+├── raw_reviews.jsonl       ~86 MB   (156,219 raw payloads)
+├── reviews.jsonl           ~62 MB   (156,219 normalized reviews)
+├── units.jsonl             ~21 MB   (89,295 atomic units)
+├── embeddings.npy          ~137 MB  (89,295 × 384 float32, L2-normalized)
+├── unit_index.json         ~4 MB    (row → unit_id alignment)
+├── graph.gpickle           ~43 MB   (89,295 nodes, ~1.05M edges)
+├── communities.json        ~4.7 MB  (859 communities)
+├── themes.json             ~366 KB  (40 themes + 819 emerging signals)
+├── insights.json           ~57 KB   (8 questions, category graph, segment stats)
+├── validation.json         ~36 KB   (coherence, triangulation, spot-check)
+└── validation_summary.md   human-readable validation report
+```
+
+(these numbers are for the Google-Play-only path, i.e. no
+`data/Mouthshut_reviews.csv` present. See §13 for the merged-corpus numbers
+when the optional second source is added.)
+
+All of `data/` is gitignored — it's a build artifact, not source. Deleting
+it and re-running `python -m src.pipeline` regenerates it from scratch (the
+one exception: once `data/spot_check_sample.json` exists, it is never
+auto-regenerated, so manual human-agreement labels you add are never
+clobbered by a re-run — delete it yourself to force a fresh sample).
+
+---
+
+## 7. Browsing the output
+
+**React app via `api.py`** (current, primary interface):
+
+```bash
+uvicorn api:app --host 0.0.0.0 --port 8000
+```
+
+Then open `http://localhost:8000` (or `http://<your-ip>:8000` for anyone on your
+LAN — same one-command shareability the Streamlit app had). This single FastAPI
+process serves both the JSON API (reading the same `themes.json`/`insights.json`/
+`validation.json`/`communities.json`/`units.jsonl` artifacts as everything else
+below) and a static single-page React frontend at `web/index.html` (React + Babel
+loaded from a CDN via an import map — no `npm install`/build step required,
+consistent with this project's "one command to run" philosophy). Two tabs: **Ask**
+(a free-form question box that runs *live* local semantic search — the same
+`all-MiniLM-L6-v2` model Stage 4 already produced embeddings with — over all 93k+
+real review units, with real verbatim citations showing rating/date/source) and
+**Narrative** (leads with the top-5 **problem statements** — see below — then the
+full 40 real themes ranked by size, each with a real description, its mapped
+research questions, and a templated growth-objective suggestion you can "select" to
+turn into a proposed growth theme). This replaced an earlier version of this UI that
+surfaced too much raw/unfiltered pipeline detail (all 851 emerging signals, every
+filter control) — the current design deliberately narrows to the curated themes plus
+on-demand real citations, per direct user feedback.
+
+**Optional: top-5 problem-statement themes** (`src/theme_titles.py`). Stage 7's
+TF-IDF labels ("blinkit / good / app / service") are honest but read as topic-word
+salad, not as the *user problem* a PM would act on. This optional stage takes the
+strongly-supported themes (`>= max(N% of reviews, 15)`, N defaults to 1.0) and asks
+Groq (temperature 0 + fixed seed) to rewrite each as a short 4–8-word problem
+statement from the user's perspective (e.g. *"Users struggle with unhelpful customer
+support"*), with a rating-derived severity (high/medium/low, never LLM-derived) and
+real verbatim quotes kept intact. Only the *title wording* is model-generated; every
+number and quote is computed/extracted deterministically. Run it (needs the same
+free `GROQ_API_KEY` in `.env` as §12), then it appears as the "Key problems" section
+atop the Narrative tab:
+
+```bash
+python -m src.theme_titles            # writes data/theme_titles.json
+python -m src.theme_titles --refresh  # rebuild
+python -m src.theme_titles --min-share 2.0   # require >= 2% support instead of 1%
+```
+
+If `data/theme_titles.json` is absent, the app simply omits the section (the full
+theme breakdown is always shown).
+
+**Streamlit app** (still included, a more exhaustive/analyst-oriented view):
+
+```bash
+streamlit run app.py
+```
+
+Opens locally; to share on your LAN, run `streamlit run app.py --server.address
+0.0.0.0` and share the printed Network URL. Five pages: **Overview** (live corpus
+stats + pipeline stage table), **Research Questions** (all 8 questions with
+coverage badges, supporting themes/verbatims), **Theme Explorer**
+(filterable/searchable themes + emerging signals, drill-down per theme),
+**Category Graph** (force-directed similarity map of themes), and
+**Validation & Methodology** (coherence, triangulation, spot-check status).
+
+**Notebook fallback** (static/portable, no Streamlit):
+
+```bash
+jupyter notebook notebook.ipynb
+```
+
+or run headlessly end-to-end:
+
+```bash
+jupyter nbconvert --to notebook --execute notebook.ipynb --output notebook.ipynb
+```
+
+Both read the exact same `data/insights.json` / `data/themes.json` /
+`data/validation.json` (plus `reviews.jsonl`/`units.jsonl` for corpus
+counts) — nothing is hardcoded, so a fresh pipeline run produces a UI/
+notebook update automatically.
+
+---
+
+## 8. Determinism & reproducibility
+
+Verified mechanisms (per `Docs/architecture.md` §7's design goal):
+
+- **Fixed seed:** `config.yaml`'s `seed: 42` is applied to Python's `random`
+  and `numpy.random` at the start of every stage (`apply_global_seed`), and
+  threaded explicitly into every library call that takes its own RNG:
+  - Louvain community detection (`python-louvain`'s `random_state`, Stage 6).
+  - The validation stage's stratified spot-check sampling (Stage 9).
+  - Ollama's `options.seed` + `temperature: 0`, when `use_llm: true` (see
+    below).
+- **Pinned dependencies:** every package in `requirements.txt` is pinned to
+  an exact version, including a pinned CPU-only PyTorch wheel index (a real
+  Windows DLL-load failure was hit and fixed this way during development —
+  see §3).
+- **Cached artifacts:** every stage reads/writes one `data/` file and is
+  skipped on re-run if that file already exists (`--force` to rebuild) —
+  re-running the pipeline never silently redoes non-deterministic work you
+  didn't ask to redo.
+- **Embeddings are deterministic:** `sentence-transformers` inference (no
+  dropout at eval time, no sampling) on a fixed model + fixed input always
+  produces the same vectors on the same machine.
+- **The similarity graph and Louvain partition are deterministic given the
+  same embeddings and seed**, with one caveat: Louvain's internal
+  tie-breaking during modularity optimization can depend on dict/set
+  iteration order, which is not strictly guaranteed identical across
+  Python/library/OS versions. Minor partition variance across *different
+  environments* (not across re-runs on the same environment) is expected
+  and accepted, not eliminated — documented in `src/cluster.py`.
+
+**LLM non-determinism (the one genuinely non-deterministic step) and its
+mitigations:**
+
+- With the shipped defaults (`units.use_llm: false`, `summarize.use_llm:
+  false`), **no LLM is called anywhere in the pipeline** — unit splitting is
+  rule-based and theme labeling is TF-IDF/rating-derived. This is the fully
+  deterministic path that was actually run end-to-end and is what the
+  documented corpus statistics in `Docs/Implementation-plan.md` reflect.
+- If you opt into `summarize.use_llm: true` (§5), every Ollama request sets
+  `temperature: 0` and a fixed `seed` (from `config.seed`) to eliminate
+  sampling randomness as a source of run-to-run drift on a fixed model +
+  fixed machine. This does not guarantee bit-for-bit identical output across
+  different Ollama/model versions or hardware — only that repeated runs
+  against the *same* installed model are stable.
+- Sentiment is **never** LLM-derived (always computed from the review
+  rating distribution), and representative quotes are **never** LLM-written
+  (always verbatim member text) — the LLM, when enabled, only ever
+  paraphrases a label/description, so a bad or drifting LLM output can
+  degrade wording quality but never fabricates evidence or breaks
+  traceability back to real reviews.
+- Every LLM call failure (connection refused, timeout, malformed JSON)
+  degrades silently to the deterministic extractive fallback and logs a
+  warning — a missing/misbehaving Ollama install never crashes the
+  pipeline, and cached `themes.json` output means you only pay this
+  non-determinism cost once per `--force` re-run of the `summarize` stage.
+- The optional Stage 11 (`llm_synthesis.py`, §12) applies the exact same
+  `temperature: 0` + fixed-`seed` mitigation to its Groq API calls. Its
+  candidate *sample* of units is also fully deterministic (seeded). What is
+  **not** guaranteed deterministic is the LLM's exact wording of each
+  inferred pattern phrase from one run to the next (a remote, closed-weight
+  model gives no reproducibility guarantee the way a fixed local model
+  does) — this is why patterns are aggregated via *local* embedding
+  clustering rather than trusting exact string matches, so minor wording
+  drift across runs still collapses into the same canonical pattern.
+
+---
+
+## 9. Repository layout
+
+```
+Discovery Engine/
+├── README.md                 # this file
+├── requirements.txt          # pinned deps
+├── config.yaml                # tunables
+├── .gitignore
+├── Docs/
+│   ├── problemstatement.md   # spec (source of truth)
+│   ├── context.md            # persistent project context
+│   ├── architecture.md       # module/data-flow design
+│   ├── edgecases.md          # catalogued edge cases (S1-xx..X-xx)
+│   └── Implementation-plan.md# phase-by-phase plan + verification log
+├── src/
+│   ├── config.py              # config.yaml loader/validator
+│   ├── schema.py               # dataclasses + atomic JSON/JSONL I/O
+│   ├── scrape.py                # Stage 1
+│   ├── scrape_mouthshut.py      # Stage 1b (optional, §13, second source)
+│   ├── normalize.py             # Stage 2
+│   ├── units.py                  # Stage 3
+│   ├── embed.py                   # Stage 4
+│   ├── graph.py                    # Stage 5
+│   ├── cluster.py                   # Stage 6
+│   ├── summarize.py                  # Stage 7
+│   ├── insights.py                    # Stage 8
+│   ├── validate.py                     # Stage 9
+│   ├── pipeline.py                      # orchestrates Stages 1-9
+│   ├── llm_synthesis.py                  # Stage 11 (optional, opt-in, needs Groq API key)
+│   └── theme_titles.py                    # optional - top-5 themes as problem statements (Groq)
+├── api.py                     # Stage 10 (current) - FastAPI backend, serves web/ + /api/*
+├── web/
+│   └── index.html              # Stage 10 (current) - React UI (CDN-loaded, no build step)
+├── app.py                     # Stage 10 (earlier) - Streamlit UI, still included/working
+├── notebook.ipynb             # Stage 10 (notebook fallback)
+├── .env                        # gitignored - GROQ_API_KEY for Stage 11 only, not committed
+└── data/                      # gitignored; regenerated by the pipeline
+    └── Mouthshut_reviews.csv   # optional, §13 - not committed, drop in by hand to enable Stage 1b
+```
+
+---
+
+## 10. Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `OSError: [WinError 1114] ... DLL initialization routine failed` on `import torch`/`sentence_transformers` | `torch` installed into a different `site-packages` root than `numpy`/`transformers` | Reinstall `torch` into the same environment as the rest (§3); always install via the single `requirements.txt` command. |
+| `ConfigError: Missing required config key` / `must be in [...]` | `config.yaml` edited with a missing or out-of-range value | Fix the flagged key; the error message names the exact dotted path and valid range. |
+| `NotImplementedError: Stage '...' is not implemented yet` | Should not occur — all 9 batch stages are implemented | If seen, check you're on the latest checkout; see `Docs/Implementation-plan.md` for stage status. |
+| `CorruptArtifactError` reading a `data/*.jsonl` file | More than 5% of lines in that file are malformed (e.g. truncated by a killed process) | Delete the offending `data/` file and re-run that stage (or the whole pipeline). |
+| `FileNotFoundError: Expected artifact not found` | Running a stage whose upstream artifact doesn't exist yet | Run `python -m src.pipeline` (in order) instead of an out-of-order `--only <stage>`. |
+| Ollama-related warnings in logs even with `use_llm: false` | Should not occur — Ollama is never called unless `summarize.use_llm`/`units.use_llm` is `true` | Check `config.yaml`; this is a config, not a code, issue if seen. |
+| `LLMSynthesisError: GROQ_API_KEY not found` | `.env` missing or missing the key (Stage 11 only) | Create `.env` at the project root with `GROQ_API_KEY=gsk_...` (§12). Doesn't affect the core pipeline (S1-S9) or `app.py` at all otherwise. |
+| Stage 11 run seems slow / lots of `429` warnings in logs | Free-tier per-model token-per-minute budget exceeded | Expected/handled automatically (`Retry-After`-aware backoff) — lower `llm_synthesis.requests_per_minute` in `config.yaml` if it happens constantly, not just occasionally. |
+| `MouthshutIngestError: ... is missing expected columns` | `data/Mouthshut_reviews.csv` present but not in the expected export shape (needs `review_url, title, body, rating, reviewer, review_date` columns) | Re-export the CSV with those column names, or remove the file entirely — Stage 1b is a no-op without it (§13). |
+
+---
+
+## 12. (Optional) Deep pattern synthesis via Groq — Stage 11
+
+**This stage is not part of the core pipeline (S1–S9) or its Definition of Done** — it's an
+additional, explicitly opt-in layer on top of the already-complete, fully-local pipeline,
+added to answer a real gap: Stage 7's TF-IDF labels and Stage 8's embedding-similarity
+question-mapping can only ever surface **literal recurring vocabulary**. Neither can infer
+an *abstract, indirectly-implied* behavioral driver (e.g. "choice overload when browsing
+unfamiliar categories") that no single review states outright but that a human reading many
+reviews might notice. `src/llm_synthesis.py` targets exactly that gap by sending a curated
+sample of raw review excerpts to a remote LLM and explicitly asking it to name the
+indirect/implicit pattern behind each one, per research question.
+
+**Trade-off, stated plainly:** this deviates from the "fully local" design principle
+(`Docs/architecture.md` §1) — it requires network access and a remote API key. **Zero-cost is
+preserved** (Groq's free tier has no per-token charge, only rate limits — no credit card
+required), but "fully offline" is not, and this is why it's kept fully separate from
+`python -m src.pipeline` rather than folded into it.
+
+### Setup
+
+1. Get a free API key at [console.groq.com](https://console.groq.com) (no credit card).
+2. Create a `.env` file at the project root (gitignored, never committed):
+   ```
+   GROQ_API_KEY=gsk_...your_key...
+   ```
+3. Run it:
+   ```bash
+   python -m src.llm_synthesis
+   ```
+   (`--refresh` discards any checkpoint and starts over; `--config` for a non-default config path.)
+
+### What it does
+
+1. **Samples, doesn't scan the whole corpus.** Free-tier rate limits make sending all 89K
+   units impractical and unnecessary. `llm_synthesis.sample_size` (default 4,000) units are
+   chosen deterministically (seeded): first every unit belonging to a theme/signal Stage 8
+   already flagged `"uncategorized"` (the exact gap this stage targets, capped per-theme so
+   one giant generic theme doesn't eat the whole budget), then every emerging-signal member
+   unit, then a stratified-by-rating random top-up.
+2. **One batched call answers all 8 questions at once** (`llm_synthesis.batch_size` excerpts
+   per call) — far more token-efficient than one call per question.
+3. **The LLM is explicitly instructed not to just restate the question categories** — early
+   testing showed a naive prompt made the model lazily echo back the 8 question descriptions
+   verbatim as "patterns" for every hit. The shipped prompt requires a specific, concrete,
+   the-model's-own-words inference (with a worked example) instead, and this was verified to
+   actually work: e.g. a real hit for "worst service provide by blinkit staff" against
+   "barriers to exploring new categories" produced *"negative staff interactions deter new
+   category trials"*, not a copy of the question text.
+4. **Local aggregation, not LLM aggregation:** raw per-batch pattern phrases are merged into
+   canonical patterns via the *local* embedding model (`models.embedding_model` — no extra
+   API calls, deterministic) when their cosine similarity clears
+   `llm_synthesis.pattern_cluster_threshold`. Every surviving pattern keeps real verbatim
+   quotes and unit ids — the interpretation is model-generated, the evidence is not.
+5. **Resumable via a checkpoint file** (`data/llm_synthesis_checkpoint.jsonl`, one line per
+   batch) — a long run can be safely interrupted and resumed without re-spending API quota on
+   completed batches.
+6. **Every failure degrades gracefully:** a 429 respects `Retry-After` and backs off; other
+   failures retry up to `llm_synthesis.max_retries` then skip that batch (logged, not fatal).
+   The run summary in `data/llm_insights.json` reports how many batches failed.
+
+### Model choice (measured, not assumed)
+
+Three free-tier models were tested head-to-head on the same real batch before picking a
+default:
+
+| Model | Tokens/call (measured, 20 excerpts) | Daily token budget | Quality observed |
+|---|---|---|---|
+| `llama-3.1-8b-instant` (default) | ~1,400 (no hidden reasoning tokens) | 500,000 TPD | Good after prompt fix; occasionally more generic/templated phrasing. |
+| `openai/gpt-oss-120b` | ~2,660 (**1,457 of which were hidden reasoning tokens**) | 200,000 TPD | Visibly deeper, more specific inferences — notably better at finding indirect Q2/Q5/Q7 barrier signals from the same excerpts. |
+
+`openai/gpt-oss-120b`'s hidden reasoning-token overhead means its 200K-token/day budget only
+covers ~1,500 units — not enough for a representative sample in one run. `llama-3.1-8b-instant`
+was chosen as the default specifically for its ~350x larger *daily* budget (500K vs
+effectively ~130K usable TPD after reasoning overhead), letting the full `sample_size: 4000`
+default run to completion in one sitting; swap `llm_synthesis.model` to `openai/gpt-oss-120b`
+(and lower `sample_size` to ~1,500) for a smaller but higher-quality run instead.
+
+`llm_synthesis.requests_per_minute: 4` is set below Groq's 30 RPM cap because the *real*
+binding constraint at `batch_size: 20` is the 6,000 tokens/minute budget (~1,400 tokens/call
+→ ~4 calls/minute sustainable), not the request-count cap — confirmed by measuring actual
+`usage.total_tokens` on real API responses rather than guessing.
+
+### A real known limitation, found and kept (not hidden)
+
+The default model (`llama-3.1-8b-instant`, chosen for its daily token budget - see above)
+occasionally falls back to a generic, stock-sounding phrase (e.g. "narrow, unstated product
+vocabulary suggesting routine-only usage") for ambiguous or low-content excerpts rather than
+a genuinely specific inference. Because the local aggregation step clusters *semantically
+similar* phrases together, this stock phrase can inflate one pattern's `support_count` with
+weak/generic examples rather than a real recurring signal — confirmed on the real run by
+reading the actual example quotes behind the largest Q2 cluster and finding several that
+don't obviously support the stated pattern. A word-count floor
+(`llm_synthesis.min_quote_words`) filters out the shortest, vaguest excerpts before
+aggregation and measurably reduced this, but did not eliminate it entirely. **This is why
+`app.py` always shows the real verbatim quotes behind every pattern, and why the UI
+explicitly warns not to trust `support_count` alone** — read the quotes; the higher-quality
+(but lower-daily-budget) `openai/gpt-oss-120b` alternative above showed less of this
+tendency in side-by-side testing, at the cost of only covering ~1,500 units/day instead of
+the full sample in one run.
+
+### Where the output shows up
+
+`data/llm_insights.json` is picked up automatically by `app.py`'s **Research Questions**
+page — each question gets a clearly-labeled "🧠 LLM-Inferred Patterns (optional,
+experimental — Groq)" section, visually and textually distinguished from the deterministic
+`insights.json` evidence above it, with every pattern's supporting verbatim quotes shown in
+an expander. If the file doesn't exist, the app shows a note explaining how to generate it
+instead of silently omitting the section.
+
+---
+
+## 13. (Optional, amends the single-source constraint) Second data source — Mouthshut, Stage 1b
+
+**Unlike §12's Groq stage (a separate opt-in script), this addendum changes the *core*
+pipeline** (`python -m src.pipeline`, Stages 1-9) — when present, `data/Mouthshut_reviews.csv`
+(a pre-scraped export, ~1,000 rows of Mouthshut.com reviews of Blinkit) is ingested and merged
+into the *same* `reviews.jsonl`/`units.jsonl` every downstream stage already reads, rather than
+kept in a parallel track. This directly amends this project's original, explicitly-worded
+"single data source: Google Play only" constraint (`Docs/problemstatement.md` §5 literally
+lists "deal forums, complaint boards" as out-of-scope, and Mouthshut is exactly that) — a
+deliberate exception made with the user for this one specific source, not a general opening to
+arbitrary connectors. **If you never add the CSV, nothing here applies — Stage 1b is a no-op
+and the pipeline behaves exactly as documented in §6-§9.**
+
+### Setup
+
+Drop a Mouthshut export CSV at `data/Mouthshut_reviews.csv` with these columns:
+`review_url, title, body, rating, reviewer, review_date, page` (the `page` column isn't used).
+Then run the pipeline as usual:
+
+```bash
+python -m src.pipeline
+```
+
+`src/scrape_mouthshut.py` (Stage 1b, inserted between Stage 1 and Stage 2) ingests the CSV into
+`data/raw_mouthshut.jsonl`; `normalize.py` (Stage 2) then normalizes and merges it with the
+Google Play stream into one `reviews.jsonl`, each review tagged `source: "google_play"` or
+`source: "mouthshut"`. Every stage from Stage 3 onward is source-agnostic and needed **zero**
+code changes to work over the merged corpus.
+
+### What's different about Mouthshut's raw shape (handled by `normalize.py`)
+
+- **Title + body → one `text` field.** Play Store's `content` field is already the whole
+  review; Mouthshut splits a short title from the body, so they're concatenated
+  (`"{title}. {body}"`) before Stage 3's unit splitter sees it.
+- **Two real date shapes in the same column.** The actual export has absolute dates
+  (`"Jun 20, 2026 05:15 PM"`, the vast majority) and relative ones (`"N days ago"`, only the
+  most recent ~20 rows, max "30 days ago") — no scrape timestamp is recorded in the file, so
+  relative dates are resolved against the CSV's own last-modified time as a documented
+  best-effort reference anchor (cross-checked as consistent against the absolute dates present
+  in the same file — see `Docs/context.md` §11 Phase 9 for the exact reasoning).
+- **No `thumbs_up`/`app_version`/`developer_reply` equivalent** exists in this export — those
+  fields are left at their schema defaults (`0`/`None`/`None`) rather than invented.
+- Verified on the real 1,000-row file: **zero rejections, zero unparseable dates.**
+
+### Provenance stays visible everywhere downstream
+
+`Unit.source` (new field, default `"google_play"` for artifacts written before this addendum)
+carries provenance from Stage 3 onward. `insights.py`/`validate.py` report a per-theme
+`source_distribution` (and a corpus-level `corpus_sources_observed`) — informational only,
+**deliberately excluded** from the cross-segment `stability` verdict, for the same reason
+rating bands are (`edgecases.md` S9-05): Mouthshut is a small fraction of the merged corpus, so
+near-universal `google_play` dominance per theme is an expected size-imbalance artifact, not
+evidence of instability. `app.py`'s Overview page gets a third "Source split" chart, and the
+Theme Explorer's per-theme detail view gets a 4th "Source distribution" chart.
+
+### Real result, from actually re-running the merged corpus
+
+`python -m src.pipeline` (re-run from `normalize` onward; both raw files were already present,
+so no re-scrape happened) against the real files produced:
+
+| | Google Play only (§6 baseline) | Merged (+ Mouthshut) |
+|---|---|---|
+| Reviews | 156,219 | 157,219 (+1,000) |
+| Units | 89,295 | 93,393 (+4,098) |
+| Themes | 40 | 40 |
+| Emerging signals | 819 | 851 |
+| Questions "sufficient" | 4/8 (Q1, Q3, Q4, Q6) | 4/8 (Q1, Q3, Q4, Q6) — unchanged |
+| Graph modularity | 0.8394 | 0.8366 |
+| Cross-segment stable themes | 28/40 | 28/40 |
+
+Mouthshut's 4,098 units landed in **32 of the 40 themes** (confirmed via each theme's
+`source_distribution`), not siloed into their own cluster — they blend topically with the
+existing corpus (mostly 1-star delivery/refund/product-quality complaints, consistent with
+Mouthshut's own overall skew: 879/1,000 rows are 1-star). Re-embedding + re-clustering the full
+93,393-unit corpus (not just the new ~4K units — Stages 4-9 have no incremental/delta mode)
+took roughly **21 minutes end-to-end on CPU**, a real cost worth knowing before adding a third
+source.
+
+---
+
+## 14. The 8 research questions
+
+The engine's output must answer these (see `Docs/problemstatement.md` §3);
+`app.py`'s **Research Questions** page and `notebook.ipynb` show the current
+evidence-backed answer (or honest "insufficient evidence" state) for each:
+
+1. Why do users repeatedly buy from the same categories?
+2. What prevents users from exploring new categories?
+3. How do users discover products today?
+4. What role do habits play in shopping behavior?
+5. What information do users need before trying a new category?
+6. What frustrations emerge repeatedly?
+7. Which user segments are more likely to experiment?
+8. What unmet needs emerge consistently across discussions?
+
+Operational/pricing complaints (stockouts, price, delivery time) are
+captured and categorized alongside pure discovery-behavior feedback, never
+filtered out — see `Docs/context.md` §3.

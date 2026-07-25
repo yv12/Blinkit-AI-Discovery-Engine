@@ -1,0 +1,37 @@
+# Pinned, free/local-only dependencies (problemstatement.md §5: zero-cost constraint).
+# Install with: pip install -r requirements.txt
+# Pinned per edgecases.md R-02 (dependency version drift breaks reproducibility).
+
+# CPU-only PyTorch wheels. Install everything with a single `pip install -r
+# requirements.txt` invocation (not package-by-package), and avoid mixing
+# `--user` and system-wide installs for numpy/torch/transformers. On Windows,
+# if torch ends up in a *different* site-packages root than numpy (e.g. one
+# user-installed, one system-installed), its native DLLs (c10.dll and
+# friends) can fail to load at import time ("OSError: [WinError 1114] A
+# dynamic link library (DLL) initialization routine failed") even though the
+# install itself reports success - the fix is reinstalling torch into the
+# same site-packages root as numpy/transformers (edgecases.md S4-01).
+# Harmless on Linux/macOS too.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+google-play-scraper==1.2.7    # Stage 1: scrape (no API key required)
+PyYAML==6.0.2                  # config.yaml loading
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.1             # kNN fallback (edgecases.md S5-05) + validation metrics
+networkx==3.3                   # Stage 5: similarity graph
+python-louvain==0.16            # Stage 6: community detection (imports as `community`)
+torch==2.13.0                   # Stage 4: local embeddings backend - pin CPU build explicitly (see note above)
+sentence-transformers==5.6.0    # Stage 4: local embeddings
+streamlit==1.37.0               # Stage 10: UI (app.py) - superseded by api.py/web/ (see README §7), kept for reference
+fastapi==0.137.0                # Stage 10 (current): API backend serving the React UI in web/
+uvicorn==0.49.0                 # ASGI server for api.py - run with `uvicorn api:app`
+requests==2.32.3
+ipykernel==6.29.5                # Stage 10: notebook fallback (notebook.ipynb) - `jupyter notebook` to run it
+python-dotenv==1.0.1             # optional Stage 11 (src/llm_synthesis.py): loads GROQ_API_KEY from .env
+
+# Optional: approximate/faster kNN backend. Not reliably available as a pip
+# wheel on all platforms (e.g. some Windows toolchains). scikit-learn's
+# NearestNeighbors is used automatically when this is not installed
+# (edgecases.md S5-05). Uncomment if your platform supports it:
+# faiss-cpu==1.8.0.post1

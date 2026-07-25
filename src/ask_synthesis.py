@@ -1,0 +1,236 @@
+"""Live Ask-tab answer synthesis via Groq (same stack as Stage 11 / theme titles).
+
+Builds an evidence-only context block from retrieved reviews (and optional
+theme summaries) and asks the model for one flowing narrative paragraph.
+Failures return None so the API can show ``SYNTHESIS_FALLBACK`` — never the
+old stats-template answer.
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Any, Dict, List, Optional
+
+import requests
+
+from src.config import load_config
+from src.llm_synthesis import GROQ_CHAT_URL, GROQ_TIMEOUT_S, LLMSynthesisError, _load_api_key
+
+logger = logging.getLogger(__name__)
+
+# System prompt for Ask synthesis (Growth-PM behavioral lens).
+SYSTEM_PROMPT = (
+    "You are a product research analyst summarizing Blinkit reviews for a Growth PM. Use "
+    "ONLY the evidence given. No outside knowledge, no invented facts. Write ONE flowing "
+    "paragraph, 4-6 sentences, natural narrative prose. No bracket citations, no counts, "
+    "no ratings, no corpus size in the answer. Refer to evidence like a person: \"one user "
+    "complained...\", \"some users feel...\". Lead with the most dominant cause (judge from "
+    "THEMES internally), transition through the rest, end with one summary sentence. If "
+    "evidence shows symptoms but not root cause, say so plainly. "
+    "When THEMES frame trust, risk, support hassle, or exploration barriers, answer through "
+    "that behavioral lens - e.g. a bad order (wrong/missing/expired item) plus painful support "
+    "makes people stick to familiar staples rather than risk something new. Do not treat literal "
+    "\"frequently ordered / quantity limit / price hike on repeat buys\" complaints as the main "
+    "explanation for category habit unless THEMES themselves frame it that way. "
+    "Never use em dashes or en dashes; use commas or hyphens instead."
+)
+
+# One-shot example (user question → expected narrative answer).
+EXAMPLE_QUESTION = "Why do users repeatedly buy from the same categories?"
+EXAMPLE_ANSWER = (
+    "Users stick to familiar categories because a bad order experience quickly teaches them "
+    "not to take risks. One user describes ordering something everyday like milk, getting a "
+    "poor or expired product, then spending time fighting support over whether money comes "
+    "back - even when refunded, the hassle still costs them trust. After that, trying an "
+    "unfamiliar product feels like gambling again, so they reorder what they already know. "
+    "Weak or slow support after failures deepens that caution. Overall, habit here is less "
+    "about loyalty and more about avoiding another wasted trip through the same failure loop."
+)
+
+_SOURCE_LABELS = {
+    "google_play": "Google Play",
+    "mouthshut": "Mouthshut",
+}
+
+SYNTHESIS_FALLBACK = "Couldn't generate a summary - here are the matching reviews"
+
+
+def strip_em_dashes(text: str) -> str:
+    """Replace em/en dashes so frontend copy never shows — or –."""
+    if not text:
+        return text
+    return (
+        text.replace("\u2014", "-")
+        .replace("\u2013", "-")
+        .replace("—", "-")
+        .replace("–", "-")
+    )
+
+
+def _platform_label(source: Optional[str]) -> str:
+    if not source:
+        return "unknown"
+    return _SOURCE_LABELS.get(source, source)
+
+
+def _format_rating(rating: Any) -> str:
+    if rating is None:
+        return "n/a"
+    try:
+        return f"{float(rating):.1f}".rstrip("0").rstrip(".")
+    except (TypeError, ValueError):
+        return str(rating)
+
+
+def _theme_line(theme: dict) -> str:
+    summary = (
+        theme.get("theme_summary")
+        or theme.get("description")
+        or theme.get("label")
+        or "Untitled theme"
+    )
+    count = theme.get("review_count", theme.get("member_count"))
+    count_s = f"{int(count):,}" if count is not None else "?"
+    avg = theme.get("avg_rating")
+    avg_s = _format_rating(avg) if avg is not None else "n/a"
+    return f"- {summary} - {count_s} reviews, avg {avg_s}★"
+
+
+def _review_line(index: int, review: dict) -> str:
+    text = (review.get("text") or "").replace("\n", " ").strip()
+    platform = _platform_label(review.get("source") or review.get("platform"))
+    date = review.get("date") or "unknown date"
+    rating = _format_rating(review.get("rating"))
+    return f'[{index}] "{text}" - {platform}, {date}, {rating}★'
+
+
+def build_evidence_context(
+    question: str,
+    themes: List[dict],
+    reviews: List[dict],
+) -> str:
+    """Fill the QUESTION / THEMES / REVIEWS evidence block for the user message.
+
+    Omits the THEMES section entirely when ``themes`` is empty.
+    """
+    parts = [f"QUESTION: {question.strip()}", ""]
+
+    if themes:
+        parts.append("THEMES:")
+        parts.extend(_theme_line(t) for t in themes)
+        parts.append("")
+
+    parts.append("REVIEWS:")
+    if reviews:
+        parts.extend(_review_line(i, r) for i, r in enumerate(reviews, start=1))
+    else:
+        parts.append("(none)")
+
+    parts.append("")
+    parts.append("Write the answer using only this evidence. Do not print citation numbers.")
+    return "\n".join(parts)
+
+
+def synthesize_answer(
+    question: str,
+    themes: List[dict],
+    reviews: List[dict],
+    *,
+    model: Optional[str] = None,
+    seed: Optional[int] = None,
+    timeout_s: float = GROQ_TIMEOUT_S,
+) -> Optional[str]:
+    """Call Groq with the fixed system prompt, one-shot example, and evidence context.
+
+    Returns the model's plain-text paragraph, or None on any failure/timeout so
+    callers can show ``SYNTHESIS_FALLBACK`` and still display the reviews.
+    """
+    print(
+        f"[ask_synthesis] synthesize_answer CALLED "
+        f"question={question[:80]!r} themes={len(themes)} reviews={len(reviews)}",
+        flush=True,
+    )
+    logger.info(
+        "synthesize_answer called (themes=%d, reviews=%d, q=%r)",
+        len(themes),
+        len(reviews),
+        question[:120],
+    )
+
+    try:
+        config = load_config()
+    except Exception as exc:
+        print(f"[ask_synthesis] load_config failed: {exc!r}", flush=True)
+        logger.exception("load_config failed during ask synthesis")
+        config = None
+
+    llm_model = model
+    if not llm_model:
+        llm_model = (
+            config.llm_synthesis.model
+            if config is not None
+            else "llama-3.1-8b-instant"
+        )
+
+    call_seed = seed if seed is not None else (config.seed if config is not None else 42)
+
+    try:
+        api_key = _load_api_key()
+    except LLMSynthesisError as exc:
+        print(f"[ask_synthesis] API key error: {exc!r}", flush=True)
+        logger.warning("Ask synthesis skipped: %s", exc)
+        return None
+
+    user_message = build_evidence_context(question, themes, reviews)
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    payload = {
+        "model": llm_model,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": f"QUESTION: {EXAMPLE_QUESTION}"},
+            {"role": "assistant", "content": EXAMPLE_ANSWER},
+            {"role": "user", "content": user_message},
+        ],
+        "temperature": 0,
+        "seed": call_seed,
+    }
+
+    print(f"[ask_synthesis] calling Groq model={llm_model!r}", flush=True)
+    try:
+        resp = requests.post(GROQ_CHAT_URL, headers=headers, json=payload, timeout=timeout_s)
+    except requests.exceptions.Timeout as exc:
+        print(f"[ask_synthesis] TIMEOUT after {timeout_s}s: {exc!r}", flush=True)
+        logger.warning("Groq ask synthesis timed out after %ss", timeout_s)
+        return None
+    except requests.exceptions.RequestException as exc:
+        print(f"[ask_synthesis] REQUEST EXCEPTION: {exc!r}", flush=True)
+        logger.warning("Groq ask synthesis request failed: %s", exc, exc_info=True)
+        return None
+    except Exception as exc:
+        print(f"[ask_synthesis] UNEXPECTED EXCEPTION: {exc!r}", flush=True)
+        logger.exception("Unexpected error during Groq ask synthesis")
+        return None
+
+    if resp.status_code != 200:
+        print(
+            f"[ask_synthesis] HTTP {resp.status_code}: {resp.text[:500]}",
+            flush=True,
+        )
+        logger.warning("Groq ask synthesis HTTP %d: %s", resp.status_code, resp.text[:300])
+        return None
+
+    try:
+        text = (resp.json()["choices"][0]["message"]["content"] or "").strip()
+    except (ValueError, KeyError, IndexError, TypeError) as exc:
+        print(f"[ask_synthesis] parse error: {exc!r} body={resp.text[:500]!r}", flush=True)
+        logger.warning("Groq ask synthesis response unusable: %s", exc)
+        return None
+
+    if not text:
+        print("[ask_synthesis] empty content from Groq", flush=True)
+        logger.warning("Groq ask synthesis returned empty content")
+        return None
+
+    print(f"[ask_synthesis] OK chars={len(text)} preview={text[:100]!r}", flush=True)
+    logger.info("synthesize_answer succeeded (%d chars)", len(text))
+    return strip_em_dashes(text)
