@@ -37,11 +37,10 @@ phase build history and verification notes.
 - ~2 GB free disk for the full corpus + derived artifacts (the real run
   described in Implementation-plan.md produces ~350 MB of `data/`).
 - No GPU required — everything runs on CPU.
-- **Ollama is optional.** The pipeline is fully functional and produces the
-  documented results with `use_llm: false` everywhere in `config.yaml`
-  (the actual default, and the path that was verified end-to-end on the
-  real corpus). Install Ollama only if you want LLM-generated theme labels
-  instead of the local TF-IDF/rating-derived fallback — see §5.
+- **Groq is optional.** The pipeline is fully functional and produces the
+  core rule-based thematic output without any external API calls (the verified default for the
+  real corpus). Configure Groq only if you want LLM-generated theme labels
+  and narrative synthesis, otherwise it uses a local TF-IDF/rating-derived fallback — see §5.
 
 ---
 
@@ -102,7 +101,7 @@ corrupts a downstream stage). Key sections:
 | `app` | Play Store app id/country/lang (`com.grofers.customerapp`, `in`, `en`). |
 | `scrape` | Lookback window in months, per-bucket safety cap, sort modes. |
 | `units` | Low-signal review cutoff, min words per split fragment, max units/review, `use_llm` (rule-based splitting is the default and only verified path at corpus scale). |
-| `models` | Embedding model name, local LLM model name (for Ollama), embed batch size. |
+| `models` | Embedding model name, remote LLM model name (for Groq), embed batch size. |
 | `graph` | kNN `k` and cosine similarity threshold. |
 | `clustering` | Louvain resolution, minimum community size. |
 | `summarize` | `use_llm` toggle, representative/quote counts, TF-IDF term count. |
@@ -116,32 +115,20 @@ run described in `Docs/Implementation-plan.md`.
 
 ---
 
-## 5. (Optional) Install Ollama for LLM-assisted labeling
+## 5. (Optional) Configure Groq for LLM-assisted labeling
 
-By default (`summarize.use_llm: false`, `units.use_llm: false`), the
-pipeline never calls an LLM — theme labels come from TF-IDF top terms and
-templated, rating-derived descriptions; sentiment always comes from the
-review rating distribution, never from an LLM. This is the path that was
-actually run and verified against the full 156k-review corpus.
+The pipeline is completely functional without an LLM. By default (`summarize.use_llm: false`),
+it uses rule-based extraction (TF-IDF + rating distributions) to label themes.
 
-To additionally try LLM-generated theme labels/descriptions per community
-(falling back silently to the extractive result on any failure):
+If you want the pipeline to generate LLM-synthesized narrative descriptions for each cluster:
 
-1. Install Ollama from [ollama.com](https://ollama.com) (free, runs locally).
-2. Pull the model referenced by `config.yaml`'s `models.llm_model` (default
-   `llama3`):
-   ```bash
-   ollama pull llama3
-   ```
-3. Make sure the Ollama server is running (it starts automatically on most
-   installs; otherwise `ollama serve`). It's expected at
-   `http://localhost:11434`.
-4. Set `summarize.use_llm: true` in `config.yaml` and re-run the `summarize`
-   stage with `--force` (see §6).
+1. Create an account at [console.groq.com](https://console.groq.com) to get a free API key.
+2. Set the `GROQ_API_KEY` environment variable in your terminal.
+3. In `config.yaml`, set `summarize.use_llm: true` (and/or `units.use_llm: true`).
+4. Ensure `models.llm_model` is set to a valid Groq model (e.g. `llama-3.1-8b-instant`).
 
-If Ollama isn't reachable, every LLM call degrades to the extractive
-fallback per-community/per-batch and logs a warning — it never crashes the
-pipeline.
+If Groq isn't reachable (e.g., API limits or network issues), every LLM call degrades to the extractive
+TF-IDF baseline automatically. No manual failover is required.
 
 ---
 
@@ -428,7 +415,7 @@ Discovery Engine/
 | `NotImplementedError: Stage '...' is not implemented yet` | Should not occur — all 9 batch stages are implemented | If seen, check you're on the latest checkout; see `Docs/Implementation-plan.md` for stage status. |
 | `CorruptArtifactError` reading a `data/*.jsonl` file | More than 5% of lines in that file are malformed (e.g. truncated by a killed process) | Delete the offending `data/` file and re-run that stage (or the whole pipeline). |
 | `FileNotFoundError: Expected artifact not found` | Running a stage whose upstream artifact doesn't exist yet | Run `python -m src.pipeline` (in order) instead of an out-of-order `--only <stage>`. |
-| Ollama-related warnings in logs even with `use_llm: false` | Should not occur — Ollama is never called unless `summarize.use_llm`/`units.use_llm` is `true` | Check `config.yaml`; this is a config, not a code, issue if seen. |
+| Groq-related warnings in logs even with `use_llm: false` | Should not occur — Groq is never called unless `summarize.use_llm`/`units.use_llm` is `true` | Check `config.yaml`; this is a config, not a code, issue if seen. |
 | `LLMSynthesisError: GROQ_API_KEY not found` | `.env` missing or missing the key (Stage 11 only) | Create `.env` at the project root with `GROQ_API_KEY=gsk_...` (§12). Doesn't affect the core pipeline (S1-S9) or `app.py` at all otherwise. |
 | Stage 11 run seems slow / lots of `429` warnings in logs | Free-tier per-model token-per-minute budget exceeded | Expected/handled automatically (`Retry-After`-aware backoff) — lower `llm_synthesis.requests_per_minute` in `config.yaml` if it happens constantly, not just occasionally. |
 | `MouthshutIngestError: ... is missing expected columns` | `data/Mouthshut_reviews.csv` present but not in the expected export shape (needs `review_url, title, body, rating, reviewer, review_date` columns) | Re-export the CSV with those column names, or remove the file entirely — Stage 1b is a no-op without it (§13). |

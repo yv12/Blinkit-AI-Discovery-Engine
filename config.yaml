@@ -33,7 +33,7 @@ units:
 
 models:
   embedding_model: sentence-transformers/all-MiniLM-L6-v2
-  llm_model: llama3              # local Ollama model name; see edgecases.md S3-01/S7-01 for fallback behavior
+  llm_model: llama-3.1-8b-instant              # remote Groq model name; see edgecases.md S3-01/S7-01 for fallback behavior
   embed_batch_size: 128           # sentence-transformers encode() batch size (edgecases.md S4-05, memory/speed knob)
 
 graph:
@@ -46,11 +46,10 @@ clustering:
 
 summarize:
   use_llm: false                  # primary path is local TF-IDF + rating-derived labeling (edgecases.md
-                                   # S7-01) - verified Ollama is NOT reachable on this machine, so this is
-                                   # also what actually runs, not just a theoretical fallback. Set true
-                                   # (with Ollama running locally, serving `models.llm_model`) to use
-                                   # LLM-generated labels/descriptions instead - sentiment always stays
-                                   # rating-derived regardless of this flag (S7-06).
+                                   # S7-01) - so this is what actually runs on a fresh system.
+                                   # Set to true and provide GROQ_API_KEY
+                                   # to use LLM labels + descriptions per theme (and batched long tail).
+                                   # sentiment always stays rating-derived regardless of this flag (S7-06).
   max_representatives: 8          # candidate pool per theme, ranked by similarity-to-centroid (S7-04)
   max_quotes: 3                   # representative_quotes cap per theme (drawn from the pool above)
   max_tfidf_terms: 4              # top TF-IDF terms used to build the fallback label (S7-01)
@@ -142,7 +141,7 @@ llm_synthesis:
                                     # in one run. Swap in for a smaller, higher-quality run if
                                     # wanted (reduce sample_size to ~1500 accordingly).
   temperature: 0                   # + a fixed seed per request - determinism mitigation
-                                    # (README.md §8), same principle as summarize.py's Ollama path.
+                                    # (README.md §8), same principle as summarize.py's Groq path.
   sample_size: 4000                # cap on how many units get sent to the LLM at all - the
                                     # candidate pool is NOT a plain random sample: it prioritizes
                                     # every unit already flagged "uncategorized" by Stage 8 (the

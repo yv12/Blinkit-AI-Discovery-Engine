@@ -8,7 +8,7 @@
 
 Every decision traces back to the spec constraints:
 
-- **Zero cost / fully local** — no paid APIs or models. Local embeddings, local/free LLM (Ollama), free scraping lib.
+- **Zero cost / fully local** — no paid APIs or models. Local embeddings, local/free LLM (Groq), free scraping lib.
 - **Single source (amended §12)** — Google Play Store reviews only, originally. §12 documents a deliberate, user-directed exception adding one specific second source (Mouthshut) - not a general opening to arbitrary connectors.
 - **Question-driven** — the pipeline exists to answer the 8 research questions; the insight layer maps every theme back to them.
 - **Whole-funnel** — operational/pricing complaints are categorized, not filtered out.
@@ -53,11 +53,11 @@ Data flows one direction; each stage's output is a durable artifact in `data/`. 
 | 1 | Scrape | `src/scrape.py` | Play Store (app `com.grofers.customerapp`) | `data/raw_reviews.jsonl` | `google-play-scraper` |
 | 1b | Ingest Mouthshut (§12, optional, second source) | `src/scrape_mouthshut.py` | `data/Mouthshut_reviews.csv` (if present) | `data/raw_mouthshut.jsonl` | stdlib `csv` |
 | 2 | Normalize | `src/normalize.py` | `raw_reviews.jsonl` (+ `raw_mouthshut.jsonl` if present) | `data/reviews.jsonl` | stdlib |
-| 3 | Unit extraction | `src/units.py` | `reviews.jsonl` | `data/units.jsonl` | LLM (Ollama) / rules |
+| 3 | Unit extraction | `src/units.py` | `reviews.jsonl` | `data/units.jsonl` | LLM (Groq) / rules |
 | 4 | Embed | `src/embed.py` | `units.jsonl` | `data/embeddings.npy` + `data/unit_index.json` | `sentence-transformers` |
 | 5 | Similarity graph | `src/graph.py` | embeddings | `data/graph.gpickle` | `faiss`/`sklearn`, `networkx` |
 | 6 | Community detection | `src/cluster.py` | `graph.gpickle` | `data/communities.json` | `python-louvain` |
-| 7 | LLM summarization | `src/summarize.py` | communities + units | `data/themes.json` | Ollama |
+| 7 | LLM summarization | `src/summarize.py` | communities + units | `data/themes.json` | Groq |
 | 8 | Insight mapping | `src/insights.py` | themes + units | `data/insights.json` | LLM + stdlib |
 | 9 | Validation | `src/validate.py` | themes, communities, embeddings | `data/validation.json` | `sklearn`, stdlib |
 | 10 | UI | `app.py` / `notebook.ipynb` | `insights.json`, `themes.json`, `validation.json` | browsable output | `streamlit` |
@@ -294,7 +294,7 @@ Discovery Engine/
 | kNN | `faiss-cpu` or `scikit-learn` | fallback to sklearn if faiss unavailable |
 | Graph | `networkx` | |
 | Community detection | `python-louvain` | |
-| LLM (units, summaries, mapping) | Ollama local model (e.g., `llama3`/`qwen`) | zero-cost; rule-based fallback for units |
+| LLM (units, summaries, mapping) | Groq local model (e.g., `llama3`/`qwen`) | zero-cost; rule-based fallback for units |
 | Validation | `scikit-learn`, `numpy`, `pandas` | |
 | UI | `streamlit` | shareable link; notebook fallback |
 
@@ -346,7 +346,7 @@ exploration-barrier signal the mapping missed by threshold alone.
 
 **Design, deviating deliberately from §1's "fully local" principle:**
 
-- Uses the Groq API (OpenAI-compatible, free tier, no credit card) instead of local Ollama -
+- Uses the Groq API (OpenAI-compatible, free tier, no credit card) instead of local Groq -
   zero-cost is preserved, "fully local"/offline is not. This is why it is a separate,
   opt-in script, never folded into `python -m src.pipeline`.
 - Sends a bounded, prioritized, deterministically-seeded *sample* of raw review excerpts

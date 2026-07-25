@@ -151,7 +151,7 @@ this stage sits inline in `python -m src.pipeline`, between Stage 1 and Stage 2.
 
 | ID | Edge Case | Trigger | Expected behavior | Handling | Severity |
 |---|---|---|---|---|---|
-| S7-01 | LLM unavailable | Ollama down | Degraded summaries | **Decided (not just fallback): the TF-IDF/rating-derived extractive method is the primary path** (`summarize.use_llm` defaults to `false`); Ollama was verified live to be unreachable on this machine, so this is also what actually runs, not a theoretical fallback. Label = top TF-IDF terms; description = templated from community stats; sentiment = rating distribution (never LLM-derived, S7-06). If `use_llm=true` is set and a call fails, degrades to this same extractive result per-community/per-batch and logs a warning | Degraded |
+| S7-01 | LLM unavailable | Groq down | Degraded summaries | **Decided (not just fallback): the TF-IDF/rating-derived extractive method is the primary path** (`summarize.use_llm` defaults to `false`); Groq was verified live to be unreachable on this machine, so this is also what actually runs, not a theoretical fallback. Label = top TF-IDF terms; description = templated from community stats; sentiment = rating distribution (never LLM-derived, S7-06). If `use_llm=true` is set and a call fails, degrades to this same extractive result per-community/per-batch and logs a warning | Degraded |
 | S7-02 | Hallucinated theme label | Label not supported by members | Faithful labels | Feed only representative member texts; require quotes to be verbatim from members | Degraded |
 | S7-03 | Non-JSON LLM output | Free-form summary | Parseable themes | Constrain to JSON schema; retry once; fallback on repeated failure | Degraded |
 | S7-04 | Community too large to fit context | Thousands of members | Bounded prompt | Select representatives (medoid/centrality), cap count; summarize sample | Degraded |
@@ -209,7 +209,7 @@ this stage sits inline in `python -m src.pipeline`, between Stage 1 and Stage 2.
 
 | ID | Edge Case | Trigger | Expected behavior | Handling | Severity |
 |---|---|---|---|---|---|
-| R-01 | Fresh env missing Ollama | No local LLM installed | Documented + degradable | README install steps; pipeline runs with fallbacks if absent | Degraded |
+| R-01 | Fresh env missing Groq | No local LLM installed | Documented + degradable | README install steps; pipeline runs with fallbacks if absent | Degraded |
 | R-02 | Dependency version drift | Unpinned deps update + break | Stable installs | Pin all versions in `requirements.txt` | Blocker |
 | R-03 | OS path differences (Windows) | Backslash vs POSIX paths | Cross-platform | Use `pathlib`; no hard-coded separators | Cosmetic |
 | R-04 | Partial pipeline re-run | Stage rebuilt, downstream stale | Consistent state | `--force` cascades; detect artifact staleness by upstream timestamp | Degraded |
