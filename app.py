@@ -2,16 +2,17 @@ import gradio as gr
 from api import app as fastapi_app, _load_state
 import threading
 
-# Gradio's mount_gradio_app overwrites FastAPI startup events, so we must load manually.
-# But loading the machine learning models synchronously blocks Uvicorn from starting,
-# causing Hugging Face's health check to timeout and restart the container endlessly!
-# By loading in a background thread, Uvicorn starts instantly and passes the health check.
+# Load heavy data in the background so Uvicorn can bind to port 7860 instantly!
 threading.Thread(target=_load_state, daemon=True).start()
 
-def greet():
-    return "Health check passed!"
+# We MUST serve a real Gradio app at the root ("/") for Hugging Face to detect it
+# and pass the health check. We embed our React app using a full-screen iframe!
+css = """
+footer { display: none !important; }
+.gradio-container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; height: 100vh !important; }
+"""
 
-demo = gr.Interface(fn=greet, inputs=[], outputs="text")
+with gr.Blocks(css=css, title="Discovery Engine") as demo:
+    gr.HTML('<iframe src="/react" style="width: 100%; height: 100vh; border: none;"></iframe>')
 
-# Mount Gradio at "/" so Hugging Face's health checker can find it.
 app = gr.mount_gradio_app(fastapi_app, demo, path="/")

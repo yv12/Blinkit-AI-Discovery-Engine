@@ -601,6 +601,6 @@ def ask(req: AskRequest):
 
 from fastapi.responses import FileResponse
 
-@app.get("/")
+@app.get("/react")
 def serve_react_app():
     return FileResponse(str(Path(__file__).parent / "web" / "index.html"))
