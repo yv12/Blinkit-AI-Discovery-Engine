@@ -26,5 +26,11 @@ footer { display: none !important; }
 
 with gr.Blocks(title="Discovery Engine") as demo:
     gr.HTML(html_content)
+    
+    # Bind the dummy function to a hidden button so Gradio's internal API registers it.
+    # Without this, ZeroGPU ignores the function and crashes!
+    with gr.Row(visible=False):
+        hidden_btn = gr.Button("Init ZeroGPU")
+        hidden_btn.click(fn=dummy_gpu_function, inputs=[], outputs=[])
 
 app = gr.mount_gradio_app(fastapi_app, demo, path="/")
