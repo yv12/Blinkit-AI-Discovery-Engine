@@ -1,13 +1,16 @@
 import gradio as gr
-from api import app as fastapi_app
+from api import app as fastapi_app, _load_state
 
-# Create a dummy Gradio interface
+# Gradio's mount_gradio_app overrides FastAPI's @app.on_event("startup"),
+# so we must manually load the data into memory before mounting.
+_load_state()
+
 def greet():
-    return "FastAPI is running!"
+    return "Health check passed!"
 
 demo = gr.Interface(fn=greet, inputs=[], outputs="text")
 
-# Mount the dummy Gradio app onto our existing FastAPI app.
-# The Hugging Face Gradio SDK will detect this `app` variable 
-# and use it to run our FastAPI server instead of a standard Gradio UI!
-app = gr.mount_gradio_app(fastapi_app, demo, path="/gradio")
+# Mount Gradio at "/" so Hugging Face's health checker can find it.
+# Because api.py already defines @app.get("/"), that exact route will
+# take precedence and serve your React app, while Gradio handles /info!
+app = gr.mount_gradio_app(fastapi_app, demo, path="/")
