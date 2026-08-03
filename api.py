@@ -599,4 +599,8 @@ def ask(req: AskRequest):
 # Static frontend (web/) - mounted last so it never shadows the /api/* routes above
 # --------------------------------------------------------------------------- #
 
-app.mount("/", StaticFiles(directory=str(Path(__file__).parent / "web"), html=True), name="web")
+from fastapi.responses import FileResponse
+
+@app.get("/")
+def serve_react_app():
+    return FileResponse(str(Path(__file__).parent / "web" / "index.html"))
