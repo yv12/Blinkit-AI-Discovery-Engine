@@ -36,4 +36,3 @@ python-dotenv==1.0.1             # optional Stage 11 (src/llm_synthesis.py): loa
 # (edgecases.md S5-05). Uncomment if your platform supports it:
 # faiss-cpu==1.8.0.post1
 
-gradio==4.41.0                 # Needed for Hugging Face Free Tier hack
