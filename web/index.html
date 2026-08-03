@@ -818,21 +818,36 @@ function App() {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    Promise.all([
-      apiGet("/overview"),
-      apiGet("/themes"),
-      apiGet("/questions"),
-      apiGet("/top-themes"),
-      apiGet("/appux").catch(()=>null)
-    ]).then(([ov,th,qs,tt,ax])=>{
-      setOverview(ov);
-      setThemes(th);
-      setTopThemes((tt&&tt.themes)||[]);
-      setNearMisses((tt&&tt.near_misses)||[]);
-      setAppuxData(ax);
-      setReady(true);
-    }).catch(err=>setLoadError(String(err)));
-  },[]);
+    let timer;
+    async function checkHealthAndLoad() {
+      try {
+        const res = await fetch(API_BASE + "/health");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.ready) {
+            Promise.all([
+              apiGet("/overview"),
+              apiGet("/themes"),
+              apiGet("/questions"),
+              apiGet("/top-themes"),
+              apiGet("/appux").catch(()=>null)
+            ]).then(([ov,th,qs,tt,ax])=>{
+              setOverview(ov);
+              setThemes(th);
+              setTopThemes((tt&&tt.themes)||[]);
+              setNearMisses((tt&&tt.near_misses)||[]);
+              setAppuxData(ax);
+              setReady(true);
+            }).catch(err=>setLoadError(String(err)));
+            return;
+          }
+        }
+      } catch (err) {}
+      timer = setTimeout(checkHealthAndLoad, 2000);
+    }
+    checkHealthAndLoad();
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(()=>{
     if (bottomRef.current) bottomRef.current.scrollIntoView({behavior:"smooth"});
@@ -922,8 +937,8 @@ function App() {
     <div className="dq-root">
       <div className="dq-loading-screen">
         <div className="dq-loading-spinner"/>
-        <p className="dq-loading-text">Loading Blinkit review data…</p>
-        <span style={{fontSize:"12px",color:"var(--text-muted)"}}>Indexing embeddings and theme clusters</span>
+        <p className="dq-loading-text">Warming up, one moment...</p>
+        <span style={{fontSize:"12px",color:"var(--text-muted)"}}>Starting server and loading ML models</span>
       </div>
     </div>
   );

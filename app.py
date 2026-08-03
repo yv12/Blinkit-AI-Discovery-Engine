@@ -3,8 +3,23 @@ import spaces
 from api import app as fastapi_app, _load_state
 import threading
 
+import sys
+import traceback
+import logging
+
+logger = logging.getLogger("api")
+
+def _safe_load():
+    try:
+        _load_state()
+        logger.info("STATE LOADED OK")
+    except Exception:
+        logger.error(traceback.format_exc())
+    finally:
+        sys.stdout.flush()
+
 # Load heavy data in the background so Uvicorn can bind to port 7860 instantly!
-threading.Thread(target=_load_state, daemon=True).start()
+threading.Thread(target=_safe_load, daemon=True).start()
 
 # Hugging Face ZeroGPU environments strictly require at least one function
 # decorated with @spaces.GPU, otherwise they crash the container on startup.

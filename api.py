@@ -107,8 +107,21 @@ def _build_insight_text(theme: dict, theme_to_q: Dict[str, List[int]]) -> str:
     return base
 
 
-@app.on_event("startup")
+READY = False
+
 def _load_state() -> None:
+    import os
+    try:
+        import resource
+        def log_mem(step=""):
+            logger.info(f"{step} peak RSS MB: {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024}")
+    except ImportError:
+        def log_mem(step=""):
+            pass
+
+    if os.path.exists("data"):
+        logger.info(f"files: {[(f, os.path.getsize(os.path.join('data', f))) for f in os.listdir('data')]}")
+    log_mem("Start")
     logger.info("Loading pipeline artifacts...")
     config = load_config()
     themes_doc = read_json(config.paths.themes)
@@ -150,6 +163,7 @@ def _load_state() -> None:
         for uid in c["unit_ids"]:
             unit_to_community[uid] = c["community_id"]
 
+    log_mem("After basic JSONs")
     logger.info("Indexing units.jsonl...")
     unit_by_id: Dict[str, dict] = {}
     for row in _iter_jsonl(config.paths.units):
@@ -161,18 +175,23 @@ def _load_state() -> None:
             "review_id": row.get("review_id"),
         }
 
+    log_mem("After indexing units")
     logger.info("Loading embeddings + query encoder (%s)...", config.models.embedding_model)
     unit_index = read_json(config.paths.unit_index)
     row_unit_ids: List[str] = unit_index["unit_ids"]
-    embeddings = np.load(config.paths.embeddings)
+    embeddings = np.load(config.paths.embeddings, mmap_mode="r")
+    log_mem("After embeddings mmap")
 
     # Import torch directly *before* sentence-transformers/transformers pull it in
     # transitively - see src/embed.py / README.md §3 / edgecases.md S4-01 for the
     # real Windows DLL-init conflict this avoids.
     import torch  # noqa: F401
+    torch.set_num_threads(1)
     from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(config.models.embedding_model)
+    model = SentenceTransformer(config.models.embedding_model, device="cpu")
+    model.eval()
+    log_mem("After SentenceTransformer")
 
     logger.info("Counting corpus stats...")
     source_counts: Dict[str, int] = {}
@@ -284,21 +303,29 @@ def _load_state() -> None:
         len(unit_by_id),
         embeddings.shape[0],
     )
+    global READY
+    READY = True
 
 
 # --------------------------------------------------------------------------- #
 # API routes
 # --------------------------------------------------------------------------- #
 
+@app.get("/health")
+def get_health():
+    return {"ready": READY}
+
 
 @app.get("/api/overview")
 def get_overview():
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     return _STATE["overview"]
 
 
 @app.get("/api/appux")
 def get_appux():
     """App UX friction map data (addressability-spec.md)."""
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     return {
         "themes_doc": _STATE.get("appux_themes_doc"),
         "classifier_stats": _STATE.get("classifier_stats"),
@@ -309,6 +336,7 @@ def get_appux():
 def get_questions():
     """The 8 canonical research questions with their deterministic pipeline answers
     (insights.json)."""
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     theme_by_id = _STATE["theme_by_id"]
     out = []
     for q in _STATE["insights"]["questions"]:
@@ -331,9 +359,10 @@ def get_questions():
 
 
 @app.get("/api/top-themes")
-def get_top_themes():
+def get_top_themes(limit: int = 5):
     """The top-5 problem-statement themes (src/theme_titles.py output), or an
     empty list if that optional stage hasn't been run."""
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     tt = _STATE.get("theme_titles")
     if not tt:
         return {"themes": [], "available": False}
@@ -362,6 +391,7 @@ def get_top_themes():
 
 @app.get("/api/themes")
 def get_themes():
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     themes = _STATE["themes_doc"]["themes"]
     theme_to_q = _STATE["theme_to_q"]
     out = []
@@ -383,6 +413,7 @@ def get_themes():
 
 @app.get("/api/themes/{theme_id}/citations")
 def get_theme_citations(theme_id: str, limit: int = 6):
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     theme = _STATE["theme_by_id"].get(theme_id)
     if not theme:
         raise HTTPException(404, f"Unknown theme_id: {theme_id}")
@@ -497,6 +528,7 @@ def _select_citations_across_themes(
 
 @app.post("/api/ask")
 def ask(req: AskRequest):
+    if not READY: raise HTTPException(status_code=503, detail="Still warming up...")
     query = req.query.strip()
     if not query:
         return {
