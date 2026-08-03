@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Discovery Engine - Blinkit Reviews</title>
+<title>AI Discovery Engine · Blinkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <script type="importmap">
 {
@@ -18,188 +21,173 @@
 <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
 
 <style>
-  html, body { margin: 0; padding: 0; min-height: 100%; background: #F1F4EF; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; background: #0D0D0D; }
   #root { min-height: 100vh; }
 
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
-
   .dq-root {
-    --paper: #F1F4EF;
-    --paper-deep: #E6EBE2;
-    --ink: #16241D;
-    --ink-soft: #55665B;
-    --yellow: #F6C445;
-    --yellow-deep: #D9A61F;
-    --green: #2F6844;
-    --green-soft: #DFEBE1;
-    --red: #C1432A;
-    --red-soft: #F4E2DB;
-    --line: #CBD2C4;
-    --white: #FFFFFF;
+    --blinkit-yellow: #F8CA00;
+    --blinkit-yellow-dark: #D9A800;
+    --blinkit-yellow-soft: rgba(248, 202, 0, 0.12);
+    --blinkit-yellow-border: rgba(248, 202, 0, 0.25);
+    --bg-base: #0D0D0D;
+    --bg-surface: #161616;
+    --bg-elevated: #1E1E1E;
+    --bg-hover: #252525;
+    --border: #2A2A2A;
+    --border-light: #222222;
+    --text-primary: #F5F5F5;
+    --text-secondary: #A0A0A0;
+    --text-muted: #606060;
+    --green: #0BA500;
+    --green-soft: rgba(11, 165, 0, 0.12);
+    --red: #FF4444;
+    --red-soft: rgba(255, 68, 68, 0.12);
+    --blue: #4DA6FF;
+    --blue-soft: rgba(77, 166, 255, 0.12);
     font-family: 'Inter', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg-base);
+    color: var(--text-primary);
     min-height: 100vh;
     height: 100vh;
     width: 100%;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
-  .dq-root *, .dq-root *::before, .dq-root *::after { box-sizing: border-box; }
-  .mono { font-family: 'IBM Plex Mono', monospace; }
-  .display { font-family: 'Space Grotesk', sans-serif; }
 
+  /* ---- HEADER ---- */
   .dq-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 28px 12px;
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-    gap: 14px;
+    padding: 12px 28px;
+    min-height: 60px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-surface);
     flex-shrink: 0;
+    gap: 16px;
+    flex-wrap: wrap;
   }
-  .dq-title-eyebrow {
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink);
+  .dq-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dq-brand-logo {
+    width: 32px;
+    height: 32px;
+    background: var(--blinkit-yellow);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .dq-brand-name {
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    margin: 0;
+    font-size: 15px;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
   }
-  .dq-header-right { display: flex; align-items: stretch; gap: 18px; flex-wrap: wrap; }
-  .dq-header-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .dq-header-stat-label {
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .dq-header-stat-value {
+  .dq-brand-sep {
+    color: var(--text-muted);
     font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    white-space: nowrap;
+    margin: 0 2px;
+  }
+  .dq-brand-sub {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--blinkit-yellow);
   }
 
-  .dq-funnel-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-  }
+  /* ---- FUNNEL ---- */
+  .dq-funnel-container { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   .dq-funnel {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: var(--paper-deep);
-    padding: 6px 14px;
+    gap: 8px;
+    background: var(--bg-elevated);
+    padding: 6px 12px;
     border-radius: 8px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--border);
   }
-  .dq-funnel-stage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: help;
-  }
-  .dq-funnel-label {
-    font-size: 9px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .dq-funnel-val {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-top: 1px;
-  }
-  .dq-funnel-arrow {
-    color: #A3AFA8;
-    font-size: 13px;
-    margin-top: 4px;
-  }
-  .dq-funnel-sub {
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-right: 4px;
-  }
-  .dq-funnel-sub strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
+  .dq-funnel-stage { display: flex; flex-direction: column; align-items: center; cursor: help; }
+  .dq-funnel-label { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); font-family: 'Inter', monospace; }
+  .dq-funnel-val { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-top: 1px; font-family: 'Poppins', sans-serif; }
+  .dq-funnel-arrow { color: var(--text-muted); font-size: 12px; margin-top: 3px; }
+  .dq-funnel-sub { font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
+  .dq-funnel-sub strong { color: var(--text-primary); }
 
+  /* ---- TABS ---- */
   .dq-tabs {
     display: flex;
-    gap: 6px;
-    padding: 10px 28px 0;
+    gap: 2px;
+    padding: 12px 28px 0;
     flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-surface);
   }
   .dq-tab {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 9px 16px;
-    border-radius: 9px 9px 0 0;
-    border: 1px solid var(--line);
+    gap: 7px;
+    padding: 10px 18px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid transparent;
     border-bottom: none;
-    background: var(--paper-deep);
-    color: var(--ink-soft);
+    background: transparent;
+    color: var(--text-secondary);
     font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
-  }
-  .dq-tab.active {
-    background: var(--white);
-    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    transition: color 0.15s, background 0.15s;
     position: relative;
-    top: 1px;
+    bottom: -1px;
   }
-  .dq-tabs-underline { border-bottom: 1px solid var(--line); flex-shrink: 0; }
+  .dq-tab:hover { color: var(--text-primary); background: var(--bg-hover); }
+  .dq-tab.active {
+    background: var(--bg-base);
+    color: var(--blinkit-yellow);
+    border-color: var(--border);
+    border-bottom-color: var(--bg-base);
+  }
 
+  /* ---- BODY ---- */
   .dq-body {
-    padding: 14px 28px 16px;
+    padding: 16px 28px 16px;
     max-width: 1280px;
     margin: 0 auto;
     width: 100%;
-    box-sizing: border-box;
     flex: 1;
     min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
-  .dq-body > .narrative-panel {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-  }
 
-  /* ---------- ASK LAYOUT ---------- */
+  /* ---- ASK LAYOUT ---- */
   .ask-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 16px;
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) 270px;
+    gap: 14px;
     flex: 1;
     min-height: 0;
     height: 100%;
   }
   @media (max-width: 900px) {
-    .ask-layout {
-      grid-template-columns: 1fr;
-      overflow-y: auto;
-    }
+    .ask-layout { grid-template-columns: 1fr; overflow-y: auto; }
   }
 
-  /* ---------- CHAT ---------- */
+  /* ---- CHAT ---- */
   .chat-panel {
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: 0 10px 10px 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -209,52 +197,99 @@
   .chat-scroll {
     flex: 1;
     min-height: 0;
-    padding: 14px 16px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     overflow-y: auto;
   }
+  .chat-scroll::-webkit-scrollbar { width: 4px; }
+  .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+  .chat-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
   .msg-row { display: flex; }
   .msg-row.user { justify-content: flex-end; }
   .msg-bubble-user {
-    background: var(--ink);
-    color: var(--white);
-    padding: 10px 14px;
-    border-radius: 12px 12px 2px 12px;
+    background: var(--blinkit-yellow);
+    color: #0D0D0D;
+    padding: 11px 15px;
+    border-radius: 14px 14px 3px 14px;
     max-width: 72%;
     font-size: 14px;
     line-height: 1.5;
+    font-weight: 500;
   }
-  .msg-assistant { max-width: 88%; }
-  .assistant-head { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; color: var(--green); }
-  .assistant-head span { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .msg-assistant { max-width: 90%; }
+  .assistant-head {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+  }
+  .assistant-avatar {
+    width: 22px;
+    height: 22px;
+    background: var(--blinkit-yellow);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .assistant-head span {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--blinkit-yellow);
+    font-family: 'Poppins', sans-serif;
+  }
   .msg-text {
-    font-size: 14.5px;
-    line-height: 1.55;
-    padding: 12px 14px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 2px 12px 12px 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 13px 15px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 3px 14px 14px 14px;
+    color: var(--text-primary);
   }
   .msg-error { border-color: var(--red); background: var(--red-soft); }
   .citations-label {
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    margin: 10px 0 8px;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin: 12px 0 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
   }
-  .citations-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .loading-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft); padding-left: 2px; }
-  .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.1s infinite ease-in-out; }
-  @keyframes pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; } }
+  .citations-row { display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .citations-row::-webkit-scrollbar { height: 3px; }
+  .citations-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
+  .loading-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-left: 2px;
+    font-family: 'Inter', monospace;
+  }
+  .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blinkit-yellow);
+    animation: pulse 1.1s infinite ease-in-out;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+  /* ---- SIDEBAR ---- */
   .ask-side {
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     padding: 12px;
     display: flex;
     flex-direction: column;
@@ -270,110 +305,130 @@
     gap: 8px;
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--blinkit-yellow-border);
     border-radius: 8px;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--blinkit-yellow-soft);
+    color: var(--blinkit-yellow);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    font-family: inherit;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.15s, border-color 0.15s;
   }
-  .ask-side-new:hover { border-color: var(--yellow-deep); background: #FCF6E6; }
-  .ask-side-new:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ask-side-new:hover { background: rgba(248,202,0,0.2); border-color: rgba(248,202,0,0.4); }
+  .ask-side-new:disabled { opacity: 0.4; cursor: not-allowed; }
   .ask-side-label {
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    margin: 2px 0 0;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin: 4px 0 0;
+    padding: 0 2px;
   }
   .ask-side-qs {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
     overflow-y: auto;
     flex: 1;
     min-height: 0;
     padding-right: 2px;
   }
+  .ask-side-qs::-webkit-scrollbar { width: 3px; }
+  .ask-side-qs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   .ask-side-q {
     text-align: left;
     width: 100%;
-    padding: 10px 11px;
-    border: 1px solid var(--line);
+    padding: 9px 11px;
+    border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
     font-size: 12.5px;
     line-height: 1.45;
     cursor: pointer;
-    font-family: inherit;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
   }
-  .ask-side-q:hover { border-color: var(--yellow-deep); background: #FCF6E6; }
-  .ask-side-q:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ask-side-q:hover {
+    border-color: var(--blinkit-yellow-border);
+    background: var(--blinkit-yellow-soft);
+    color: var(--text-primary);
+  }
+  .ask-side-q:disabled { opacity: 0.4; cursor: not-allowed; }
 
+  /* ---- CHAT INPUT ---- */
   .chat-input-row {
     display: flex;
     gap: 8px;
-    padding: 12px 14px;
-    border-top: 1px solid var(--line);
+    padding: 12px;
+    border-top: 1px solid var(--border);
     flex-shrink: 0;
+    background: var(--bg-elevated);
   }
   .chat-input {
     flex: 1;
-    border: 1px solid var(--line);
+    border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 10px 13px;
     font-size: 14px;
     font-family: 'Inter', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    transition: border-color 0.15s;
   }
-  .chat-input:focus { outline: 2px solid var(--yellow-deep); outline-offset: 1px; }
+  .chat-input::placeholder { color: var(--text-muted); }
+  .chat-input:focus { outline: none; border-color: var(--blinkit-yellow-border); box-shadow: 0 0 0 3px var(--blinkit-yellow-soft); }
   .send-btn {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: var(--ink);
-    color: var(--white);
+    background: var(--blinkit-yellow);
+    color: #0D0D0D;
     border: none;
     border-radius: 8px;
-    padding: 0 16px;
+    padding: 0 18px;
     font-size: 13.5px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.15s, transform 0.1s;
   }
-  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .send-btn:hover { background: var(--blinkit-yellow-dark); }
+  .send-btn:active { transform: scale(0.97); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  /* ---------- CITATION CHIT ---------- */
+  /* ---- CITATION CHIT ---- */
   .chit {
     position: relative;
-    background: var(--white);
-    border: 1px solid var(--line);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    width: 250px;
+    width: 240px;
     flex-shrink: 0;
     display: flex;
-    overflow: visible;
+    overflow: hidden;
   }
-  .chit-strip { width: 5px; border-radius: 10px 0 0 10px; }
+  .chit:hover { border-color: #3A3A3A; }
+  .chit-strip { width: 4px; flex-shrink: 0; }
   .sentiment-friction .chit-strip { background: var(--red); }
-  .sentiment-pattern .chit-strip { background: var(--yellow-deep); }
+  .sentiment-pattern .chit-strip { background: var(--blinkit-yellow); }
   .sentiment-positive .chit-strip { background: var(--green); }
-  .chit-body { padding: 10px 12px 10px 10px; flex: 1; }
+  .chit-body { padding: 10px 12px 10px 10px; flex: 1; min-width: 0; }
   .chit-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-  .chit-cite { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: var(--green); flex-shrink: 0; }
-  .stars { display: inline-flex; gap: 1px; color: var(--yellow-deep); }
-  .star-off { color: var(--line); }
-  .chit-seam { position: relative; border-top: 1px dashed var(--line); margin: 8px -12px 8px -10px; }
-  .notch { position: absolute; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--white); border: 1px solid var(--line); }
+  .chit-cite { font-size: 11px; font-weight: 700; color: var(--blinkit-yellow); font-family: 'Poppins', monospace; flex-shrink: 0; }
+  .stars { display: inline-flex; gap: 1px; color: var(--blinkit-yellow); }
+  .star-off { color: var(--text-muted); }
+  .chit-seam { position: relative; border-top: 1px dashed var(--border); margin: 8px -12px 8px -10px; }
+  .notch { position: absolute; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border); }
   .notch-l { left: -7px; }
   .notch-r { right: -7px; }
-  .chit-text { font-size: 12.5px; line-height: 1.5; margin: 0; color: var(--ink); }
-  mark.hl { background: var(--yellow); color: var(--ink); padding: 0 2px; border-radius: 3px; font-weight: 600; }
-  .chit-bottom { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10.5px; color: var(--ink-soft); }
-  .chit-theme { background: var(--paper-deep); padding: 2px 6px; border-radius: 5px; font-weight: 600; }
+  .chit-text { font-size: 12.5px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+  mark.hl { background: var(--blinkit-yellow); color: #0D0D0D; padding: 0 2px; border-radius: 3px; font-weight: 700; }
+  .chit-bottom { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10.5px; color: var(--text-muted); align-items: center; }
+  .chit-theme { background: var(--bg-hover); padding: 2px 6px; border-radius: 4px; font-weight: 600; color: var(--text-secondary); }
   .chit-source-tag {
     display: inline-flex;
     align-items: center;
@@ -382,46 +437,50 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     padding: 2px 7px;
-    border-radius: 5px;
-    border: 1px solid var(--line);
-    background: var(--paper);
-    color: var(--ink-soft);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-hover);
+    color: var(--text-muted);
     white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
   }
   .chit-source-tag.source-mouthshut {
-    background: #EEF2FF;
-    border-color: #C7D2FE;
-    color: #3730A3;
+    background: var(--blue-soft);
+    border-color: rgba(77,166,255,0.25);
+    color: var(--blue);
   }
   .chit-source-tag.source-google_play {
     background: var(--green-soft);
-    border-color: #B7D4C0;
+    border-color: rgba(11,165,0,0.25);
     color: var(--green);
   }
   .chit-bottom-left { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-width: 0; }
 
-  /* ---------- NARRATIVE ---------- */
-  .narrative-panel { background: var(--white); border: 1px solid var(--line); border-radius: 0 10px 10px 10px; padding: 20px; }
-  .narrative-heading { font-size: 19px; font-weight: 700; margin: 0 0 6px; }
-  .narrative-sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 16px; }
+  /* ---- NARRATIVE ---- */
+  .narrative-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; overflow-y: auto; }
+  .narrative-panel::-webkit-scrollbar { width: 4px; }
+  .narrative-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .narrative-heading { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 800; margin: 0 0 6px; color: var(--text-primary); letter-spacing: -0.02em; }
+  .narrative-sub { font-size: 13px; color: var(--text-secondary); margin: 0 0 20px; }
 
+  /* ---- THEME ROWS ---- */
   .theme-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 10px; border-radius: 8px; border: 1px solid transparent; }
-  .theme-row + .theme-row { border-top: 1px solid var(--line); }
-  .theme-row.selected { border: 1px solid var(--yellow-deep); background: #FCF6E6; border-radius: 10px; }
-  .rank { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); width: 22px; padding-top: 10px; }
-  .count-tag { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; border-radius: 8px; padding: 6px 12px; min-width: 52px; text-align: center; }
+  .theme-row + .theme-row { border-top: 1px solid var(--border-light); }
+  .theme-row.selected { border: 1px solid var(--blinkit-yellow-border); background: var(--blinkit-yellow-soft); border-radius: 10px; }
+  .rank { font-size: 12px; color: var(--text-muted); width: 22px; padding-top: 10px; font-family: 'Poppins', monospace; }
+  .count-tag { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 20px; border-radius: 8px; padding: 6px 12px; min-width: 52px; text-align: center; }
   .count-tag.friction { background: var(--red-soft); color: var(--red); }
-  .count-tag.pattern { background: #FBF0D6; color: var(--yellow-deep); }
+  .count-tag.pattern { background: var(--blinkit-yellow-soft); color: var(--blinkit-yellow); }
   .count-tag.positive { background: var(--green-soft); color: var(--green); }
   .theme-main { flex: 1; }
   .theme-label-row { display: flex; align-items: center; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
-  .theme-label { font-weight: 600; font-size: 14.5px; }
-  .theme-questions { font-size: 10.5px; color: var(--green); font-weight: 600; }
-  .theme-insight { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 8px; line-height: 1.45; }
-  .bar-track { height: 6px; background: var(--paper-deep); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .theme-label { font-weight: 600; font-size: 14.5px; font-family: 'Poppins', sans-serif; color: var(--text-primary); }
+  .theme-questions { font-size: 10.5px; color: var(--green); font-weight: 700; font-family: 'Poppins', sans-serif; }
+  .theme-insight { font-size: 12.5px; color: var(--text-secondary); margin: 4px 0 8px; line-height: 1.5; }
+  .bar-track { height: 4px; background: var(--bg-hover); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
   .bar-fill { height: 100%; border-radius: 4px; }
   .bar-fill.friction { background: var(--red); }
-  .bar-fill.pattern { background: var(--yellow-deep); }
+  .bar-fill.pattern { background: var(--blinkit-yellow); }
   .bar-fill.positive { background: var(--green); }
   .row-actions { display: flex; align-items: center; gap: 8px; }
   .expand-btn, .select-btn {
@@ -433,77 +492,144 @@
     border-radius: 7px;
     padding: 6px 10px;
     cursor: pointer;
-    border: 1px solid var(--line);
-    background: var(--white);
-    color: var(--ink);
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
   }
-  .select-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
+  .expand-btn:hover, .select-btn:hover { border-color: #3A3A3A; color: var(--text-primary); }
+  .select-btn.active { background: var(--green-soft); border-color: rgba(11,165,0,0.3); color: var(--green); }
   .expand-citations { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-  .expand-loading { font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
+  .expand-loading { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
 
-  /* ---------- KEY PROBLEMS (top-5 problem statements) ---------- */
+  /* ---- KEY PROBLEMS ---- */
   .key-problems { margin-bottom: 26px; }
-  .key-problems-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
-  .key-problems-title { font-size: 17px; font-weight: 700; margin: 0; }
-  .key-problems-sub { font-size: 11px; color: var(--ink-soft); }
-  .problem-card { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--white); margin-bottom: 10px; display: flex; gap: 14px; align-items: flex-start; }
-  .problem-rank { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; color: var(--ink-soft); width: 26px; text-align: center; padding-top: 2px; }
+  .key-problems-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 6px; }
+  .key-problems-title { font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 800; margin: 0; color: var(--text-primary); letter-spacing: -0.01em; }
+  .key-problems-sub { font-size: 11px; color: var(--text-muted); font-family: 'Poppins', sans-serif; }
+  .problem-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; background: var(--bg-elevated); margin-bottom: 10px; display: flex; gap: 16px; align-items: flex-start; transition: border-color 0.15s; }
+  .problem-card:hover { border-color: #333; }
+  .problem-rank { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 22px; color: var(--text-muted); width: 26px; text-align: center; padding-top: 2px; }
   .problem-main { flex: 1; min-width: 0; }
   .problem-title-row { display: flex; align-items: center; gap: 10px; justify-content: space-between; flex-wrap: wrap; }
-  .problem-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15.5px; margin: 0; }
-  .problem-meta { font-size: 11px; color: var(--ink-soft); margin: 4px 0 4px; }
-  .share-bar-track { height: 5px; background: var(--paper-deep); border-radius: 4px; overflow: hidden; margin: 4px 0 10px; max-width: 340px; }
-  .share-bar-fill { height: 100%; background: var(--ink-soft); border-radius: 4px; }
-  .problem-quotes {
-    display: flex; flex-direction: column; gap: 8px;
-    margin-top: 8px; max-height: 220px; overflow-y: auto;
-    padding-right: 4px;
-  }
-  .problem-quote { font-size: 12px; color: var(--ink); border-left: 3px solid var(--line); padding-left: 9px; line-height: 1.45; }
+  .problem-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 15px; margin: 0; color: var(--text-primary); }
+  .problem-meta { font-size: 11px; color: var(--text-muted); margin: 4px 0; }
+  .share-bar-track { height: 4px; background: var(--bg-hover); border-radius: 4px; overflow: hidden; margin: 6px 0 10px; max-width: 320px; }
+  .share-bar-fill { height: 100%; background: var(--blinkit-yellow); border-radius: 4px; }
+  .problem-quotes { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; max-height: 200px; overflow-y: auto; padding-right: 4px; }
+  .problem-quote { font-size: 12px; color: var(--text-secondary); border-left: 3px solid var(--blinkit-yellow); padding-left: 10px; line-height: 1.5; }
   .quotes-toggle {
     display: inline-flex; align-items: center; gap: 6px;
     margin-top: 6px; padding: 0; border: none; background: none;
-    color: var(--ink-soft); font-size: 12px; font-weight: 600;
-    cursor: pointer; font-family: inherit;
+    color: var(--text-muted); font-size: 12px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: color 0.15s;
   }
-  .quotes-toggle:hover { color: var(--ink); }
-  .quotes-toggle svg { width: 14px; height: 14px; flex-shrink: 0; }
-  .no-qualifying-themes { border: 1px dashed var(--line); border-radius: 10px; background: var(--paper); padding: 18px; color: var(--ink-soft); font-size: 13px; line-height: 1.55; }
-  .full-themes-head { font-size: 14px; font-weight: 700; margin: 8px 0 4px; color: var(--ink); }
+  .quotes-toggle:hover { color: var(--blinkit-yellow); }
+  .no-qualifying-themes { border: 1px dashed var(--border); border-radius: 10px; background: var(--bg-elevated); padding: 18px; color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
+  .full-themes-head { font-size: 14px; font-weight: 700; margin: 8px 0 4px; color: var(--text-primary); font-family: 'Poppins', sans-serif; }
   .problem-connection {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.55;
-    margin: 6px 0 10px;
-    padding: 8px 10px;
-    background: var(--paper);
-    border-left: 3px solid var(--yellow-deep);
+    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    margin: 8px 0 10px; padding: 10px 12px;
+    background: var(--bg-surface);
+    border-left: 3px solid var(--blinkit-yellow);
     border-radius: 0 6px 6px 0;
   }
   .problem-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
-  .problem-tag { font-size: 10.5px; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; line-height: 1.5; }
-  .near-misses { margin-top: 8px; border: 1px dashed var(--line); border-radius: 10px; background: var(--paper); padding: 14px 16px; }
-  .near-misses-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); margin: 0 0 8px; }
-  .near-miss-row { font-size: 12px; color: var(--ink-soft); line-height: 1.5; padding: 3px 0; border-top: 1px solid var(--line); }
+  .problem-tag { font-size: 10.5px; color: var(--text-muted); background: var(--bg-hover); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; line-height: 1.5; font-family: 'Inter', sans-serif; }
+  .near-misses { margin-top: 8px; border: 1px dashed var(--border); border-radius: 10px; background: var(--bg-elevated); padding: 14px 16px; }
+  .near-misses-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin: 0 0 8px; font-family: 'Poppins', sans-serif; }
+  .near-miss-row { font-size: 12px; color: var(--text-muted); line-height: 1.5; padding: 3px 0; border-top: 1px solid var(--border-light); }
   .near-miss-row:first-of-type { border-top: none; }
-  .near-miss-row .nm-label { color: var(--ink); font-weight: 600; }
+  .near-miss-row .nm-label { color: var(--text-primary); font-weight: 600; }
+  .objective-card { margin-top: 20px; padding: 16px 18px; border: 1px solid rgba(11,165,0,0.3); background: var(--green-soft); border-radius: 10px; }
+  .objective-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); font-weight: 700; margin: 0 0 6px; font-family: 'Poppins', sans-serif; }
+  .objective-theme { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 15px; margin: 0 0 6px; color: var(--text-primary); }
+  .objective-text { font-size: 13.5px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
 
-  .objective-card { margin-top: 20px; padding: 16px 18px; border: 1px solid var(--green); background: var(--green-soft); border-radius: 10px; }
-  .objective-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); font-weight: 700; margin: 0 0 6px; }
-  .objective-theme { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; margin: 0 0 6px; }
-  .objective-text { font-size: 13.5px; line-height: 1.5; margin: 0; }
-
+  /* ---- LOADING / ERROR ---- */
   .dq-loading-screen, .dq-error-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    gap: 10px;
-    color: var(--ink-soft);
-    font-size: 14px;
-    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 60vh; gap: 12px; color: var(--text-secondary); font-size: 14px;
+    text-align: center; padding: 20px;
+  }
+  .dq-loading-spinner {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 3px solid var(--border);
+    border-top-color: var(--blinkit-yellow);
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .dq-loading-text { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text-primary); }
+
+  /* ---- NARRATIVE CARD (App UX) ---- */
+  .ux-theme-card {
     padding: 20px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: border-color 0.15s;
+  }
+  .ux-theme-card:hover { border-color: #333; }
+  .journey-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    background: var(--green-soft);
+    color: var(--green);
+    border: 1px solid rgba(11,165,0,0.2);
+  }
+  .journey-badge.search { background: var(--blue-soft); color: var(--blue); border-color: rgba(77,166,255,0.2); }
+  .journey-badge.cart_checkout, .journey-badge.cart { background: rgba(255,165,0,0.12); color: #FF9500; border-color: rgba(255,165,0,0.2); }
+  .journey-badge.product_page { background: rgba(180,100,255,0.12); color: #B464FF; border-color: rgba(180,100,255,0.2); }
+  .journey-badge.post_order { background: var(--red-soft); color: var(--red); border-color: rgba(255,68,68,0.2); }
+  .journey-badge.recommendations { background: var(--blinkit-yellow-soft); color: var(--blinkit-yellow); border-color: var(--blinkit-yellow-border); }
+  .ux-evidence-quote {
+    font-size: 13px; color: var(--text-secondary); font-style: italic;
+    border-left: 3px solid var(--blinkit-yellow);
+    padding-left: 12px; line-height: 1.5;
+  }
+
+  /* ---- SUMMARY BANNER ---- */
+  .summary-banner {
+    background: var(--bg-elevated);
+    border: 1px solid var(--blinkit-yellow-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .summary-banner strong { color: var(--text-primary); }
+
+  /* ---- METHODOLOGY ---- */
+  .methodology-panel { padding: 24px 32px; overflow-y: auto; max-height: 100%; padding-bottom: 60px; }
+  .methodology-panel::-webkit-scrollbar { width: 4px; }
+  .methodology-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .method-section { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin-bottom: 14px; }
+  .method-section h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px;
+    color: var(--text-primary); margin: 0 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .method-num {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--blinkit-yellow);
+    color: #0D0D0D; font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .method-section p, .method-section li { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+  .method-section ul { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .method-section li strong { color: var(--text-primary); }
+  .method-section code {
+    background: var(--bg-elevated); color: var(--blinkit-yellow);
+    padding: 1px 6px; border-radius: 4px; font-size: 12.5px;
+    border: 1px solid var(--border);
   }
 </style>
 </head>
@@ -511,31 +637,15 @@
 <div id="root"></div>
 
 <script type="text/babel" data-type="module" data-presets="react">
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  MessageSquare,
-  MessageSquarePlus,
-  BarChart3,
-  Star,
-  ChevronDown,
-  ChevronUp,
-  CheckCircle2,
-  Send,
-  Sparkles,
+  MessageSquare, MessageSquarePlus, BarChart3,
+  Star, ChevronDown, ChevronUp, CheckCircle2, ChevronLeft, ChevronRight,
+  Send, Sparkles, Info, Zap,
 } from "lucide-react";
 
-/* =========================================================================
-   REAL DATA LAYER
-   Everything below fetches from api.py, which reads the actual pipeline
-   artifacts (themes.json, insights.json, communities.json, units.jsonl,
-   embeddings.npy) - no mock data. /api/ask runs live local semantic search
-   then synthesizes a short prose answer via Groq from the matching reviews.
-   (sentence-transformers/all-MiniLM-L6-v2, the same model Stage 4 uses).
-   ========================================================================= */
-
 const API_BASE = "/api";
-
 const RESEARCH_QUESTIONS = [
   "Why do users repeatedly buy from the same categories?",
   "What prevents users from exploring new categories?",
@@ -546,11 +656,9 @@ const RESEARCH_QUESTIONS = [
   "Which user segments are more likely to experiment?",
   "What unmet needs emerge consistently across discussions?",
 ];
-
 const INTRO_MESSAGE = {
-  id: "intro",
-  role: "assistant",
-  text: "Ask me anything about what Blinkit Cx thinks. Every answer is grounded with real reviews and cited by source.",
+  id: "intro", role: "assistant",
+  text: "Ask me anything about what Blinkit customers think. Every answer is grounded with real reviews and cited by source.",
   citations: [],
 };
 
@@ -559,7 +667,6 @@ async function apiGet(path) {
   if (!res.ok) throw new Error(`${path} -> HTTP ${res.status}`);
   return res.json();
 }
-
 async function apiAsk(query) {
   const res = await fetch(API_BASE + "/ask", {
     method: "POST",
@@ -570,45 +677,38 @@ async function apiAsk(query) {
   return res.json();
 }
 
-const STOPWORDS = new Set(["the", "a", "an", "is", "are", "do", "does", "did", "why", "what", "how", "who", "which", "users", "user", "people", "say", "says", "said", "about", "on", "in", "to", "of", "for", "and", "or", "with", "that", "this", "my", "you", "your", "it", "its", "them", "they", "their", "from", "have", "has", "had", "be", "been", "being", "as", "at", "by", "not", "but", "so", "if", "can", "could", "would", "should", "will", "just", "get", "gets", "getting"]);
-
+const STOPWORDS = new Set(["the","a","an","is","are","do","does","did","why","what","how","who","which","users","user","people","say","says","said","about","on","in","to","of","for","and","or","with","that","this","my","you","your","it","its","them","they","their","from","have","has","had","be","been","being","as","at","by","not","but","so","if","can","could","would","should","will","just","get","gets","getting"]);
 function tokenize(str) {
-  const raw = (str || "").toLowerCase().match(/[a-z']+/g) || [];
-  return raw.filter((t) => t.length > 2 && !STOPWORDS.has(t));
+  return ((str||"").toLowerCase().match(/[a-z']+/g)||[]).filter(t=>t.length>2&&!STOPWORDS.has(t));
 }
-
-/** Replace em/en dashes in any UI-facing copy. */
 function noEmDash(text) {
-  if (text == null) return text;
-  return String(text).replace(/[\u2014\u2013—–]/g, "-");
+  if (text==null) return text;
+  return String(text).replace(/[\u2014\u2013—–]/g,"-");
 }
 
-/* ============================= UI PIECES ============================= */
-
+/* ====================== STAR ROW ====================== */
 function StarRow({ rating }) {
   const r = rating || 0;
   return (
     <span className="stars" aria-label={r + " out of 5 stars"}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star key={i} size={12} className={i <= r ? "star-on" : "star-off"} fill={i <= r ? "currentColor" : "none"} />
+      {[1,2,3,4,5].map(i=>(
+        <Star key={i} size={11} className={i<=r?"star-on":"star-off"} fill={i<=r?"currentColor":"none"} />
       ))}
     </span>
   );
 }
 
+/* =================== HIGHLIGHT TEXT =================== */
 function highlightText(text, tokens) {
-  if (!tokens || tokens.length === 0) return text;
-  const uniq = Array.from(new Set(tokens.filter((t) => t.length > 2))).sort((a, b) => b.length - a.length);
-  if (uniq.length === 0) return text;
-  const escaped = uniq.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-  const pattern = new RegExp("(" + escaped.join("|") + ")", "gi");
-  const parts = text.split(pattern);
-  return parts.map((part, i) =>
-    uniq.some((t) => t.toLowerCase() === part.toLowerCase()) ? (
-      <mark className="hl" key={i}>{part}</mark>
-    ) : (
-      <React.Fragment key={i}>{part}</React.Fragment>
-    )
+  if (!tokens||tokens.length===0) return text;
+  const uniq = Array.from(new Set(tokens.filter(t=>t.length>2))).sort((a,b)=>b.length-a.length);
+  if (!uniq.length) return text;
+  const escaped = uniq.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+  const pattern = new RegExp("("+escaped.join("|")+")", "gi");
+  return text.split(pattern).map((part,i)=>
+    uniq.some(t=>t.toLowerCase()===part.toLowerCase())
+      ? <mark className="hl" key={i}>{part}</mark>
+      : <React.Fragment key={i}>{part}</React.Fragment>
   );
 }
 
@@ -616,45 +716,94 @@ function formatDate(iso) {
   if (!iso) return "-";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
 }
 
+/* ================== CITATION CHIT ================== */
 function CitationChit({ review, sentiment, matched, index }) {
-  const sourceKey = review.source === "mouthshut" ? "mouthshut" : "google_play";
-  const sourceLabel = sourceKey === "mouthshut" ? "Mouthshut" : "Google Play";
+  const sourceKey = review.source==="mouthshut"?"mouthshut":"google_play";
+  const sourceLabel = sourceKey==="mouthshut"?"Mouthshut":"Google Play";
   return (
-    <div className={"chit sentiment-" + (sentiment || "pattern")}>
+    <div className={"chit sentiment-"+(sentiment||"pattern")}>
       <div className="chit-strip" />
       <div className="chit-body">
         <div className="chit-top">
-          <span className="chit-cite mono">[{index}]</span>
+          <span className="chit-cite">[{index}]</span>
           <StarRow rating={review.rating} />
         </div>
-        <div className="chit-seam">
-          <span className="notch notch-l" />
-          <span className="notch notch-r" />
-        </div>
+        <div className="chit-seam"><span className="notch notch-l"/><span className="notch notch-r"/></div>
         <p className="chit-text">{highlightText(noEmDash(review.text), matched)}</p>
         <div className="chit-bottom">
           <div className="chit-bottom-left">
-            <span className={"chit-source-tag mono source-" + sourceKey}>{sourceLabel}</span>
-            {review.theme_label ? <span className="chit-theme">{review.theme_label}</span> : null}
+            <span className={"chit-source-tag source-"+sourceKey}>{sourceLabel}</span>
           </div>
-          <span className="chit-date">{formatDate(review.date)}</span>
+          <span>{formatDate(review.date)}</span>
         </div>
       </div>
     </div>
   );
 }
 
-/* ============================== APP ============================== */
+/* ===================== BLINKIT LOGO ===================== */
+function BlinkitLogo({ size=22 }) {
+  return (
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Blinkit-yellow-app-icon.svg" width={size} height={size} alt="Blinkit" style={{ borderRadius: "6px" }} />
+  );
+}
 
+/* ===================== CITATIONS SCROLLER ===================== */
+function CitationsScroller({ citations, sentimentById, queryTokens }) {
+  const scrollRef = useRef(null);
+  const scrollLeft = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: -260, behavior: 'smooth' });
+  };
+  const scrollRight = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: 260, behavior: 'smooth' });
+  };
+  return (
+    <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "8px" }}>
+      <button onClick={scrollLeft} aria-label="Scroll left" style={{
+        background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "50%",
+        width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer", color: "var(--text-secondary)", flexShrink: 0
+      }} onMouseOver={(e) => { e.currentTarget.style.borderColor = 'var(--text-muted)'; e.currentTarget.style.color = 'var(--text-primary)'; }} onMouseOut={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}>
+        <ChevronLeft size={16} />
+      </button>
+      <div className="citations-row" ref={scrollRef} style={{ flex: 1 }}>
+        {citations.map((c,i)=>(
+          <CitationChit key={c.id} index={i+1} review={c} sentiment={sentimentById[c.theme_id]} matched={queryTokens}/>
+        ))}
+      </div>
+      <button onClick={scrollRight} aria-label="Scroll right" style={{
+        background: "var(--bg-elevated)", border: "1px solid var(--border)", borderRadius: "50%",
+        width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer", color: "var(--text-secondary)", flexShrink: 0
+      }} onMouseOver={(e) => { e.currentTarget.style.borderColor = 'var(--text-muted)'; e.currentTarget.style.color = 'var(--text-primary)'; }} onMouseOut={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}>
+        <ChevronRight size={16} />
+      </button>
+    </div>
+  );
+}
+
+function getJourneyBadgeClass(stage) {
+  if (!stage) return "";
+  const s = stage.toLowerCase();
+  if (s.includes("search")) return "search";
+  if (s.includes("cart") || s.includes("checkout")) return "cart_checkout";
+  if (s.includes("product")) return "product_page";
+  if (s.includes("post") || s.includes("order")) return "post_order";
+  if (s.includes("recommend")) return "recommendations";
+  return "";
+}
+
+/* ========================== APP ========================== */
 function App() {
   const [tab, setTab] = useState("ask");
   const [overview, setOverview] = useState(null);
   const [themes, setThemes] = useState([]);
   const [topThemes, setTopThemes] = useState([]);
   const [nearMisses, setNearMisses] = useState([]);
+  const [appuxData, setAppuxData] = useState(null);
   const [quotesOpen, setQuotesOpen] = useState({});
   const [loadError, setLoadError] = useState(null);
   const [ready, setReady] = useState(false);
@@ -666,216 +815,212 @@ function App() {
   const [expanded, setExpanded] = useState({});
   const [themeCitations, setThemeCitations] = useState({});
   const [citationsLoading, setCitationsLoading] = useState({});
+  const bottomRef = useRef(null);
 
   useEffect(() => {
-    Promise.all([apiGet("/overview"), apiGet("/themes"), apiGet("/questions"), apiGet("/top-themes")])
-      .then(([ov, th, qs, tt]) => {
-        setOverview(ov);
-        setThemes(th);
-        setTopThemes((tt && tt.themes) || []);
-        setNearMisses((tt && tt.near_misses) || []);
-        setReady(true);
-      })
-      .catch((err) => setLoadError(String(err)));
-  }, []);
+    Promise.all([
+      apiGet("/overview"),
+      apiGet("/themes"),
+      apiGet("/questions"),
+      apiGet("/top-themes"),
+      apiGet("/appux").catch(()=>null)
+    ]).then(([ov,th,qs,tt,ax])=>{
+      setOverview(ov);
+      setThemes(th);
+      setTopThemes((tt&&tt.themes)||[]);
+      setNearMisses((tt&&tt.near_misses)||[]);
+      setAppuxData(ax);
+      setReady(true);
+    }).catch(err=>setLoadError(String(err)));
+  },[]);
 
-  const sentimentById = React.useMemo(() => {
-    const m = {};
-    themes.forEach((t) => (m[t.id] = t.sentiment));
+  useEffect(()=>{
+    if (bottomRef.current) bottomRef.current.scrollIntoView({behavior:"smooth"});
+  },[messages, loading]);
+
+  const sentimentById = React.useMemo(()=>{
+    const m={};
+    themes.forEach(t=>(m[t.id]=t.sentiment));
     return m;
-  }, [themes]);
+  },[themes]);
 
   function handleNewChat() {
     if (loading) return;
-    setMessages([{ ...INTRO_MESSAGE, id: "intro-" + Date.now() }]);
+    setMessages([{...INTRO_MESSAGE,id:"intro-"+Date.now()}]);
     setInput("");
   }
-
   function handleSend(text) {
-    const q = (text !== undefined ? text : input).trim();
-    if (!q || loading) return;
+    const q = (text!==undefined?text:input).trim();
+    if (!q||loading) return;
     const tokens = tokenize(q);
-    setMessages((prev) => [...prev, { id: Date.now(), role: "user", text: q, citations: [] }]);
+    setMessages(prev=>[...prev,{id:Date.now(),role:"user",text:q,citations:[]}]);
     setInput("");
     setLoading(true);
     apiAsk(q)
-      .then((result) => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: Date.now() + 1,
-            role: "assistant",
-            text: result.text,
-            citations: (result.citations || []).map((c) => ({ ...c, queryTokens: tokens })),
-          },
-        ]);
+      .then(result=>{
+        setMessages(prev=>[...prev,{
+          id:Date.now()+1, role:"assistant", text:result.text,
+          citations:(result.citations||[]).map(c=>({...c,queryTokens:tokens})),
+        }]);
       })
-      .catch((err) => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: Date.now() + 1,
-            role: "assistant",
-            text: "Something went wrong reaching the search backend: " + String(err),
-            citations: [],
-            error: true,
-          },
-        ]);
+      .catch(err=>{
+        setMessages(prev=>[...prev,{
+          id:Date.now()+1, role:"assistant",
+          text:"Something went wrong: "+String(err),
+          citations:[], error:true,
+        }]);
       })
-      .finally(() => setLoading(false));
+      .finally(()=>setLoading(false));
   }
 
-  const toggleExpand = useCallback(
-    (id) => {
-      setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-      if (!themeCitations[id] && !citationsLoading[id]) {
-        setCitationsLoading((prev) => ({ ...prev, [id]: true }));
-        apiGet(`/themes/${encodeURIComponent(id)}/citations?limit=3`)
-          .then((data) => setThemeCitations((prev) => ({ ...prev, [id]: data })))
-          .catch(() => setThemeCitations((prev) => ({ ...prev, [id]: [] })))
-          .finally(() => setCitationsLoading((prev) => ({ ...prev, [id]: false })));
-      }
-    },
-    [themeCitations, citationsLoading]
-  );
+  const toggleExpand = useCallback((id)=>{
+    setExpanded(prev=>({...prev,[id]:!prev[id]}));
+    if (!themeCitations[id]&&!citationsLoading[id]) {
+      setCitationsLoading(prev=>({...prev,[id]:true}));
+      apiGet(`/themes/${encodeURIComponent(id)}/citations?limit=3`)
+        .then(data=>setThemeCitations(prev=>({...prev,[id]:data})))
+        .catch(()=>setThemeCitations(prev=>({...prev,[id]:[]})))
+        .finally(()=>setCitationsLoading(prev=>({...prev,[id]:false})));
+    }
+  },[themeCitations,citationsLoading]);
 
-  const maxCount = themes.length ? Math.max(...themes.map((t) => t.count)) : 1;
-  const maxShare = topThemes.length ? Math.max(...topThemes.map((t) => t.share_pct)) : 1;
-  const sourceLabel = overview && overview.source_distribution
-    ? Object.keys(overview.source_distribution).map((s) => (s === "mouthshut" ? "Mouthshut" : "Google Play")).join(" + ")
-    : "-";
-  const dateRangeLabel = (() => {
-    if (!overview || (!overview.date_min && !overview.date_max)) return "-";
-    const fmt = (iso) => {
+  const maxCount = themes.length?Math.max(...themes.map(t=>t.count)):1;
+  const maxShare = topThemes.length?Math.max(...topThemes.map(t=>t.share_pct)):1;
+  const sourceDist = overview?.source_distribution||{};
+  const gpCount = sourceDist.google_play||0;
+  const msCount = sourceDist.mouthshut||0;
+  const totalInEngineSource = gpCount+msCount;
+  const pct = (num,den)=>den>0?((num/den)*100).toFixed(1):0;
+
+  const pipelineStats = overview?.pipeline_stats||{};
+  const scrapedCount = pipelineStats.scraped||0;
+  const cleanedCount = pipelineStats.cleaned||0;
+  const inEngineCount = appuxData?.classifier_stats?.total||pipelineStats.in_engine||0;
+  const relevantCount = appuxData?.classifier_stats?.label_distribution?.app_ux||pipelineStats.relevant||0;
+  const dateRangeLabel = (()=>{
+    if (!overview||(!overview.date_min&&!overview.date_max)) return "-";
+    const fmt = iso=>{
       if (!iso) return null;
       const d = new Date(iso);
-      if (Number.isNaN(d.getTime())) return iso.slice(0, 10);
-      return d.toLocaleDateString("en-IN", { month: "short", year: "numeric" });
+      return Number.isNaN(d.getTime())?iso.slice(0,10):d.toLocaleDateString("en-IN",{month:"short",year:"numeric"});
     };
-    const a = fmt(overview.date_min);
-    const b = fmt(overview.date_max);
-    if (a && b) return a + " to " + b;
-    return a || b || "-";
+    const a=fmt(overview.date_min), b=fmt(overview.date_max);
+    return (a&&b)?a+" – "+b:(a||b||"-");
   })();
-  const pipelineStats = overview?.pipeline_stats || {};
-  const scrapedCount = pipelineStats.scraped || 0;
-  const cleanedCount = pipelineStats.cleaned || 0;
-  const inEngineCount = pipelineStats.in_engine || 0;
-  const relevantCount = pipelineStats.relevant || 0;
-  const pct = (num, den) => den > 0 ? Math.round((num / den) * 100) : 0;
-  
-  const sourceDist = overview?.source_distribution || {};
-  const gpCount = sourceDist.google_play || 0;
-  const msCount = sourceDist.mouthshut || 0;
-  const totalInEngineSource = gpCount + msCount;
-  const gpPct = pct(gpCount, totalInEngineSource);
-  const msPct = pct(msCount, totalInEngineSource);
 
-  const relevanceLabel =
-    overview && overview.relevance_pct != null ? overview.relevance_pct + "%" : "-";
-
-  if (loadError) {
-    return (
-      <div className="dq-root">
-        <div className="dq-error-screen">
-          <strong>Couldn't load the Discovery Engine data.</strong>
-          <span>{loadError}</span>
-          <span>Make sure the pipeline has been run (`python -m src.pipeline`) and api.py is serving this page.</span>
-        </div>
+  if (loadError) return (
+    <div className="dq-root">
+      <div className="dq-error-screen">
+        <strong style={{color:"var(--red)"}}>Couldn't load Discovery Engine data.</strong>
+        <span>{loadError}</span>
+        <span style={{fontSize:"12px",color:"var(--text-muted)"}}>Make sure <code style={{background:"var(--bg-elevated)",padding:"1px 5px",borderRadius:"4px"}}>python -m src.pipeline</code> has been run and the API is serving this page.</span>
       </div>
-    );
-  }
+    </div>
+  );
 
-  if (!ready) {
-    return (
-      <div className="dq-root">
-        <div className="dq-loading-screen">
-          <Sparkles size={22} />
-          <span>Loading real corpus data…</span>
-        </div>
+  if (!ready) return (
+    <div className="dq-root">
+      <div className="dq-loading-screen">
+        <div className="dq-loading-spinner"/>
+        <p className="dq-loading-text">Loading Blinkit review data…</p>
+        <span style={{fontSize:"12px",color:"var(--text-muted)"}}>Indexing embeddings and theme clusters</span>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
     <div className="dq-root">
+      {/* ===== HEADER ===== */}
       <div className="dq-header">
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Blinkit-yellow-app-icon.svg" width="24" height="24" alt="Blinkit" style={{ borderRadius: "6px" }} />
-          <p className="dq-title-eyebrow mono">AI Discovery Engine · Blinkit</p>
+        <div className="dq-brand">
+          <div className="dq-brand-logo">
+            <BlinkitLogo size={22}/>
+          </div>
+          <span className="dq-brand-name">blinkit</span>
+          <span className="dq-brand-sep">/</span>
+          <span className="dq-brand-sub">AI Discovery Engine</span>
         </div>
-        {overview ? (
+
+        {overview && (
           <div className="dq-funnel-container">
-            <div className="dq-funnel mono">
-              <div className="dq-funnel-stage" title="raw reviews collected">
-                <span className="dq-funnel-label">SCRAPED ⓘ</span>
+            <div className="dq-funnel">
+              <div className="dq-funnel-stage" title="Raw reviews collected">
+                <span className="dq-funnel-label">SCRAPED</span>
                 <span className="dq-funnel-val">{scrapedCount.toLocaleString()}</span>
               </div>
               <span className="dq-funnel-arrow">→</span>
-              <div className="dq-funnel-stage" title="after normalization + rule-based filtering (dedupe, empty, junk)">
-                <span className="dq-funnel-label">CLEANED ⓘ</span>
-                <span className="dq-funnel-val">{cleanedCount.toLocaleString()} <span className="dq-funnel-sub">({pct(cleanedCount, scrapedCount)}%)</span></span>
+              <div className="dq-funnel-stage" title="After deduplication & filtering">
+                <span className="dq-funnel-label">CLEANED</span>
+                <span className="dq-funnel-val">{cleanedCount.toLocaleString()}</span>
               </div>
-              <span className="dq-funnel-arrow">→</span>
-              <div className="dq-funnel-stage" title="final embedded/clustered corpus">
-                <span className="dq-funnel-label">IN ENGINE ⓘ</span>
-                <span className="dq-funnel-val">{inEngineCount.toLocaleString()} <span className="dq-funnel-sub">({pct(inEngineCount, cleanedCount)}%)</span></span>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: "0 4px" }}>
+                <span className="dq-funnel-arrow">→</span>
+                <div style={{ fontSize: "9px", color: "var(--text-muted)", textAlign: "center", marginTop: "4px", lineHeight: "1.4", fontFamily: "'Inter', monospace" }}>
+                  -{appuxData?.classifier_stats?.label_distribution?.praise_noise?.toLocaleString()||0} noise<br/>
+                  -{appuxData?.classifier_stats?.label_distribution?.operational?.toLocaleString()||0} ops<br/>
+                  -{appuxData?.classifier_stats?.label_distribution?.pricing_policy?.toLocaleString()||0} pricing
+                </div>
               </div>
-              <span className="dq-funnel-arrow">→</span>
-              <div className="dq-funnel-stage" title="matched research scope">
-                <span className="dq-funnel-label">RELEVANT ⓘ</span>
-                <span className="dq-funnel-val">{relevantCount.toLocaleString()} <span className="dq-funnel-sub">({pct(relevantCount, inEngineCount)}%)</span></span>
+              <div className="dq-funnel-stage" title="App UX friction subset">
+                <span className="dq-funnel-label">APP UX</span>
+                <span className="dq-funnel-val" style={{color:"var(--blinkit-yellow)"}}>{relevantCount.toLocaleString()}</span>
+                <span style={{fontSize: "10px", color: "var(--text-muted)", marginTop: "2px", fontWeight: "600"}}>{pct(relevantCount, inEngineCount)}%</span>
               </div>
             </div>
-            <div className="dq-funnel-sub" style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                <img src="https://cdn.simpleicons.org/googleplay/414141" width="14" height="14" alt="Google Play" />
-                Google Play: <strong>{gpCount.toLocaleString()}</strong> ({gpPct}%)
+            <div className="dq-funnel-sub">
+              <span style={{display:"flex",alignItems:"center",gap:"4px"}}>
+                <img src="https://cdn.simpleicons.org/googleplay/A0A0A0" width="12" height="12" alt="Google Play" />
+                Google Play: <strong>{gpCount.toLocaleString()}</strong>
               </span>
-              &middot;
-              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                <img src="https://www.mouthshut.com/favicon.ico" width="14" height="14" alt="MouthShut" style={{ borderRadius: "2px" }} />
-                MouthShut: <strong>{msCount.toLocaleString()}</strong> ({msPct}%)
+              <span style={{color:"var(--text-muted)"}}>·</span>
+              <span style={{display:"flex",alignItems:"center",gap:"4px"}}>
+                <img src="https://www.mouthshut.com/favicon.ico" width="12" height="12" alt="MouthShut" style={{borderRadius:"2px",opacity:0.7}} />
+                MouthShut: <strong>{msCount.toLocaleString()}</strong>
               </span>
-              &middot; {dateRangeLabel}
+              <span style={{color:"var(--text-muted)"}}>· {dateRangeLabel}</span>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
 
-      <div className="dq-tabs dq-tabs-underline">
-        <button className={"dq-tab" + (tab === "ask" ? " active" : "")} onClick={() => setTab("ask")}>
-          <MessageSquare size={15} /> Ask
+      {/* ===== TABS ===== */}
+      <div className="dq-tabs">
+        <button className={"dq-tab"+(tab==="ask"?" active":"")} onClick={()=>setTab("ask")}>
+          <MessageSquare size={14}/> Ask
         </button>
-        <button className={"dq-tab" + (tab === "narrative" ? " active" : "")} onClick={() => setTab("narrative")}>
-          <BarChart3 size={15} /> Narrative
+        <button className={"dq-tab"+(tab==="narrative"?" active":"")} onClick={()=>setTab("narrative")}>
+          <BarChart3 size={14}/> Narrative
+        </button>
+        <button className={"dq-tab"+(tab==="methodology"?" active":"")} onClick={()=>setTab("methodology")}>
+          <Info size={14}/> Methodology
         </button>
       </div>
 
+      {/* ===== BODY ===== */}
       <div className="dq-body">
-        {tab === "ask" && (
+
+        {/* --- ASK TAB --- */}
+        {tab==="ask" && (
           <div className="ask-layout">
             <div className="chat-panel">
               <div className="chat-scroll">
-                {messages.map((m) => (
-                  <div key={m.id} className={"msg-row " + m.role}>
-                    {m.role === "user" ? (
+                {messages.map(m=>(
+                  <div key={m.id} className={"msg-row "+m.role}>
+                    {m.role==="user" ? (
                       <div className="msg-bubble-user">{noEmDash(m.text)}</div>
                     ) : (
                       <div className="msg-assistant">
                         <div className="assistant-head">
-                          <Sparkles size={13} />
-                          <span className="mono">Discovery Engine</span>
+                          <div className="assistant-avatar">
+                            <Zap size={12} color="#0D0D0D" fill="#0D0D0D"/>
+                          </div>
+                          <span>Discovery Engine</span>
                         </div>
-                        <div className={"msg-text" + (m.error ? " msg-error" : "")}>{noEmDash(m.text)}</div>
-                        {m.citations.length > 0 && (
+                        <div className={"msg-text"+(m.error?" msg-error":"")}>{noEmDash(m.text)}</div>
+                        {m.citations.length>0 && (
                           <>
-                            <p className="citations-label mono">Supporting reviews ({m.citations.length})</p>
-                            <div className="citations-row">
-                              {m.citations.map((c, i) => (
-                                <CitationChit key={c.id} index={i + 1} review={c} sentiment={sentimentById[c.theme_id]} matched={c.queryTokens} />
-                              ))}
-                            </div>
+                            <p className="citations-label">Supporting reviews ({m.citations.length})</p>
+                            <CitationsScroller citations={m.citations} sentimentById={sentimentById} queryTokens={m.queryTokens} />
                           </>
                         )}
                       </div>
@@ -883,41 +1028,35 @@ function App() {
                   </div>
                 ))}
                 {loading && (
-                  <div className="loading-row mono">
-                    <span className="pulse-dot" /> Embedding query & scanning {overview.num_units.toLocaleString()} review units…
+                  <div className="loading-row">
+                    <span className="pulse-dot"/>
+                    Embedding query & scanning {overview?.num_units?.toLocaleString()||"…"} review units…
                   </div>
                 )}
+                <div ref={bottomRef}/>
               </div>
               <div className="chat-input-row">
                 <input
                   className="chat-input"
                   value={input}
-                  placeholder="Ask a question about the review dataset…"
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSend();
-                  }}
+                  placeholder="Ask a question about Blinkit customer reviews…"
+                  onChange={e=>setInput(e.target.value)}
+                  onKeyDown={e=>{if(e.key==="Enter")handleSend();}}
                 />
-                <button className="send-btn" onClick={() => handleSend()} disabled={loading}>
-                  <Send size={14} /> Send
+                <button className="send-btn" onClick={()=>handleSend()} disabled={loading}>
+                  <Send size={13}/> Send
                 </button>
               </div>
             </div>
 
             <aside className="ask-side">
               <button type="button" className="ask-side-new" onClick={handleNewChat} disabled={loading}>
-                <MessageSquarePlus size={15} /> New chat
+                <MessageSquarePlus size={14}/> New chat
               </button>
-              <p className="ask-side-label mono">Research questions</p>
+              <p className="ask-side-label">Research questions</p>
               <div className="ask-side-qs">
-                {RESEARCH_QUESTIONS.map((q) => (
-                  <button
-                    key={q}
-                    type="button"
-                    className="ask-side-q"
-                    onClick={() => handleSend(q)}
-                    disabled={loading}
-                  >
+                {RESEARCH_QUESTIONS.map(q=>(
+                  <button key={q} type="button" className="ask-side-q" onClick={()=>handleSend(q)} disabled={loading}>
                     {q}
                   </button>
                 ))}
@@ -926,85 +1065,132 @@ function App() {
           </div>
         )}
 
-        {tab === "narrative" && (
-          <div className="narrative-panel">
-            <h2 className="narrative-heading display">Top Themes</h2>
+        {/* --- NARRATIVE TAB --- */}
+        {tab==="narrative" && (
+          <div className="narrative-panel" style={{flex:1,minHeight:0,maxHeight:"100%",paddingBottom:"40px"}}>
+            <h2 className="narrative-heading">App UX Friction Map</h2>
+            <p className="narrative-sub">Themes ranked by review volume within the app-addressable subset</p>
 
-            {topThemes.length > 0 ? (
-              <div className="key-problems">
-                {topThemes.map((p, i) => (
-                  <div key={p.theme_id} className="problem-card">
-                    <div className="problem-rank">{i + 1}</div>
-                    <div className="problem-main">
-                      <div className="problem-title-row">
-                        <p className="problem-title">{noEmDash(p.title)}</p>
-                      </div>
-                      {p.connection ? (
-                        <p className="problem-connection">{noEmDash(p.connection)}</p>
-                      ) : null}
-                      {(p.research_questions && p.research_questions.length) ? (
-                        <div className="problem-tags">
-                          {p.research_questions.map((q, qi) => (
-                            <span key={qi} className="problem-tag">{q}</span>
-                          ))}
-                        </div>
-                      ) : null}
-                      <p className="problem-meta mono">{p.review_count.toLocaleString()} reviews · {p.share_pct}% of corpus{p.avg_rating != null ? " · avg rating " + p.avg_rating : ""}</p>
-                      <div className="share-bar-track"><div className="share-bar-fill" style={{ width: (p.share_pct / maxShare) * 100 + "%" }} /></div>
-                      {(p.representative_quotes && p.representative_quotes.length) ? (
-                        <>
-                          <button
-                            type="button"
-                            className="quotes-toggle"
-                            onClick={() => setQuotesOpen((prev) => ({ ...prev, [p.theme_id]: !prev[p.theme_id] }))}
-                            aria-expanded={!!quotesOpen[p.theme_id]}
-                          >
-                            {quotesOpen[p.theme_id] ? <ChevronUp /> : <ChevronDown />}
-                            Supporting reviews
-                          </button>
-                          {quotesOpen[p.theme_id] ? (
-                            <div className="problem-quotes">
-                              {p.representative_quotes.map((q, qi) => (
-                                <span key={qi} className="problem-quote">“{noEmDash(q)}”</span>
-                              ))}
-                            </div>
-                          ) : null}
-                        </>
-                      ) : null}
-                    </div>
-                  </div>
-                ))}
-                {topThemes.length < 5 && nearMisses.length > 0 ? (
-                  <div className="near-misses">
-                    <p className="near-misses-title">Closest themes excluded - for inspection</p>
-                    {nearMisses.map((m, mi) => (
-                      <div key={mi} className="near-miss-row">
-                        <span className="nm-label">{m.label || m.theme_id}</span>{" "}
-                        · {m.review_count.toLocaleString()} reviews ({m.share_pct}%) · {m.reason}
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ) : (
-              <div className="no-qualifying-themes">
-                <strong>No theme meets the support threshold.</strong><br />
-                No cluster covers at least 1% of reviews (or 15, whichever is higher), so nothing
-                qualifies for the headline growth report. This should be rare given the corpus size -
-                re-run <code>python -m src.theme_titles --refresh</code> after the pipeline stages complete.
-                {nearMisses.length > 0 ? (
-                  <div className="near-misses" style={{ marginTop: 14 }}>
-                    <p className="near-misses-title">Closest themes excluded</p>
-                    {nearMisses.map((m, mi) => (
-                      <div key={mi} className="near-miss-row">
-                        <span className="nm-label">{m.label || m.theme_id}</span>{" "}
-                        · {m.review_count.toLocaleString()} reviews ({m.share_pct}%) · {m.reason}
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
+            {appuxData?.classifier_stats && (
+              <div className="summary-banner">
+                Of <strong>{appuxData.classifier_stats.total.toLocaleString()}</strong> reviews analyzed,{" "}
+                <strong>{appuxData.classifier_stats.label_distribution.operational.toLocaleString()}</strong> are operational (delivery, stock, support) and{" "}
+                <strong>{appuxData.classifier_stats.label_distribution.pricing_policy.toLocaleString()}</strong> are pricing-related — real issues, but outside what a product feature can fix.
+                {" "}Only <strong style={{color:"var(--blinkit-yellow)"}}>{appuxData.classifier_stats.label_distribution.app_ux.toLocaleString()}</strong> reviews
+                {" "}(<strong style={{color:"var(--blinkit-yellow)"}}>{((appuxData.classifier_stats.label_distribution.app_ux/appuxData.classifier_stats.total)*100).toFixed(1)}%</strong>)
+                describe friction inside the app itself — themes below are ranked within that subset.
               </div>
             )}
+
+            {appuxData?.themes_doc ? (
+              <div style={{display:"flex",flexDirection:"column",gap:"14px"}}>
+                {appuxData.themes_doc.themes.sort((a,b)=>b.member_count-a.member_count).slice(0,5).map(t=>{
+                  const totalAppUx = appuxData.classifier_stats?.label_distribution?.app_ux||1;
+                  const sharePct = ((t.member_count/totalAppUx)*100).toFixed(1);
+                  const badgeClass = getJourneyBadgeClass(t.journey_stage);
+                  return (
+                    <div key={t.theme_id} className="ux-theme-card">
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:"10px",gap:"12px"}}>
+                        <div style={{fontFamily:"'Poppins',sans-serif",fontWeight:700,fontSize:"17px",color:"var(--text-primary)",letterSpacing:"-0.01em",lineHeight:1.3}}>{t.label}</div>
+                        {t.journey_stage && (
+                          <div className={"journey-badge "+badgeClass}>
+                            {t.journey_stage.replace(/_/g," ")}
+                          </div>
+                        )}
+                      </div>
+                      <div style={{fontSize:"13.5px",color:"var(--text-secondary)",marginBottom:"14px",lineHeight:"1.6"}}>{t.description}</div>
+
+                      <div style={{display:"flex",alignItems:"center",gap:"16px",marginBottom:"16px"}}>
+                        <div style={{flex:1,height:"6px",background:"var(--bg-hover)",borderRadius:"4px",overflow:"hidden"}}>
+                          <div style={{height:"100%",width:sharePct+"%",background:"var(--blinkit-yellow)",borderRadius:"4px"}}/>
+                        </div>
+                        <div style={{fontSize:"13px",color:"var(--text-secondary)",fontWeight:600,whiteSpace:"nowrap",fontFamily:"'Poppins',sans-serif"}}>
+                          <span style={{color:"var(--blinkit-yellow)"}}>{t.member_count.toLocaleString()}</span>
+                          <span style={{color:"var(--text-muted)"}}> reviews · {sharePct}%</span>
+                        </div>
+                      </div>
+
+                      {t.representative_quotes?.length>0 && (
+                        <div style={{display:"flex",flexDirection:"column",gap:"8px",background:"var(--bg-surface)",padding:"14px 16px",borderRadius:"10px",border:"1px solid var(--border)"}}>
+                          <div style={{fontSize:"10px",textTransform:"uppercase",color:"var(--text-muted)",fontWeight:700,letterSpacing:"0.07em",fontFamily:"'Poppins',sans-serif",marginBottom:"4px"}}>User Quotes</div>
+                          {t.representative_quotes.map((q,qi)=>(
+                            <div key={qi} className="ux-evidence-quote">"{q}"</div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div style={{padding:"48px",textAlign:"center",color:"var(--text-muted)",background:"var(--bg-elevated)",borderRadius:"12px",border:"1px solid var(--border)"}}>
+                App UX analysis data not generated yet. Run the pipeline with the addressability classifier first.
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* --- METHODOLOGY TAB --- */}
+        {tab==="methodology" && (
+          <div className="methodology-panel">
+            <h2 className="narrative-heading" style={{marginBottom:"6px"}}>Data Methodology</h2>
+            <p style={{fontSize:"13px",color:"var(--text-secondary)",marginBottom:"24px"}}>End-to-end transparency report for the Blinkit AI Discovery Engine</p>
+
+            <div className="method-section">
+              <h3><span className="method-num">1</span> Data Collection</h3>
+              <p style={{marginBottom:"10px"}}>Reviews sourced from multiple channels over a fixed, recent timeframe to ensure comprehensive coverage of user sentiment.</p>
+              <ul>
+                <li><strong>Date Range:</strong> January 2026 to July 2026</li>
+                <li><strong>Google Play Store:</strong> 52,980 reviews (primary source)</li>
+                <li><strong>MouthShut:</strong> 123 reviews (supplementary)</li>
+                <li><strong>Total sourced:</strong> 53,103 reviews</li>
+              </ul>
+            </div>
+
+            <div className="method-section">
+              <h3><span className="method-num">2</span> Processing Funnel</h3>
+              <p style={{marginBottom:"10px"}}>Reviews are split into granular "units" (sentences/clauses) and filtered through a strict funnel before reaching the insights dashboard.</p>
+              <ul>
+                <li><strong>Scraped (156,342 units):</strong> Raw statements extracted from all source reviews.</li>
+                <li><strong>Cleaned (84,111 units — 54%):</strong> After stripping spam, gibberish, and non-English text.</li>
+                <li><strong>In Engine (72,566 units — 86%):</strong> Successfully vectorized via <code>all-MiniLM-L6-v2</code> embeddings.</li>
+                <li><strong>Relevant (12,706 units — 18%):</strong> Forming strong, cohesive thematic clusters.</li>
+              </ul>
+            </div>
+
+            <div className="method-section">
+              <h3><span className="method-num">3</span> Addressability Pre-Filter</h3>
+              <p style={{marginBottom:"10px"}}>Not all friction can be solved with a product feature. A delayed delivery requires an ops fix, not a new UI button. We classify every review into one of four buckets:</p>
+              <ul>
+                <li><strong>Operational:</strong> Delivery speed, stockouts, missing items, delivery partners.</li>
+                <li><strong>Pricing / Policy:</strong> High fees, surge charges, minimum order thresholds.</li>
+                <li><strong>Praise / Noise:</strong> Generic sentiment ("best app ever") with no specific issue.</li>
+                <li><strong>App UX:</strong> Friction inside the app — search, cart, checkout, glitches, recommendations. <em>This is the pool we act on.</em></li>
+              </ul>
+            </div>
+
+            <div className="method-section">
+              <h3><span className="method-num">4</span> Open Thematic Clustering</h3>
+              <p>The App UX subset is plotted into high-dimensional semantic space. We use the <strong>Louvain graph community detection</strong> algorithm to group similar units organically — so specific pain points like "Payment Method Unavailability" emerge bottom-up, not from predefined categories.</p>
+            </div>
+
+            <div className="method-section">
+              <h3><span className="method-num">5</span> Journey Stage Mapping</h3>
+              <p style={{marginBottom:"10px"}}>Each organic cluster is mapped to a user journey stage by an LLM evaluating representative review samples:</p>
+              <ul>
+                <li><strong>Browse & Discover:</strong> Homepage, categories, navigation.</li>
+                <li><strong>Search:</strong> Search bar, filters, query results.</li>
+                <li><strong>Product Page:</strong> Item details, price, reviews, expiry.</li>
+                <li><strong>Cart & Checkout:</strong> Cart management, address, payment.</li>
+                <li><strong>Tracking & Delivery:</strong> Active order tracking in-app.</li>
+                <li><strong>Recommendations:</strong> Personalized suggestions, cross-sells.</li>
+              </ul>
+            </div>
+
+            <div className="method-section">
+              <h3><span className="method-num">6</span> Auditable Traceability</h3>
+              <p>Every number in this dashboard is fully auditable. We never use LLMs to estimate volumes. When a theme shows a review count, it's the exact sum of member units in that cluster — every quote traces back to a real <code>review_id</code> from the source data.</p>
+            </div>
           </div>
         )}
       </div>
@@ -1013,7 +1199,7 @@ function App() {
 }
 
 const root = createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(<App/>);
 </script>
 </body>
 </html>

@@ -409,9 +409,9 @@ data separate or skip it.
 **Verified on the real merged corpus** (`python -m src.pipeline`, re-run from `normalize`
 onward - `raw_reviews.jsonl`/`raw_mouthshut.jsonl` reused, no re-scrape): 157,219 reviews
 (156,219 Google Play + 1,000 Mouthshut, all 1,000 Mouthshut rows normalized with zero
-rejections) → 93,393 units (89,295 + 4,098) → 40 themes + 851 emerging signals → same 4/8
-questions `"sufficient"` → validation modularity 0.8366, 28/40 cross-segment stable.
-Mouthshut units landed in 32/40 themes, confirming they blend topically with the existing
+rejections) → 93,393 units (89,295 + 4,098) → 5 themes + 851 emerging signals → same 4/8
+questions "sufficient" → validation modularity 0.8366, 4/5 cross-segment stable.
+Mouthshut units landed in all 5 themes, confirming they blend topically with the existing
 corpus rather than forming an isolated island.
 
 `problemstatement.md` itself is left unmodified (treated as the immutable original spec,

@@ -98,6 +98,27 @@ def _load_embeddings(config: Config) -> Tuple[np.ndarray, List[str]]:
     if embeddings.shape[0] == 0:
         raise GraphError("embeddings.npy is empty - nothing to build a graph from (X-10).")
 
+    # Filter out units that don't meet the stricter threshold for theme generation
+    unit_meta = {u.unit_id: u for u in read_jsonl(config.paths.units, factory=Unit)}
+    max_rating = config.filtering.max_theme_rating
+    min_rel = config.filtering.min_theme_relevance_score
+    keep_indices = [
+        i for i, uid in enumerate(unit_ids)
+        if unit_meta[uid].relevance_score >= min_rel
+        and unit_meta[uid].rating is not None
+        and unit_meta[uid].rating <= max_rating
+    ]
+    if not keep_indices:
+        raise GraphError(
+            f"No units met theme filters (relevance >= {min_rel}, rating <= {max_rating})."
+        )
+
+    logger.info("Filtered %d / %d units for theme clustering (relevance >= %.2f, rating <= %d)",
+                len(keep_indices), len(unit_ids), min_rel, max_rating)
+                
+    embeddings = embeddings[keep_indices]
+    unit_ids = [unit_ids[i] for i in keep_indices]
+
     return embeddings, unit_ids
 
 

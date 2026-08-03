@@ -1,7 +1,7 @@
 """Stage 9 - Validate theme coherence, cross-segment stability, and a human spot-check sample.
 
 See architecture.md §4 (Stage 9) and edgecases.md "Stage 9 - Validation" for
-the full edge-case catalog (S9-xx IDs referenced below). Only the 40
+the full edge-case catalog (S9-xx IDs referenced below). Only the 5
 qualifying `themes` are validated here, not the 819 `emerging_signals` -
 those are already tagged low-confidence/supplementary evidence as of Stage
 7/8 and aren't held to the same rigor.
@@ -335,6 +335,33 @@ def validate_pipeline(config: Config, refresh: bool = False) -> None:
     spot_check_sample = _load_or_create_spot_check_sample(themes, communities_by_id, unit_meta, config)
     spot_check = _spot_check_summary(spot_check_sample)
 
+    # Addressability classifier stats (addressability-spec.md §5) — optional,
+    # only present if the classify stage has been run.
+    classifier_stats = None
+    if config.paths.unit_labels.exists():
+        from collections import Counter as _Counter
+        label_counts: _Counter = _Counter()
+        method_counts: _Counter = _Counter()
+        total_classified = 0
+        for record in read_jsonl(config.paths.unit_labels):
+            label_counts[record.get("label", "unknown")] += 1
+            method_counts[record.get("method", "unknown")] += 1
+            total_classified += 1
+        classifier_stats = {
+            "total_classified": total_classified,
+            "label_distribution": dict(sorted(label_counts.items())),
+            "method_distribution": dict(sorted(method_counts.items())),
+            "classification_spot_check_file": (
+                str(config.paths.classification_spot_check.name)
+                if config.paths.classification_spot_check.exists()
+                else None
+            ),
+        }
+        logger.info(
+            "Classifier stats: %d units, distribution: %s",
+            total_classified, dict(label_counts),
+        )
+
     num_cross_segment = sum(1 for t in triangulation["themes"] if t["stability"] == "cross_segment")
     num_segment_specific = len(triangulation["themes"]) - num_cross_segment
 
@@ -342,6 +369,7 @@ def validate_pipeline(config: Config, refresh: bool = False) -> None:
         "coherence": coherence,
         "triangulation": triangulation,
         "spot_check": spot_check,
+        "classifier": classifier_stats,
         "summary": {
             "num_themes_validated": len(themes),
             "modularity": coherence["modularity"],

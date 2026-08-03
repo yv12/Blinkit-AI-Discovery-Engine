@@ -112,6 +112,7 @@ class Unit(_Record):
     rating: Optional[int] = None
     date: Optional[str] = None
     lang: str = "en"
+    relevance_score: float = 0.0
     # Propagated from the parent Review (default kept for backward-compat with
     # units.jsonl written before the second source was added - those are all
     # implicitly google_play). See VALID_SOURCES above.

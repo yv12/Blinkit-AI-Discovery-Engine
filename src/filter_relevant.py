@@ -88,7 +88,11 @@ def filter_units(config: Config, refresh: bool = False) -> None:
     # Boolean mask of units to keep
     keep_mask = max_sim >= config.filtering.min_relevance_score
     
-    filtered_units = [u for i, u in enumerate(units_raw) if keep_mask[i]]
+    import dataclasses
+    filtered_units = [
+        dataclasses.replace(u, relevance_score=float(max_sim[i]))
+        for i, u in enumerate(units_raw) if keep_mask[i]
+    ]
     filtered_embeddings = embeddings_raw[keep_mask]
     
     elapsed = time.time() - start

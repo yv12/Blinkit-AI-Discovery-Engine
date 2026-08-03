@@ -1,7 +1,7 @@
 """Optional presentation stage - plain-English titles for EVERY theme (not just
 the top-5 growth report from src/theme_titles.py).
 
-Why this exists: Stage 7 (`summarize.py`) labels each of the 40 themes with its
+Why this exists: Stage 7 (`summarize.py`) labels each of the 5 themes with its
 literal TF-IDF top terms (e.g. "app / good / best / nice", "blinkit / good / app /
 service"). Fine for a machine, unreadable for a human skimming a spreadsheet. This
 stage asks the LLM for a short, real-sentence title per theme - a problem statement

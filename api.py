@@ -1,14 +1,10 @@
 """Stage 10 (current UI) - FastAPI backend serving the React interface in web/.
 
-Supersedes app.py (Streamlit) as the primary way to browse results - app.py is kept
-in the repo for anyone who prefers it, but this is now the recommended interface:
-one `uvicorn api:app` command serves both the JSON API and the static frontend on a
-single port. Reads exactly the same artifacts app.py reads (themes.json,
-insights.json, validation.json, communities.json, units.jsonl, embeddings.npy) and
-never mutates pipeline data.
+One `uvicorn api:app` command serves both the JSON API and the static frontend on a
+single port. Reads the final artifacts (themes.json, insights.json, validation.json,
+communities.json, units.jsonl, embeddings.npy) and never mutates pipeline data.
 
-The one genuinely new capability this adds over app.py: POST /api/ask runs *live*
-semantic search over the real unit embeddings (the same local
+POST /api/ask runs *live* semantic search over the real unit embeddings (the same local
 sentence-transformers/all-MiniLM-L6-v2 model Stage 4 already produced) to answer
 free-form questions, not just the 8 canonical research questions. Matching reviews
 are then synthesized into a short prose answer via Groq (``src.ask_synthesis``,
@@ -231,10 +227,40 @@ def _load_state() -> None:
         "has_llm_synthesis": llm_insights is not None,
     }
 
+    # Addressability (addressability-spec.md)
+    appux_themes_doc = None
+    if config.paths.themes_appux.exists():
+        try:
+            appux_themes_doc = read_json(config.paths.themes_appux)
+        except Exception:
+            logger.warning("Found themes_appux.json but failed to load it", exc_info=True)
+
+    classifier_stats = None
+    if config.paths.unit_labels.exists():
+        from collections import Counter
+        from src.schema import read_jsonl
+        label_counts = Counter()
+        method_counts = Counter()
+        total_classified = 0
+        try:
+            for record in read_jsonl(config.paths.unit_labels):
+                label_counts[record.get("label", "unknown")] += 1
+                method_counts[record.get("method", "unknown")] += 1
+                total_classified += 1
+            classifier_stats = {
+                "total": total_classified,
+                "label_distribution": dict(sorted(label_counts.items())),
+                "method_distribution": dict(sorted(method_counts.items())),
+            }
+        except Exception:
+            logger.warning("Failed to load classifier stats", exc_info=True)
+
     _STATE.update(
         {
             "config": config,
             "themes_doc": themes_doc,
+            "appux_themes_doc": appux_themes_doc,
+            "classifier_stats": classifier_stats,
             "insights": insights,
             "validation": validation,
             "llm_insights": llm_insights,
@@ -270,10 +296,19 @@ def get_overview():
     return _STATE["overview"]
 
 
+@app.get("/api/appux")
+def get_appux():
+    """App UX friction map data (addressability-spec.md)."""
+    return {
+        "themes_doc": _STATE.get("appux_themes_doc"),
+        "classifier_stats": _STATE.get("classifier_stats"),
+    }
+
+
 @app.get("/api/questions")
 def get_questions():
     """The 8 canonical research questions with their deterministic pipeline answers
-    (insights.json) - the same evidence app.py's Research Questions page shows."""
+    (insights.json)."""
     theme_by_id = _STATE["theme_by_id"]
     out = []
     for q in _STATE["insights"]["questions"]:

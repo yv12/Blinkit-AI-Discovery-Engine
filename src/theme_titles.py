@@ -129,24 +129,38 @@ with no friction implied ("great app", "nice", "good"). When genuinely in doubt,
 eligible=true and state the link. Give ineligible clusters a short `reason` (<= 12 words).
 
 STEP 2 - FOR ELIGIBLE CLUSTERS:
-- title: a 4-8 word problem statement that names BOTH the friction AND its effect on trying / \
-exploring new categories (or sticking to habits). The exploration consequence MUST be in the \
-title, not only in the connection field. Map the operational cause to the exploration effect:
-  "late delivery"          -> "Late deliveries push users back to staples"
-  "high delivery fees"     -> "Delivery fees make users skip new-category trials"
-  "missing / wrong items"  -> "Missing items kill trust in unfamiliar products"
-  "poor customer support"  -> "Weak support after failures deters experimentation"
-  "stockouts"              -> "One stockout stops users trying new categories"
-  GOOD: "Users buy on habit, never open browse"; "Price uncertainty stops new-category trials".
-  BAD (name ONLY the operational problem - never output these): "High delivery charges and fees", \
-"Late delivery and inconsistent times", "Customer service is unhelpful", "Order issues and \
-missing items", "Blinkit", "Good app".
+You are writing these titles for a Growth PM who needs to decide WHAT TO CHANGE IN THE PRODUCT \
+(the Blinkit app). Each title must concisely name the SPECIFIC discovery failure or friction point.
+
+- title: a 1-3 word (MAXIMUM 3 WORDS) label for the specific operational failure. Keep it extremely \
+punchy and direct.
+  CRITICAL RULE: NEVER EXCEED 3 WORDS. Do not write full sentences. Do not use the word "trust".
+
+  GOOD TITLES (1-3 words max):
+    "Wrong Items Delivered"
+    "Missing Items"
+    "Hidden Delivery Charges"
+    "Expired Products"
+    "Refund Denials"
+    "Stockouts"
+    "Unhelpful Support"
+
+  BAD TITLES (too long, sentences, or vague — NEVER output these):
+    "Wrong items delivered make users stick to staples" (Too long)
+    "Expired products cause users to avoid fresh categories" (Too long)
+    "Poor customer support deters experimentation" (Too long)
+    "Order issues and missing items" (Too long)
+
+  CRITICAL RULE 2: If a cluster has reviews about MULTIPLE issues (wrong items AND bad support), \
+the title MUST name the ROOT CAUSE (e.g., "Wrong Items"), not the downstream symptom \
+(e.g., "Unhelpful Support").
+
 - Each title MUST be DISTINCT; never reuse the same title for two clusters.
 - connection: ONE full explanatory sentence, written by you, in the form \
-"Because <this cluster's friction>, users <avoid trying new categories / fall back on familiar \
-staples>." It must be your own words - NEVER a quote, snippet fragment, or copy of the title. \
-Example: "Because refunds are hard to get after a bad item, users avoid risking money on \
-unfamiliar products."
+"Because <this specific root-cause event>, users <avoid trying new categories / fall back \
+on familiar staples>." It must be your own words - NEVER a quote, snippet fragment, or copy of \
+the title. Example: "Because users received wrong items and couldn't get refunds, they avoid \
+risking money on unfamiliar products."
 - question_ids: choose the 1-3 IDs the snippets MOST directly support. NEVER select more than 3, \
 and never select all 8 - be selective.
 - severity: high | medium | low, judged from BOTH the average rating and the language intensity.
@@ -154,7 +168,7 @@ and never select all 8 - be selective.
 
 Respond with strict JSON only, no other text:
 {{"clusters": [{{"cluster_id": "<id>", "eligible": true, "question_ids": [<1-8>], \
-"title": "<4-8 word problem statement>", "connection": "<one explicit sentence>", \
+"title": "<1-3 word label>", "connection": "<one explicit sentence>", \
 "severity": "high|medium|low", "reason": ""}}, ...]}}
 
 Clusters:
@@ -162,11 +176,21 @@ Clusters:
 
 
 def _count_total_reviews(config: Config) -> int:
+    """Count theme-eligible units (those that actually entered clustering).
+
+    The support bar should be relative to the filtered pool that themes are
+    built from, not the entire 156k review corpus — otherwise rating/relevance
+    filtering makes it impossible for any theme to clear the bar.
+    """
+    from src.schema import Unit, read_jsonl
     total = 0
-    with config.paths.reviews.open("r", encoding="utf-8", errors="replace") as f:
-        for line in f:
-            if line.strip():
-                total += 1
+    max_rating = config.filtering.max_theme_rating
+    min_rel = config.filtering.min_theme_relevance_score
+    for u in read_jsonl(config.paths.units, factory=Unit):
+        if (u.relevance_score >= min_rel
+                and u.rating is not None
+                and u.rating <= max_rating):
+            total += 1
     return total
 
 
@@ -495,7 +519,7 @@ def run_theme_titles(config: Config, min_share_pct: float = 1.0, refresh: bool =
         question_ids = question_ids[:3]
         reason = str(decision.get("reason", "")).strip()
 
-        valid_title = 4 <= len(title.split()) <= 8
+        valid_title = 1 <= len(title.split()) <= 4
         if not decision.get("eligible") or not valid_title or not connection or not question_ids:
             rejected.append(
                 {

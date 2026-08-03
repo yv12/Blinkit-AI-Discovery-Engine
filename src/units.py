@@ -69,11 +69,7 @@ def _split_into_fragments(text: str, min_words_per_unit: int, max_units: int) ->
     (most informative) fragments are kept (S3-08).
     """
     sentences = [s.strip() for s in _SENTENCE_SPLIT_RE.split(text) if s.strip()]
-
-    fragments: List[str] = []
-    for sentence in sentences:
-        parts = [p.strip() for p in _CONJUNCTION_SPLIT_RE.split(sentence) if p.strip()]
-        fragments.extend(parts if parts else [sentence])
+    fragments: List[str] = sentences
 
     seen = set()
     kept: List[str] = []

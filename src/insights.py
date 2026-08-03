@@ -63,7 +63,7 @@ from src.summarize import _sentiment_from_rating
 # Theme-to-theme "category graph" (problemstatement.md §7, architecture.md Stage 8): each theme
 # is connected to its top-k most similar *other* themes by centroid-embedding similarity - a
 # coarsened, theme-level analog of Stage 5's unit-level kNN graph, not an external product-category
-# taxonomy (Google Play reviews carry no such label). Fixed at module scope since 40 themes makes
+# taxonomy (Google Play reviews carry no such label). Fixed at module scope since 5 themes makes
 # this cheap regardless of corpus size; not worth a config knob.
 _CATEGORY_GRAPH_TOP_K = 5
 

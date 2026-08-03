@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Callable, List, Optional
 
 import json
-from src import cluster, embed, filter_relevant, graph, insights, normalize, scrape, scrape_mouthshut, summarize, units, validate
+from src import addressability, barrier_mapping, classify, cluster, embed, filter_relevant, graph, insights, normalize, scrape, scrape_mouthshut, summarize, units, validate
 from src.config import Config, apply_global_seed, ensure_data_dir, load_config
 from src.schema import read_json
 
@@ -50,7 +50,7 @@ def _not_implemented(stage_name: str) -> Callable[[Config, bool], None]:
 
 
 # Stage order mirrors architecture.md §3 (S1-S9). S10 (UI) is not part of the
-# batch pipeline; it reads these artifacts separately (see app.py). `force`
+# batch pipeline; it reads these artifacts separately. `force`
 # is forwarded as each stage's own --refresh flag so a forced re-run actually
 # redoes the work rather than relying only on the orchestrator's skip check.
 STAGES: List[Stage] = [
@@ -65,11 +65,18 @@ STAGES: List[Stage] = [
     ),
     Stage("normalize", lambda c: c.paths.reviews, lambda c, force: normalize.normalize_all(c, refresh=force)),
     Stage("units", lambda c: c.paths.units_raw, lambda c, force: units.extract_units(c, refresh=force)),
+    # Addressability classifier (addressability-spec.md): classifies each unit into
+    # {app_ux, operational, pricing_policy, praise_noise} BEFORE embedding/clustering.
+    Stage("classify", lambda c: c.paths.unit_labels, lambda c, force: classify.classify_units(c, refresh=force)),
+    # App UX subset re-clustering pipeline: embed → graph → cluster → summarize on app_ux
+    # units only, producing separate output artifacts (*_appux.*).
+    Stage("addressability", lambda c: c.paths.themes_appux, lambda c, force: addressability.run_appux_pipeline(c, refresh=force)),
     Stage("embed", lambda c: c.paths.embeddings_raw, lambda c, force: embed.embed_units(c, refresh=force)),
     Stage("filter_relevant", lambda c: c.paths.embeddings, lambda c, force: filter_relevant.filter_units(c, refresh=force)),
     Stage("graph", lambda c: c.paths.graph, lambda c, force: graph.build_graph(c, refresh=force)),
     Stage("cluster", lambda c: c.paths.communities, lambda c, force: cluster.detect_communities(c, refresh=force)),
     Stage("summarize", lambda c: c.paths.themes, lambda c, force: summarize.summarize_themes(c, refresh=force)),
+    Stage("barrier_mapping", lambda c: c.paths.data_dir / "barrier_mapping.json", lambda c, force: barrier_mapping.map_barriers(c, refresh=force)),
     Stage("insights", lambda c: c.paths.insights, lambda c, force: insights.map_insights(c, refresh=force)),
     Stage("validate", lambda c: c.paths.validation, lambda c, force: validate.validate_pipeline(c, refresh=force)),
 ]

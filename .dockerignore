@@ -1,0 +1,9 @@
+.git
+.venv
+__pycache__
+*.pyc
+.env
+.ipynb_checkpoints
+llm_synthesis_run.log
+notebook.ipynb
+data.zip

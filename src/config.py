@@ -116,6 +116,18 @@ class LLMSynthesisConfig:
 @dataclass(frozen=True)
 class FilteringConfig:
     min_relevance_score: float
+    min_theme_relevance_score: float
+    max_theme_rating: int
+
+
+@dataclass(frozen=True)
+class AddressabilityConfig:
+    """Addressability classifier (addressability-spec.md): classifies units into
+    {app_ux, operational, pricing_policy, praise_noise} and re-clusters the
+    app_ux subset separately to surface in-app UX friction themes."""
+
+    llm_batch_size: int
+    spot_check_sample_size: int
 
 
 @dataclass(frozen=True)
@@ -140,6 +152,16 @@ class PathsConfig:
     llm_insights: Path
     llm_synthesis_checkpoint: Path
     pipeline_stats: Path
+    # Addressability classifier outputs (addressability-spec.md)
+    unit_labels: Path
+    classification_spot_check: Path
+    # App UX subset re-clustering pipeline outputs
+    units_appux: Path
+    embeddings_appux: Path
+    unit_index_appux: Path
+    graph_appux: Path
+    communities_appux: Path
+    themes_appux: Path
 
 
 @dataclass(frozen=True)
@@ -156,6 +178,7 @@ class Config:
     filtering: FilteringConfig
     validation: ValidationConfig
     llm_synthesis: LLMSynthesisConfig
+    addressability: AddressabilityConfig
     paths: PathsConfig
 
 
@@ -202,6 +225,16 @@ def _build_paths(data_dir: Path) -> PathsConfig:
         llm_insights=data_dir / "llm_insights.json",
         llm_synthesis_checkpoint=data_dir / "llm_synthesis_checkpoint.jsonl",
         pipeline_stats=data_dir / "pipeline_stats.json",
+        # Addressability classifier outputs (addressability-spec.md)
+        unit_labels=data_dir / "unit_labels.jsonl",
+        classification_spot_check=data_dir / "classification_spot_check.csv",
+        # App UX subset re-clustering pipeline outputs
+        units_appux=data_dir / "units_appux.jsonl",
+        embeddings_appux=data_dir / "embeddings_appux.npy",
+        unit_index_appux=data_dir / "unit_index_appux.json",
+        graph_appux=data_dir / "graph_appux.gpickle",
+        communities_appux=data_dir / "communities_appux.json",
+        themes_appux=data_dir / "themes_appux.json",
     )
 
 
@@ -435,7 +468,22 @@ def load_config(path: Union[Path, str] = DEFAULT_CONFIG_PATH) -> Config:
         1.0,
         "filtering.min_relevance_score",
     )
-    filtering = FilteringConfig(min_relevance_score=min_relevance_score)
+    min_theme_relevance_score = _require_range(
+        float(_require(filtering_raw, "min_theme_relevance_score", "filtering")),
+        0.0,
+        1.0,
+        "filtering.min_theme_relevance_score",
+    )
+    max_theme_rating = _require_type(
+        _require(filtering_raw, "max_theme_rating", "filtering"), int, "filtering.max_theme_rating"
+    )
+    if not (1 <= max_theme_rating <= 5):
+        raise ConfigError(f"'filtering.max_theme_rating' must be 1-5, got {max_theme_rating}")
+    filtering = FilteringConfig(
+        min_relevance_score=min_relevance_score,
+        min_theme_relevance_score=min_theme_relevance_score,
+        max_theme_rating=max_theme_rating,
+    )
 
     validation_raw = _require(raw, "validation", "root")
     spot_check_sample_size_per_theme = _require_type(
@@ -545,6 +593,30 @@ def load_config(path: Union[Path, str] = DEFAULT_CONFIG_PATH) -> Config:
         min_quote_words=llm_min_quote_words,
     )
 
+    addressability_raw = _require(raw, "addressability", "root")
+    addr_llm_batch_size = _require_type(
+        _require(addressability_raw, "llm_batch_size", "addressability"),
+        int,
+        "addressability.llm_batch_size",
+    )
+    if addr_llm_batch_size < 0:
+        raise ConfigError(
+            f"'addressability.llm_batch_size' must be >= 0, got {addr_llm_batch_size}"
+        )
+    addr_spot_check = _require_type(
+        _require(addressability_raw, "spot_check_sample_size", "addressability"),
+        int,
+        "addressability.spot_check_sample_size",
+    )
+    if addr_spot_check < 1:
+        raise ConfigError(
+            f"'addressability.spot_check_sample_size' must be >= 1, got {addr_spot_check}"
+        )
+    addressability = AddressabilityConfig(
+        llm_batch_size=addr_llm_batch_size,
+        spot_check_sample_size=addr_spot_check,
+    )
+
     paths_raw = _require(raw, "paths", "root")
     data_dir_str = _require_type(
         _require(paths_raw, "data_dir", "paths"), str, "paths.data_dir"
@@ -565,6 +637,7 @@ def load_config(path: Union[Path, str] = DEFAULT_CONFIG_PATH) -> Config:
         filtering=filtering,
         validation=validation,
         llm_synthesis=llm_synthesis,
+        addressability=addressability,
         paths=paths,
     )
 
