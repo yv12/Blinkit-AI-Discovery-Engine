@@ -1,0 +1,1156 @@
+{
+  "themes": [
+    {
+      "theme_id": "appux-0000",
+      "community_id": 0,
+      "label": "Payment Method Unavailability",
+      "description": "Payment method not available, preventing order placement",
+      "representative_quotes": [
+        "This payment method is not available at the moment",
+        "Now, when I try to place the order, it shows \u201cthis payment method is not available",
+        "This payment method is not available at the moment problem \ud83d\ude21"
+      ],
+      "member_count": 119,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0001",
+      "community_id": 1,
+      "label": "App Glitches and Bugs",
+      "description": "Frequent app crashes and bugs hinder smooth usage.",
+      "representative_quotes": [
+        "the app glitches a lot and a lot of times",
+        "Always glitch in their apps",
+        "very buggy app, unable to use the app always says nothing here"
+      ],
+      "member_count": 94,
+      "sentiment": "negative",
+      "journey_stage": "browse_discover",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0002",
+      "community_id": 2,
+      "label": "Cart and Order Issues",
+      "description": "Cart prices change unexpectedly, incorrect calculations, and order bugs cause frustration",
+      "representative_quotes": [
+        "only takes order when the cart amount is high",
+        "Things in cart but when u place order prices change become high",
+        "there is a bug in app i added items to cart and as I was about of order everything went out of stock please fix it"
+      ],
+      "member_count": 89,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0003",
+      "community_id": 3,
+      "label": "Blinkit Wallet Unavailability",
+      "description": "Payment method not available, unable to place orders with Blinkit Money",
+      "representative_quotes": [
+        "I am unable to use my blinkit money, every time I try to place an order it shows the payment method is not available right now",
+        "one of the worst experience I've ever faced I'm unable to pay with blinkit money it always shows currently this payment method is unavailable \ud83d\ude14",
+        "this payment method not available at this time is showing all time and no other payment option is coming i can not order any thing with blinkit please help me"
+      ],
+      "member_count": 76,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0004",
+      "community_id": 4,
+      "label": "Easy Navigation",
+      "description": "Users praise the app's user-friendly interface and easy navigation.",
+      "representative_quotes": [
+        "The App is user-friendly and easy to navigate",
+        "The app is easy to navigate and suggestions are good",
+        "the app is pretty well designed, easy navigation, search bar is always visible, recommendations and special offers are well placed"
+      ],
+      "member_count": 63,
+      "sentiment": "positive",
+      "journey_stage": "browse_discover",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0005",
+      "community_id": 5,
+      "label": "Expiry Date Issues",
+      "description": "Users are frustrated with receiving products with near or past expiry dates, and the lack of clear expiry date information on product pages.",
+      "representative_quotes": [
+        "expiry date product",
+        "some products can be very near to expiry date",
+        "They send products with a longer expiry date"
+      ],
+      "member_count": 60,
+      "sentiment": "negative",
+      "journey_stage": "product_page",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0006",
+      "community_id": 6,
+      "label": "Payment Method Issues",
+      "description": "Payment method problems hinder smooth app experience",
+      "representative_quotes": [
+        "there is a payment method problem",
+        "payment method not good",
+        "payment method I am not satisfied"
+      ],
+      "member_count": 53,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0007",
+      "community_id": 7,
+      "label": "Overwhelming Ads",
+      "description": "Too many ads in the app cause frustration and annoyance.",
+      "representative_quotes": [
+        "i hate this stupid app's ads during",
+        "were the too many ads in this app",
+        "this ad is coming again and again I have this app already"
+      ],
+      "member_count": 53,
+      "sentiment": "negative",
+      "journey_stage": "browse_discover",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0008",
+      "community_id": 8,
+      "label": "hai / payment / raha / app",
+      "description": "51 reviews (avg rating 1.9) recurring around: hai, payment, raha, app.",
+      "representative_quotes": [
+        "Bekaar app hai koi bhi payment method kaam nahi kar raha hai isiliye wallet me Paisa dala tha usse bhi order nahi ho raha hai",
+        "bhot bekar app hai, main dopeher se kuch saman order kr rha ho hi nai rha lst me payment ka option aata to sara payment option not available Aaraha na phone pe na Google pay na blinkit wallet kam kr rha maine paise v add krdiya ab usme paise wo v fash chuka hai naa cousmter care se bat horha naa ma\u2026",
+        "sir Aaj bohot issue aa raha payment kar nahi kar pa raha hu wallet payment issue solve nahi ho raha hai"
+      ],
+      "member_count": 51,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0009",
+      "community_id": 9,
+      "label": "otp / login / app / able",
+      "description": "46 reviews (avg rating 1.4) recurring around: otp, login, app, able.",
+      "representative_quotes": [
+        "unable to login I can not receive OTP such a time waste",
+        "not able to log in no otp recieved",
+        "Not able to get otp to login"
+      ],
+      "member_count": 46,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0010",
+      "community_id": 10,
+      "label": "Easy Navigation",
+      "description": "App is easy to navigate through with a good range of products",
+      "representative_quotes": [
+        "no recommendation about blinkit",
+        "Blinkit is the most easy way to get things you want and don't want lmao, cause there's everything and for cheaper prices and the app is so easy to navigate through",
+        "Blinkit is really good app and even you can say that it's my last minute snack delivery partner everything is good but there are some bugs and glitches in app not much a few"
+      ],
+      "member_count": 36,
+      "sentiment": "neutral",
+      "journey_stage": "browse_discover",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0011",
+      "community_id": 11,
+      "label": "UPI Payment Option Unavailable",
+      "description": "UPI payment option is not available or properly visible, causing inconvenience during payment process",
+      "representative_quotes": [
+        "no upi payment option",
+        "No UPI payment option",
+        "UPI payment option is not available properly, which makes the payment process very inconvenient"
+      ],
+      "member_count": 20,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0012",
+      "community_id": 12,
+      "label": "filter / working / apply / sort",
+      "description": "4 reviews (avg rating 2.8) recurring around: filter, working, apply, sort.",
+      "representative_quotes": [
+        "filter system is not at all working",
+        "Filter is not working in any category, no apply button is appearing to apply the filter",
+        "Filters stopped working after the recent update"
+      ],
+      "member_count": 4,
+      "sentiment": "neutral",
+      "journey_stage": "search",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-0013",
+      "community_id": 13,
+      "label": "Checkout UX Friction",
+      "description": "Users are hesitant to checkout due to unclear service information",
+      "representative_quotes": [
+        "review after checkout your services",
+        "i want to checkout your service first then i will do",
+        "EXCELLENT TREATMENT OF CONSIDERING THE PRODUCT REVIEW FROM THE CUSTOMER"
+      ],
+      "member_count": 3,
+      "sentiment": "negative",
+      "journey_stage": "cart_checkout",
+      "questions": []
+    },
+    {
+      "theme_id": "appux-manual-rec",
+      "community_id": 999,
+      "label": "Irrelevant Product Recommendations",
+      "description": "Users complain that the app recommends irrelevant products, pushes out-of-stock items, or traps them with accidental search history that cannot be cleared.",
+      "representative_quotes": [
+        "Hey Blinkit team might be a good idea to give users the option to delete their search history so that some items don't come in recommendations , I am tired of seeing something I searched by mistake...",
+        "more categorisation and better recommendations",
+        "recommendations are totally irrelevant and they push out of stock products in recommendations which is very frustrating"
+      ],
+      "member_count": 85,
+      "sentiment": "negative",
+      "journey_stage": "browse_discover",
+      "questions": []
+    }
+  ],
+  "emerging_signals": [
+    {
+      "signal_id": "appux-signal-0014",
+      "community_id": 14,
+      "label": "I bought a mosquito racket, and while I was buying it, a banner showed a 72-hou\u2026",
+      "description": "2 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I bought a mosquito racket, and while I was buying it, a banner showed a 72-hour return policy, but now they've denied it",
+        "The product page clearly mentioned \"7 Days Easy Return \u2013 Hassle free return or exchange for size issues"
+      ],
+      "support_count": 2,
+      "confidence": "low",
+      "avg_rating": 1,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0015",
+      "community_id": 15,
+      "label": "You use that channel for pushing stock alerts and other important notifications\u2026",
+      "description": "2 review(s), avg rating 2.0",
+      "representative_quotes": [
+        "Why the heck are you pushing promotional notifications through the \"Others\" notification channel",
+        "You use that channel for pushing stock alerts and other important notifications, so it makes no sense to push promotions through that"
+      ],
+      "support_count": 2,
+      "confidence": "low",
+      "avg_rating": 2,
+      "journey_stage": "post_order"
+    },
+    {
+      "signal_id": "appux-signal-0016",
+      "community_id": 16,
+      "label": "please sort this problem as soon as you guys can",
+      "description": "2 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "please sort this problem as soon as you guys can",
+        "So please sort out this problem"
+      ],
+      "support_count": 2,
+      "confidence": "low",
+      "avg_rating": 4,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0017",
+      "community_id": 17,
+      "label": "you get flooded with mostly non veg food items when searching for gravy mix",
+      "description": "2 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "No option to filter veg items from non veg",
+        "you get flooded with mostly non veg food items when searching for gravy mix"
+      ],
+      "support_count": 2,
+      "confidence": "low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0018",
+      "community_id": 18,
+      "label": "It is very fast and I also not go out for search this order outside and do time\u2026",
+      "description": "2 review(s), avg rating 4.5",
+      "representative_quotes": [
+        "They arrive on time and is very easy to search anything",
+        "It is very fast and I also not go out for search this order outside and do time maas"
+      ],
+      "support_count": 2,
+      "confidence": "low",
+      "avg_rating": 4.5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0019",
+      "community_id": 19,
+      "label": "As I ordered in morning just with this intention i need sort of things which wo\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "As I ordered in morning just with this intention i need sort of things which would require me in traveling"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0020",
+      "community_id": 20,
+      "label": "Which dimbo thought that forcing an app download & account login was mandatory\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Which dimbo thought that forcing an app download & account login was mandatory for tracking the order through the shared link"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "post_order"
+    },
+    {
+      "signal_id": "appux-signal-0021",
+      "community_id": 21,
+      "label": "in your eagerness to get feedback you've introduced a bug which clears the inbox",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "in your eagerness to get feedback you've introduced a bug which clears the inbox"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0022",
+      "community_id": 22,
+      "label": "Needs serious soul searching and proving up manpower",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "Needs serious soul searching and proving up manpower"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0023",
+      "community_id": 23,
+      "label": "Please add \"I don't need a bag\" feature on the checkout page",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "Please add \"I don't need a bag\" feature on the checkout page"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "cart_checkout"
+    },
+    {
+      "signal_id": "appux-signal-0024",
+      "community_id": 24,
+      "label": "I ordered 2 Paper Boat Aam Panna drinks, but there was a glitch in the app that\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I ordered 2 Paper Boat Aam Panna drinks, but there was a glitch in the app that caused issues with my order"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0025",
+      "community_id": 25,
+      "label": "Pride to its login method and ease of booking efforts",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "Pride to its login method and ease of booking efforts"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0026",
+      "community_id": 26,
+      "label": "my recommendation is you can order tenson free via this e commerce",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "my recommendation is you can order tenson free via this e commerce"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0027",
+      "community_id": 27,
+      "label": "i searched for printing shop unfortunately I don't find one",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "i searched for printing shop unfortunately I don't find one"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0028",
+      "community_id": 28,
+      "label": "varna notification mein quote likhe jata",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "varna notification mein quote likhe jata"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "post_order"
+    },
+    {
+      "signal_id": "appux-signal-0029",
+      "community_id": 29,
+      "label": "Then a lady called and told to change location and reorder",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Then a lady called and told to change location and reorder"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0030",
+      "community_id": 30,
+      "label": "otherwise eide good and thank you when I search in morning a shop but not open\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "otherwise eide good and thank you when I search in morning a shop but not open yet"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0031",
+      "community_id": 31,
+      "label": "I told them I had thrown the empty bags in garbage and can't fish them out beca\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I told them I had thrown the empty bags in garbage and can't fish them out because of hygiene reasons, they said a resolution can't be achieved without the images of amul shakti bags all lined up with their expiry date showing"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "product_page"
+    },
+    {
+      "signal_id": "appux-signal-0032",
+      "community_id": 32,
+      "label": "I registered for a part time job in blinkit app at a cost of 50/- but when I vi\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I registered for a part time job in blinkit app at a cost of 50/- but when I visited the store first they said vacancy is full but somehow completed my training but on 2nd day, they said search for other store to continue"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0033",
+      "community_id": 33,
+      "label": "after new update charge extra",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "after new update charge extra"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0034",
+      "community_id": 34,
+      "label": "please add rat glue pad also in your cart",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "please add rat glue pad also in your cart"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "cart_checkout"
+    },
+    {
+      "signal_id": "appux-signal-0035",
+      "community_id": 35,
+      "label": "You can find all the relevant information on the product page or mentioned on t\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "You can find all the relevant information on the product page or mentioned on the brand box received with your order"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0036",
+      "community_id": 36,
+      "label": "so I have to now search for my money in the web",
+      "description": "1 review(s), avg rating 2.0",
+      "representative_quotes": [
+        "so I have to now search for my money in the web"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 2,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0037",
+      "community_id": 37,
+      "label": "Chkot UX is pathetic, with too many ads and recs, making the cart confusing and\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Chkot UX is pathetic, with too many ads and recs, making the cart confusing and misleading"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0038",
+      "community_id": 38,
+      "label": "hey blinkit owner you should must open a branch in tripura agartala North tripu\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "hey blinkit owner you should must open a branch in tripura agartala North tripura so we should bug best to best grocery\u2764\ufe0f\u2764\ufe0f"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0039",
+      "community_id": 39,
+      "label": "Please promote Super Daily Offers more prominently with banners and notificatio\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "Please promote Super Daily Offers more prominently with banners and notifications"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0040",
+      "community_id": 40,
+      "label": "what sort of coconut water you sell",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "what sort of coconut water you sell"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0041",
+      "community_id": 41,
+      "label": "feeling cheated by loading money and not been able to use it since 4 days at pr\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "feeling cheated by loading money and not been able to use it since 4 days at prime location in Mulund"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0042",
+      "community_id": 42,
+      "label": "Ads never disturb the charm, instead the experience blooms like fresh flowers i\u2026",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "Ads never disturb the charm, instead the experience blooms like fresh flowers in morning light \ud83c\udf3c\ud83c\udf1e"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0043",
+      "community_id": 43,
+      "label": "no need to go out or search for any kind of product",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "no need to go out or search for any kind of product"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0044",
+      "community_id": 44,
+      "label": "i was searching for a product with a quantity of 50 grams but it is only availa\u2026",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "i was searching for a product with a quantity of 50 grams but it is only available of 100 gm"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0045",
+      "community_id": 45,
+      "label": "I have parched britaniya little hearts 3 packets but in this 1 packet is fully\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I have parched britaniya little hearts 3 packets but in this 1 packet is fully crashed the biscuits , and the packet is also not good"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0046",
+      "community_id": 46,
+      "label": "takes a load off my responsibility",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "takes a load off my responsibility"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0047",
+      "community_id": 47,
+      "label": "I urgently needed a Type-C charger and relied on the app's search results, whic\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I urgently needed a Type-C charger and relied on the app's search results, which showed a charger that turned out to be Type-B"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0048",
+      "community_id": 48,
+      "label": "just recently I came across the advertisement in social media site the ad was r\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "just recently I came across the advertisement in social media site the ad was related to the blinkit Lego, in advertisement it was mentioned that \"BOYS NEVER GROW UP\" I think so blinkit don't know the difference between BOYS AND MENS"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0049",
+      "community_id": 49,
+      "label": "Forced auto-tipping glitch",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Forced auto-tipping glitch"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0050",
+      "community_id": 50,
+      "label": "Screen freezes on checkout and won't let me remove the tip",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Screen freezes on checkout and won't let me remove the tip"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "cart_checkout"
+    },
+    {
+      "signal_id": "appux-signal-0051",
+      "community_id": 51,
+      "label": "good and safe dilivery in sort time",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "good and safe dilivery in sort time"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0052",
+      "community_id": 52,
+      "label": "but just today while searching for products such as facewash",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "but just today while searching for products such as facewash"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0053",
+      "community_id": 53,
+      "label": "I'm not understanding what sort of charges they're applying for",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I'm not understanding what sort of charges they're applying for"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0054",
+      "community_id": 54,
+      "label": "it has everything that you want but some things I search for it didn't come \ud83d\ude2d t\u2026",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "it has everything that you want but some things I search for it didn't come \ud83d\ude2d then see on YouTube some thing has come"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0055",
+      "community_id": 55,
+      "label": "after a day I had civier throught pain one day after I had vomiting and fever a\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "after a day I had civier throught pain one day after I had vomiting and fever around for 2 weeks I was at home and took rest I want to report about this but I find got any option like that in app I din't search so much and just write a review report The I bought was pot mango Ice-cream It also tast\u2026"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0056",
+      "community_id": 56,
+      "label": "I like the features of this aap because they are helpful and easy to understand\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "I like the features of this aap because they are helpful and easy to understand the aap saves time and makes my work easier I have had a very good experience using this aap it does not crash and performs well in my device the design is also nice and attractive i would recommend this aap to my frien\u2026"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0057",
+      "community_id": 57,
+      "label": "ad some loose item in grocery",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "ad some loose item in grocery"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0058",
+      "community_id": 58,
+      "label": "i think ur business reach too much that's why putting all this filteration to f\u2026",
+      "description": "1 review(s), avg rating 2.0",
+      "representative_quotes": [
+        "i think ur business reach too much that's why putting all this filteration to filter few customer who order little less"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 2,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0059",
+      "community_id": 59,
+      "label": "prints feature is horribly buggy",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "prints feature is horribly buggy"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0060",
+      "community_id": 60,
+      "label": "i have been searching for cream cheese since months and till now I haven't get\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "i have been searching for cream cheese since months and till now I haven't get it"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0061",
+      "community_id": 61,
+      "label": "I selected gift packaging, but the recipient received full order details via no\u2026",
+      "description": "1 review(s), avg rating 2.0",
+      "representative_quotes": [
+        "I selected gift packaging, but the recipient received full order details via notification"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 2,
+      "journey_stage": "post_order"
+    },
+    {
+      "signal_id": "appux-signal-0062",
+      "community_id": 62,
+      "label": "Best quality and new version system",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "Best quality and new version system"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0063",
+      "community_id": 63,
+      "label": "I ordered bed bug spray and it was and I got empty spray",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "I ordered bed bug spray and it was and I got empty spray"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0064",
+      "community_id": 64,
+      "label": "Call Filtering: Partner calls are being automatically flagged as spam, preventi\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "Call Filtering: Partner calls are being automatically flagged as spam, preventing immediate communication"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0065",
+      "community_id": 65,
+      "label": "To the support team, kindly add back the 'newly added for you' section, was ver\u2026",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "To the support team, kindly add back the 'newly added for you' section, was very helpful to browse new products"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0066",
+      "community_id": 66,
+      "label": "Can you guys please add a notification or a highlight next to each order saying\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "Can you guys please add a notification or a highlight next to each order saying this order has a tip amount"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "post_order"
+    },
+    {
+      "signal_id": "appux-signal-0067",
+      "community_id": 67,
+      "label": "trash support system and buggy app,",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "trash support system and buggy app,"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0068",
+      "community_id": 68,
+      "label": "more categorisation and better recommendations",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "more categorisation and better recommendations"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0069",
+      "community_id": 69,
+      "label": "The team was kind enough to help despite lack of clear navigation guides in eme\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "The team was kind enough to help despite lack of clear navigation guides in emergency where patient address was not accurate"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0070",
+      "community_id": 70,
+      "label": "Add feature to filter products which have price drop",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "Add feature to filter products which have price drop"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0071",
+      "community_id": 71,
+      "label": "clutched structure of menu, however rates are fine",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "clutched structure of menu, however rates are fine"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0072",
+      "community_id": 72,
+      "label": "like I was searching belt",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "like I was searching belt"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0073",
+      "community_id": 73,
+      "label": "The work load on the employees is too high and the salary is also too low ,due\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "The work load on the employees is too high and the salary is also too low ,due to which there are being mistakes in orders ,and the employees are bearing all the losses in their salary ,Worst place for the order and there's no humanity"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0074",
+      "community_id": 74,
+      "label": "once cab is booked driver is not accepting ride when you board and shared OTP",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "once cab is booked driver is not accepting ride when you board and shared OTP"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "cart_checkout"
+    },
+    {
+      "signal_id": "appux-signal-0075",
+      "community_id": 75,
+      "label": "We spend good money but when we want help you send us bots and no return banners",
+      "description": "1 review(s), avg rating 2.0",
+      "representative_quotes": [
+        "We spend good money but when we want help you send us bots and no return banners"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 2,
+      "journey_stage": "recommendations"
+    },
+    {
+      "signal_id": "appux-signal-0076",
+      "community_id": 76,
+      "label": "Overall application is great but I think a pure vegetarian section which could\u2026",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "Overall application is great but I think a pure vegetarian section which could be enabled by us in the application would be a very great idea for vegetarians as I see a lot of non vegetarian items while browsing which I don't like"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0077",
+      "community_id": 77,
+      "label": "Also products bifurcation and search was excellent",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "Also products bifurcation and search was excellent"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0078",
+      "community_id": 78,
+      "label": "there are many things/ ingredients which have local names so it becomes hard to\u2026",
+      "description": "1 review(s), avg rating 4.0",
+      "representative_quotes": [
+        "there are many things/ ingredients which have local names so it becomes hard to search them especially for elders and parents"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 4,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0079",
+      "community_id": 79,
+      "label": "while ordering it show 2 pcs in 128 rs and after adding to cart it shows 163 rs\u2026",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "while ordering it show 2 pcs in 128 rs and after adding to cart it shows 163 rs this is cheating na and 1 pcs is off 65 rs so how it comes 2 pcs in 163 plz explain"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "journey_stage": "cart_checkout"
+    },
+    {
+      "signal_id": "appux-signal-0080",
+      "community_id": 80,
+      "label": "While the unrefined masses navigate crowded aisles, I prefer a curated approach\u2026",
+      "description": "1 review(s), avg rating 5.0",
+      "representative_quotes": [
+        "While the unrefined masses navigate crowded aisles, I prefer a curated approach to my epicurean requirements"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 5,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0081",
+      "community_id": 81,
+      "label": "The AI assistant keeps looping through the same menu without resolving the issue",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "The AI assistant keeps looping through the same menu without resolving the issue"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "browse_discover"
+    },
+    {
+      "signal_id": "appux-signal-0082",
+      "community_id": 82,
+      "label": "I am searching a pond' sunscreen SPF 35 + but in in the blinkit store ther is n\u2026",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "I am searching a pond' sunscreen SPF 35 + but in in the blinkit store ther is not available this cream rather you have to include pond sunscreen jel cream also it's a also sunscreen type cream"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    },
+    {
+      "signal_id": "appux-signal-0083",
+      "community_id": 83,
+      "label": "can't excess properly anything I'm searching for is not matching at all",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "can't excess properly anything I'm searching for is not matching at all"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "journey_stage": "search"
+    }
+  ],
+  "summary": {
+    "num_themes": 14,
+    "num_emerging_signals": 70,
+    "journey_stage_distribution": {
+      "cart_checkout": 7,
+      "browse_discover": 5,
+      "product_page": 1,
+      "search": 1
+    }
+  }
+}

@@ -1,0 +1,616 @@
+{
+  "coherence": {
+    "modularity": 0.7519,
+    "mean_silhouette_score": -0.121,
+    "themes": [
+      {
+        "theme_id": "theme-0000",
+        "size": 1658,
+        "intra_similarity": 0.669,
+        "nearest_theme_id": "theme-0011",
+        "nearest_theme_similarity": 0.81,
+        "silhouette_score": -0.174
+      },
+      {
+        "theme_id": "theme-0001",
+        "size": 1424,
+        "intra_similarity": 0.677,
+        "nearest_theme_id": "theme-0005",
+        "nearest_theme_similarity": 0.845,
+        "silhouette_score": -0.199
+      },
+      {
+        "theme_id": "theme-0002",
+        "size": 1258,
+        "intra_similarity": 0.691,
+        "nearest_theme_id": "theme-0007",
+        "nearest_theme_similarity": 0.864,
+        "silhouette_score": -0.201
+      },
+      {
+        "theme_id": "theme-0003",
+        "size": 1104,
+        "intra_similarity": 0.633,
+        "nearest_theme_id": "theme-0010",
+        "nearest_theme_similarity": 0.805,
+        "silhouette_score": -0.214
+      },
+      {
+        "theme_id": "theme-0004",
+        "size": 1043,
+        "intra_similarity": 0.73,
+        "nearest_theme_id": "theme-0002",
+        "nearest_theme_similarity": 0.752,
+        "silhouette_score": -0.028
+      },
+      {
+        "theme_id": "theme-0005",
+        "size": 1029,
+        "intra_similarity": 0.724,
+        "nearest_theme_id": "theme-0001",
+        "nearest_theme_similarity": 0.845,
+        "silhouette_score": -0.143
+      },
+      {
+        "theme_id": "theme-0006",
+        "size": 993,
+        "intra_similarity": 0.752,
+        "nearest_theme_id": "theme-0001",
+        "nearest_theme_similarity": 0.667,
+        "silhouette_score": 0.113
+      },
+      {
+        "theme_id": "theme-0007",
+        "size": 911,
+        "intra_similarity": 0.75,
+        "nearest_theme_id": "theme-0002",
+        "nearest_theme_similarity": 0.864,
+        "silhouette_score": -0.133
+      },
+      {
+        "theme_id": "theme-0008",
+        "size": 781,
+        "intra_similarity": 0.642,
+        "nearest_theme_id": "theme-0001",
+        "nearest_theme_similarity": 0.806,
+        "silhouette_score": -0.204
+      },
+      {
+        "theme_id": "theme-0009",
+        "size": 719,
+        "intra_similarity": 0.664,
+        "nearest_theme_id": "theme-0010",
+        "nearest_theme_similarity": 0.786,
+        "silhouette_score": -0.156
+      },
+      {
+        "theme_id": "theme-0010",
+        "size": 708,
+        "intra_similarity": 0.625,
+        "nearest_theme_id": "theme-0003",
+        "nearest_theme_similarity": 0.805,
+        "silhouette_score": -0.223
+      },
+      {
+        "theme_id": "theme-0011",
+        "size": 629,
+        "intra_similarity": 0.708,
+        "nearest_theme_id": "theme-0000",
+        "nearest_theme_similarity": 0.81,
+        "silhouette_score": -0.126
+      },
+      {
+        "theme_id": "theme-0012",
+        "size": 176,
+        "intra_similarity": 0.731,
+        "nearest_theme_id": "theme-0001",
+        "nearest_theme_similarity": 0.81,
+        "silhouette_score": -0.098
+      },
+      {
+        "theme_id": "theme-0013",
+        "size": 140,
+        "intra_similarity": 0.736,
+        "nearest_theme_id": "theme-0001",
+        "nearest_theme_similarity": 0.692,
+        "silhouette_score": 0.06
+      },
+      {
+        "theme_id": "theme-0014",
+        "size": 133,
+        "intra_similarity": 0.687,
+        "nearest_theme_id": "theme-0001",
+        "nearest_theme_similarity": 0.754,
+        "silhouette_score": -0.089
+      }
+    ]
+  },
+  "triangulation": {
+    "dominant_share_threshold": 0.6,
+    "corpus_rating_bands_observed": {
+      "1": 10407,
+      "2": 1026,
+      "3": 1273
+    },
+    "corpus_time_cohorts_observed": {
+      "2026-01": 9,
+      "2026-02": 13,
+      "2026-03": 785,
+      "2026-04": 2730,
+      "2026-05": 3632,
+      "2026-06": 3219,
+      "2026-07": 2318
+    },
+    "corpus_sources_observed": {
+      "google_play": 12574,
+      "mouthshut": 132
+    },
+    "themes": [
+      {
+        "theme_id": "theme-0000",
+        "rating_distribution": {
+          "1": 1563,
+          "2": 66,
+          "3": 29
+        },
+        "time_cohort_distribution": {
+          "2026-01": 3,
+          "2026-02": 6,
+          "2026-03": 100,
+          "2026-04": 333,
+          "2026-05": 457,
+          "2026-06": 431,
+          "2026-07": 328
+        },
+        "length_bucket_distribution": {
+          "medium": 775,
+          "short": 568,
+          "long": 315
+        },
+        "source_distribution": {
+          "google_play": 1619,
+          "mouthshut": 39
+        },
+        "time_dominant_share": 0.276,
+        "length_dominant_share": 0.467,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0001",
+        "rating_distribution": {
+          "1": 1236,
+          "2": 80,
+          "3": 108
+        },
+        "time_cohort_distribution": {
+          "2026-01": 1,
+          "2026-02": 2,
+          "2026-03": 81,
+          "2026-04": 304,
+          "2026-05": 443,
+          "2026-06": 354,
+          "2026-07": 239
+        },
+        "length_bucket_distribution": {
+          "short": 119,
+          "long": 773,
+          "medium": 532
+        },
+        "source_distribution": {
+          "google_play": 1410,
+          "mouthshut": 14
+        },
+        "time_dominant_share": 0.311,
+        "length_dominant_share": 0.543,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0002",
+        "rating_distribution": {
+          "1": 1076,
+          "2": 78,
+          "3": 104
+        },
+        "time_cohort_distribution": {
+          "2026-01": 1,
+          "2026-03": 83,
+          "2026-04": 279,
+          "2026-05": 345,
+          "2026-06": 329,
+          "2026-07": 221
+        },
+        "length_bucket_distribution": {
+          "long": 374,
+          "medium": 579,
+          "short": 305
+        },
+        "source_distribution": {
+          "google_play": 1250,
+          "mouthshut": 8
+        },
+        "time_dominant_share": 0.274,
+        "length_dominant_share": 0.46,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0003",
+        "rating_distribution": {
+          "1": 916,
+          "2": 102,
+          "3": 86
+        },
+        "time_cohort_distribution": {
+          "2026-03": 70,
+          "2026-04": 232,
+          "2026-05": 322,
+          "2026-06": 279,
+          "2026-07": 201
+        },
+        "length_bucket_distribution": {
+          "short": 292,
+          "medium": 586,
+          "long": 226
+        },
+        "source_distribution": {
+          "google_play": 1094,
+          "mouthshut": 10
+        },
+        "time_dominant_share": 0.292,
+        "length_dominant_share": 0.531,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0004",
+        "rating_distribution": {
+          "1": 651,
+          "2": 162,
+          "3": 230
+        },
+        "time_cohort_distribution": {
+          "2026-02": 1,
+          "2026-03": 72,
+          "2026-04": 221,
+          "2026-05": 309,
+          "2026-06": 272,
+          "2026-07": 168
+        },
+        "length_bucket_distribution": {
+          "medium": 467,
+          "short": 310,
+          "long": 266
+        },
+        "source_distribution": {
+          "google_play": 1040,
+          "mouthshut": 3
+        },
+        "time_dominant_share": 0.296,
+        "length_dominant_share": 0.448,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0005",
+        "rating_distribution": {
+          "1": 895,
+          "2": 59,
+          "3": 75
+        },
+        "time_cohort_distribution": {
+          "2026-01": 1,
+          "2026-02": 2,
+          "2026-03": 57,
+          "2026-04": 251,
+          "2026-05": 287,
+          "2026-06": 230,
+          "2026-07": 201
+        },
+        "length_bucket_distribution": {
+          "short": 431,
+          "long": 148,
+          "medium": 450
+        },
+        "source_distribution": {
+          "google_play": 1024,
+          "mouthshut": 5
+        },
+        "time_dominant_share": 0.279,
+        "length_dominant_share": 0.437,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0006",
+        "rating_distribution": {
+          "1": 849,
+          "2": 64,
+          "3": 80
+        },
+        "time_cohort_distribution": {
+          "2026-01": 2,
+          "2026-02": 2,
+          "2026-03": 57,
+          "2026-04": 216,
+          "2026-05": 256,
+          "2026-06": 280,
+          "2026-07": 180
+        },
+        "length_bucket_distribution": {
+          "short": 59,
+          "long": 610,
+          "medium": 324
+        },
+        "source_distribution": {
+          "google_play": 972,
+          "mouthshut": 21
+        },
+        "time_dominant_share": 0.282,
+        "length_dominant_share": 0.614,
+        "stability": "segment_specific",
+        "stability_reasons": [
+          "concentrated in a single review-length bucket"
+        ]
+      },
+      {
+        "theme_id": "theme-0007",
+        "rating_distribution": {
+          "1": 637,
+          "2": 132,
+          "3": 142
+        },
+        "time_cohort_distribution": {
+          "2026-03": 64,
+          "2026-04": 236,
+          "2026-05": 268,
+          "2026-06": 194,
+          "2026-07": 149
+        },
+        "length_bucket_distribution": {
+          "short": 349,
+          "medium": 387,
+          "long": 175
+        },
+        "source_distribution": {
+          "google_play": 910,
+          "mouthshut": 1
+        },
+        "time_dominant_share": 0.294,
+        "length_dominant_share": 0.425,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0008",
+        "rating_distribution": {
+          "1": 495,
+          "2": 103,
+          "3": 183
+        },
+        "time_cohort_distribution": {
+          "2026-03": 41,
+          "2026-04": 166,
+          "2026-05": 240,
+          "2026-06": 191,
+          "2026-07": 143
+        },
+        "length_bucket_distribution": {
+          "short": 126,
+          "long": 274,
+          "medium": 381
+        },
+        "source_distribution": {
+          "google_play": 777,
+          "mouthshut": 4
+        },
+        "time_dominant_share": 0.307,
+        "length_dominant_share": 0.488,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0009",
+        "rating_distribution": {
+          "1": 653,
+          "2": 33,
+          "3": 33
+        },
+        "time_cohort_distribution": {
+          "2026-03": 41,
+          "2026-04": 135,
+          "2026-05": 213,
+          "2026-06": 200,
+          "2026-07": 130
+        },
+        "length_bucket_distribution": {
+          "medium": 286,
+          "long": 392,
+          "short": 41
+        },
+        "source_distribution": {
+          "google_play": 706,
+          "mouthshut": 13
+        },
+        "time_dominant_share": 0.296,
+        "length_dominant_share": 0.545,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0010",
+        "rating_distribution": {
+          "1": 573,
+          "2": 62,
+          "3": 73
+        },
+        "time_cohort_distribution": {
+          "2026-01": 1,
+          "2026-03": 48,
+          "2026-04": 126,
+          "2026-05": 186,
+          "2026-06": 189,
+          "2026-07": 158
+        },
+        "length_bucket_distribution": {
+          "long": 174,
+          "medium": 371,
+          "short": 163
+        },
+        "source_distribution": {
+          "google_play": 699,
+          "mouthshut": 9
+        },
+        "time_dominant_share": 0.267,
+        "length_dominant_share": 0.524,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0011",
+        "rating_distribution": {
+          "1": 537,
+          "2": 38,
+          "3": 54
+        },
+        "time_cohort_distribution": {
+          "2026-03": 36,
+          "2026-04": 141,
+          "2026-05": 167,
+          "2026-06": 162,
+          "2026-07": 123
+        },
+        "length_bucket_distribution": {
+          "short": 326,
+          "medium": 255,
+          "long": 48
+        },
+        "source_distribution": {
+          "google_play": 625,
+          "mouthshut": 4
+        },
+        "time_dominant_share": 0.266,
+        "length_dominant_share": 0.518,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      },
+      {
+        "theme_id": "theme-0012",
+        "rating_distribution": {
+          "1": 111,
+          "2": 25,
+          "3": 40
+        },
+        "time_cohort_distribution": {
+          "2026-03": 14,
+          "2026-04": 32,
+          "2026-05": 60,
+          "2026-06": 40,
+          "2026-07": 30
+        },
+        "length_bucket_distribution": {
+          "long": 109,
+          "short": 6,
+          "medium": 61
+        },
+        "source_distribution": {
+          "google_play": 176
+        },
+        "time_dominant_share": 0.341,
+        "length_dominant_share": 0.619,
+        "stability": "segment_specific",
+        "stability_reasons": [
+          "concentrated in a single review-length bucket"
+        ]
+      },
+      {
+        "theme_id": "theme-0013",
+        "rating_distribution": {
+          "1": 123,
+          "2": 5,
+          "3": 12
+        },
+        "time_cohort_distribution": {
+          "2026-03": 13,
+          "2026-04": 33,
+          "2026-05": 38,
+          "2026-06": 31,
+          "2026-07": 25
+        },
+        "length_bucket_distribution": {
+          "long": 105,
+          "medium": 29,
+          "short": 6
+        },
+        "source_distribution": {
+          "google_play": 139,
+          "mouthshut": 1
+        },
+        "time_dominant_share": 0.271,
+        "length_dominant_share": 0.75,
+        "stability": "segment_specific",
+        "stability_reasons": [
+          "concentrated in a single review-length bucket"
+        ]
+      },
+      {
+        "theme_id": "theme-0014",
+        "rating_distribution": {
+          "1": 92,
+          "2": 17,
+          "3": 24
+        },
+        "time_cohort_distribution": {
+          "2026-03": 8,
+          "2026-04": 25,
+          "2026-05": 41,
+          "2026-06": 37,
+          "2026-07": 22
+        },
+        "length_bucket_distribution": {
+          "medium": 53,
+          "long": 58,
+          "short": 22
+        },
+        "source_distribution": {
+          "google_play": 133
+        },
+        "time_dominant_share": 0.308,
+        "length_dominant_share": 0.436,
+        "stability": "cross_segment",
+        "stability_reasons": []
+      }
+    ]
+  },
+  "spot_check": {
+    "sample_file": "spot_check_sample.json",
+    "sample_size": 194,
+    "labeled_count": 0,
+    "agreement_rate": null,
+    "note": "No human labels present yet - open data/spot_check_sample.json, fill in `human_agrees` (true/false) per row, then re-run `python -m src.validate --refresh` to compute agreement (S9-04)."
+  },
+  "classifier": {
+    "total_classified": 84111,
+    "label_distribution": {
+      "app_ux": 1094,
+      "operational": 25768,
+      "praise_noise": 53320,
+      "pricing_policy": 3929
+    },
+    "method_distribution": {
+      "heuristic": 81948,
+      "heuristic_bypass": 2163
+    },
+    "classification_spot_check_file": "classification_spot_check.csv"
+  },
+  "summary": {
+    "num_themes_validated": 15,
+    "modularity": 0.7519,
+    "mean_silhouette_score": -0.121,
+    "num_cross_segment_stable": 12,
+    "num_segment_specific": 3,
+    "spot_check_labeled_count": 0,
+    "spot_check_agreement_rate": null
+  }
+}

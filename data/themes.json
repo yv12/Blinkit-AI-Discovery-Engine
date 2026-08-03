@@ -1,0 +1,432 @@
+{
+  "themes": [
+    {
+      "theme_id": "theme-0000",
+      "community_id": 0,
+      "label": "customer / service / support / care",
+      "description": "1658 reviews (avg rating 1.1) recurring around: customer, service, support, care.",
+      "representative_quotes": [
+        "poor customer service support",
+        "poor customer service support",
+        "Poor Customer Service"
+      ],
+      "member_count": 1658,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0001",
+      "community_id": 1,
+      "label": "app / delivery / order / worst",
+      "description": "1424 reviews (avg rating 1.2) recurring around: app, delivery, order, worst.",
+      "representative_quotes": [
+        "worst app of all time they do always late delivery and second they did not give my money back despite they took the product from me and the amount was above rs1100😡😡😡😡😡 pls do not use this app",
+        "worst app ever i ordered but i didn't recived my order nd tht delivery guy cheated us don't use this app ever nd i even called to the customer care they didn't responded yet",
+        "The worst app is the delivery agents asking for extra money for their delivery and saying if you don't give us extra money the order will be returned and the paid money won't come back and i tried to contact customer care but they don't respond"
+      ],
+      "member_count": 1424,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0002",
+      "community_id": 2,
+      "label": "delivery / service / bad / partner",
+      "description": "1258 reviews (avg rating 1.2) recurring around: delivery, service, bad, partner.",
+      "representative_quotes": [
+        "bad service with delivery guys",
+        "very bad service and the delivery partner also",
+        "poor service in delivery"
+      ],
+      "member_count": 1258,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0003",
+      "community_id": 3,
+      "label": "product / products / quality / poor",
+      "description": "1104 reviews (avg rating 1.2) recurring around: product, products, quality, poor.",
+      "representative_quotes": [
+        "multiple times bad products delivered and customer care also not great",
+        "from past 2-3 deliveries we are receiving bad quality products",
+        "Poor quality product delivery"
+      ],
+      "member_count": 1104,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0004",
+      "community_id": 4,
+      "label": "delivery / charges / high / charge",
+      "description": "1043 reviews (avg rating 1.6) recurring around: delivery, charges, high, charge.",
+      "representative_quotes": [
+        "delivery charges are very high",
+        "delivery charges are very high",
+        "delivery charges are very high"
+      ],
+      "member_count": 1043,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0005",
+      "community_id": 5,
+      "label": "app / worst / bad / use",
+      "description": "1029 reviews (avg rating 1.2) recurring around: app, worst, bad, use.",
+      "representative_quotes": [
+        "very bad app don't use this app",
+        "This app is very bad",
+        "This app is very bad"
+      ],
+      "member_count": 1029,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0006",
+      "community_id": 6,
+      "label": "blinkit / delivery / app / service",
+      "description": "993 reviews (avg rating 1.2) recurring around: blinkit, delivery, app, service.",
+      "representative_quotes": [
+        "very very disappointed and bad experience with blinkit money and blinkit customer service support",
+        "Blinkit has very Bad customer service nowadays",
+        "Very frustrating and disappointing experience with blinkit sending old products , late delivery, and worst customer support service, NO direct calling or asking facility for your order, NO complaint registration option"
+      ],
+      "member_count": 993,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0007",
+      "community_id": 7,
+      "label": "delivery / time / late / order",
+      "description": "911 reviews (avg rating 1.5) recurring around: delivery, time, late, order.",
+      "representative_quotes": [
+        "the delivery time delays a lot",
+        "delivery is delayed and horribly slow",
+        "Delivery is too much delayed"
+      ],
+      "member_count": 911,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0008",
+      "community_id": 8,
+      "label": "app / delivery / apps / price",
+      "description": "781 reviews (avg rating 1.6) recurring around: app, delivery, apps, price.",
+      "representative_quotes": [
+        "compared the other apps this app is charges more on every product they offer any coupon or discount infact have high delivery charges",
+        "the app is good but the items and the delivery cost and other costs are high compared to other apps",
+        "this is app is helpful in the case of urgency but the prices are much more higher than the actual market price but some things are cheap also from market prices and they charge high for delivery charges"
+      ],
+      "member_count": 781,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0009",
+      "community_id": 9,
+      "label": "refund / order / product / return",
+      "description": "719 reviews (avg rating 1.1) recurring around: refund, order, product, return.",
+      "representative_quotes": [
+        "I order something and I recieved something else don't give refund and their support staff is worst",
+        "When your order is not delivered, the refund process is very bad",
+        "They give incorrect orders, and don't give refund as well"
+      ],
+      "member_count": 719,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0010",
+      "community_id": 10,
+      "label": "items / missing / order / ordered",
+      "description": "708 reviews (avg rating 1.3) recurring around: items, missing, order, ordered.",
+      "representative_quotes": [
+        "after some orders the items found missing",
+        "my order items were missing and even after complains not was done it happen many times",
+        "Also, several items are missing or not available after placing the order"
+      ],
+      "member_count": 708,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0011",
+      "community_id": 11,
+      "label": "service / poor / worst / bad",
+      "description": "629 reviews (avg rating 1.2) recurring around: service, poor, worst, bad.",
+      "representative_quotes": [
+        "service not good",
+        "very poor service at times",
+        "service is not good"
+      ],
+      "member_count": 629,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0012",
+      "community_id": 12,
+      "label": "delivery / cash / app / option",
+      "description": "176 reviews (avg rating 1.6) recurring around: delivery, cash, app, option.",
+      "representative_quotes": [
+        "good App but cash on delivery is not available",
+        "not allow cash on delivery , very bad app",
+        "most worst app never get an option for cash on delivery and took long time for packing and delivering the order want this problem to be resolved asap"
+      ],
+      "member_count": 176,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0013",
+      "community_id": 13,
+      "label": "hai / app / delivery / service",
+      "description": "140 reviews (avg rating 1.2) recurring around: hai, app, delivery, service.",
+      "representative_quotes": [
+        "very bad app hai time pe order nahi ata our delivery charge jyada hai",
+        "customer support mai koi baat nahi karta ye kesa app hai",
+        "customer care se baat nhi ho paati hai aur delivery boy aadhe raaste me pahunch kar bolta hai ki aapka ek item damage hai poora order cancel krwa dijiye jaldi kariye yeh facility hai app ki"
+      ],
+      "member_count": 140,
+      "sentiment": "negative",
+      "questions": []
+    },
+    {
+      "theme_id": "theme-0014",
+      "community_id": 14,
+      "label": "app / groceries / grocery / worst",
+      "description": "133 reviews (avg rating 1.5) recurring around: app, groceries, grocery, worst.",
+      "representative_quotes": [
+        "Never order with this app as they send rotten fruits and vegetables and upon complaining they don't bother for the hard earned money of customers",
+        "previously this app was too good but now it gives very poor service because some products are often delivered in a damaged condition and the fruits are always rotten",
+        "it's getting worse app i ordered groceries it's all rough and of bad quality and it's costly"
+      ],
+      "member_count": 133,
+      "sentiment": "negative",
+      "questions": []
+    }
+  ],
+  "emerging_signals": [
+    {
+      "signal_id": "signal-0015",
+      "community_id": 15,
+      "label": "keep it up and make it more conventional for users",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "keep it up and make it more conventional for users"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0016",
+      "community_id": 16,
+      "label": "If you buy the TV remote or the smart TV remotes, you'll be little scanned as w…",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "If you buy the TV remote or the smart TV remotes, you'll be little scanned as well, and every products and groceries"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0017",
+      "community_id": 17,
+      "label": "t holistically transformed daily consumption pattern by making anything to ever…",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "t holistically transformed daily consumption pattern by making anything to everything available at everyone's disposal within a few minutes"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0018",
+      "community_id": 18,
+      "label": "It is a trick to make us spend more",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "It is a trick to make us spend more"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0019",
+      "community_id": 19,
+      "label": "because it doesn't show many options and not what we really searched",
+      "description": "1 review(s), avg rating 2.0",
+      "representative_quotes": [
+        "because it doesn't show many options and not what we really searched"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 2,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0020",
+      "community_id": 20,
+      "label": "The campaign prominently showed rewards like earbuds and smartwatches, which in…",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "The campaign prominently showed rewards like earbuds and smartwatches, which influenced my purchase decision"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0021",
+      "community_id": 21,
+      "label": "Can’t you manage things properly",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Can’t you manage things properly"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0022",
+      "community_id": 22,
+      "label": "good option for essentials and cravings",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "good option for essentials and cravings"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0023",
+      "community_id": 23,
+      "label": "Such important information should be communicated clearly before candidates inv…",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Such important information should be communicated clearly before candidates invest their time, effort, and money"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0024",
+      "community_id": 24,
+      "label": "There seems to be a perception that certain groups may be creating artificial s…",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "There seems to be a perception that certain groups may be creating artificial scarcity or informal distribution practices"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0025",
+      "community_id": 25,
+      "label": "Iccrease to boost sale",
+      "description": "1 review(s), avg rating 3.0",
+      "representative_quotes": [
+        "Iccrease to boost sale"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 3,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0026",
+      "community_id": 26,
+      "label": "Once you get used to,you tend to venture less from your home thereby limiting y…",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Once you get used to,you tend to venture less from your home thereby limiting your physical activity and mental activity (also limiting social interaction and connections) LEADS TO HEALTH ISSUES 2"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0027",
+      "community_id": 27,
+      "label": "Primary motive is to make you lazy",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "Primary motive is to make you lazy"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    },
+    {
+      "signal_id": "signal-0028",
+      "community_id": 28,
+      "label": "now how I can I find the things I need",
+      "description": "1 review(s), avg rating 1.0",
+      "representative_quotes": [
+        "now how I can I find the things I need"
+      ],
+      "support_count": 1,
+      "confidence": "very_low",
+      "avg_rating": 1,
+      "lang_counts": {
+        "en": 1
+      }
+    }
+  ],
+  "summary": {
+    "num_themes": 15,
+    "num_emerging_signals": 14,
+    "schema_rejected": 0,
+    "use_llm": false
+  }
+}

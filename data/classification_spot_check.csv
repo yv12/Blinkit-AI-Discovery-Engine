@@ -1,0 +1,51 @@
+unit_id,review_text,assigned_label,reason,method,rating
+e8baf5df-6a65-4f85-b2d4-b9563316235d-00,"good app, but lacks payment method",app_ux,app UX keywords (1 hits),heuristic,4
+b160f938-520b-4482-a01d-e330885951d3-00,"I ordered Uncle Chips, but I noticed that the manufacturer's details and expiry date on the packet appear to have been rubbed off or tampered with",app_ux,app UX keywords (1 hits),heuristic,1
+5e7ca508-6062-4681-a7d5-a36513211ea9-01,"No payment method works, so placing an order is impossible",app_ux,app UX keywords (1 hits),heuristic,1
+9477572d-07c8-4311-b215-f67183685af0-02,zepto gives best price but ui design and variety availability wise i would go with blinkit,app_ux,app UX keywords (1 hits),heuristic,5
+df4172fd-f319-48da-afaa-a3503aed3ccf-04,"Login was done through Zomato, credibility of Zomato",app_ux,app UX keywords (1 hits),heuristic,1
+592dcf2d-5820-4d87-aeaf-29a84b3a76cc-00,every time payment issue,app_ux,app UX keywords (1 hits),heuristic,1
+3eed46aa-679a-43a1-865a-3742e7d34411-00,payment method not available at some time and cash on is not available also so how we place order at emargency time bad 😞,app_ux,app UX keywords (1 hits),heuristic,1
+94bea23a-d733-4bda-b6af-ba10acf561eb-00,not on time and stupid ads,app_ux,app UX keywords (1 hits),heuristic,1
+7d8ca1e4-961c-46a6-b92e-4aea1277a2c6-01,Smooth n easy navigation,app_ux,app UX keywords (1 hits),heuristic,5
+601239e2-b5f9-4630-937f-a9a1591c24cc-04,Will crash and burn soon,app_ux,app UX keywords (1 hits),heuristic,1
+6fb37838-4f39-4754-b459-09c60db410d8-00,Blinkit is my all time favourite app because my work load and pressure are down by this,app_ux,app UX keywords (1 hits),heuristic,4
+333aeb1c-6072-40a8-ad98-d81af6147a60-00,Good functional app without any glitch till date,app_ux,app UX keywords (1 hits),heuristic,5
+acbea526-aee1-48e4-8a02-f7dcb6dc3a8e-00,Best and easy delivery,operational,operational keywords (1 hits),heuristic,5
+6666b936-fd9b-44d9-b8f0-39ee04c32928-00,dilevery time par nahi karna refund bhi time par nahi karna just like Chey,operational,operational keywords (1 hits),heuristic,1
+c3c7dc8d-92c5-432f-ad6a-f341c7850939-02,"The app has an incredibly smooth interface, a massive product selection, and lightning-fast delivery",operational,operational keywords (1 hits),heuristic,5
+cc469c0e-0499-4dd9-8758-9b88f16fb81c-01,I asked for a refund and i returned the product to them,operational,operational keywords (1 hits),heuristic,2
+ecb64532-1aab-4d0b-8cc9-4357740a659f-02,call ki delivery wale ke toh bol raha ki battery charge karne aaya hu time lagega mam aane mein and takes 10 mins more to deliver 😡😡,operational,strong operational keywords (2 hits),heuristic,1
+24d8d766-523c-409d-b7bc-7abd552e772d-00,getting some damage items bro 🤐😭,operational,operational keywords (1 hits),heuristic,1
+00fbfc65-2491-42a4-a6ef-df78313d3447-02,So I complaint it and the support team rejected my request I suggest you to buy with Bigbasket much better than blinkit,operational,operational keywords (1 hits),heuristic,1
+f3571a0b-d911-42d5-a39e-c004cefdc6f1-00,delivery partner behaviour vary bad,operational,operational keywords (1 hits),heuristic,1
+e33d34d6-f0af-4311-9fc5-ed21defe4e64-00,very bad cash on delivery is not available,operational,operational keywords (1 hits),heuristic,1
+788ffead-53c7-4696-981b-6c3d981df335-00,very good app very Fast delivery,operational,operational keywords (1 hits),heuristic,4
+98755778-fc7e-4e83-83f3-8f5613ca8cdf-00,I am going to become a Blinkit delivery partner soon,operational,operational keywords (1 hits),heuristic,5
+0c4c29eb-0a7a-4464-83f5-f0e6b6d0013a-00,Delivery boys don't know exactly location to deliver asking us to come and collect order to thier standing location,operational,strong operational keywords (2 hits),heuristic,1
+f50f720f-c802-4152-bd4c-b2d05f93b0aa-00,it is the best app ever,praise_noise,no specific friction keywords found,heuristic,5
+54a9f9cd-cb5e-4ed4-a239-7d4543e1ad95-01,"after using blinkit for about 3/4 years, I'm done",praise_noise,no specific friction keywords found,heuristic,1
+311fe604-2682-46ef-b45f-79c1bd309e00-00,one of the best app,praise_noise,"very short, no specific issue keywords",heuristic,5
+f3ad92cd-9014-4780-988c-f32130056a12-00,very nice and helpful,praise_noise,"very short, no specific issue keywords",heuristic,5
+ba5dbdf9-67e2-4e17-9ba7-3c76abe45068-00,very life saving and perfect for last min purchase or shopping ✨️💗,praise_noise,no specific friction keywords found,heuristic,5
+41f47fca-3257-4f41-90bd-1d9eb9e06b82-00,ITS MAKE EASY EVERYTHING IN LESS TIME,praise_noise,no specific friction keywords found,heuristic,5
+a16ba661-8c89-42fa-b399-0e71bae5ec36-00,it's easy to use and efficient too,praise_noise,no specific friction keywords found,heuristic,4
+a8c8c13a-2cfe-4948-bb50-6a02ddd85492-03,"Also the listing prices and charges of many items are more than on other apps like ""Zepto""",praise_noise,no specific friction keywords found,heuristic,1
+ea2f01e5-78f1-4117-b4a7-3b5cfc588526-00,loved this app and services provided by the management,praise_noise,no specific friction keywords found,heuristic,5
+588990f5-cafe-4c03-9c33-c383f9d6c0b3-00,This App is Great For Last Minute Needs still Blinkit is The Best,praise_noise,no specific friction keywords found,heuristic,5
+276f7be3-4fcb-4fb9-b2c7-ff5d84b1417d-00,cashback throgh payment app is fraud,praise_noise,no specific friction keywords found,heuristic,1
+26589c1d-17f2-43e1-b66e-ebf76a129d6e-00,just awesome it is so lowkey good if u order something above ₹149 u get free delivery which is goated,praise_noise,LLM bypassed,heuristic_bypass,4
+a8660adb-d442-4b80-af79-22a93e15b314-00,bahut achcha hai aur 50 discount hai,pricing_policy,pricing keywords (1 hits),heuristic,5
+ba09377f-8473-4d8b-b196-fb5a6d6ffa54-00,"there is no rain in my area, and you are asking for surge charges",pricing_policy,pricing keywords (1 hits),heuristic,1
+23130b13-be0f-4aba-adbe-935188a36744-00,sometimes too much costly,pricing_policy,pricing keywords (1 hits),heuristic,4
+2d519f2b-480c-4848-9fc0-215be2d55729-00,"Nice, but need more discount",pricing_policy,pricing keywords (1 hits),heuristic,5
+cf6febdf-f7fc-40f4-859a-b0459f000382-00,"I received a 75% off coupon through the spin offer, but now it is not showing or usable",pricing_policy,strong pricing keywords (2 hits),heuristic,1
+303c3397-6257-49b0-914a-0566680100be-00,quite expensive even after purchase of 100/- they charge us extra charges for delivery,pricing_policy,strong pricing keywords (2 hits),heuristic,4
+f16440e7-9300-4273-86df-16c77da88f0c-00,price thode kaam kro or jiomart ke jaise coupon start kro thq,pricing_policy,pricing keywords (1 hits),heuristic,2
+704748b8-e261-498d-805b-e46dedc9e4f3-00,expensive and no copoun available and no 1 rupees store,pricing_policy,pricing keywords (1 hits),heuristic,1
+087d768a-14ce-4934-b5a9-0384fd21b253-01,"When I shop for less than ₹200, they charge so many extra fees that after seeing the total, I don’t feel like ordering anything",pricing_policy,pricing keywords (1 hits),heuristic,1
+3448bd5a-1831-4068-837c-5e1e63501195-00,surge charge komao ba,pricing_policy,pricing keywords (1 hits),heuristic,1
+61892e87-99a1-49c4-bcba-9b749de12ab6-00,the ice cream offer is not coming,pricing_policy,pricing keywords (1 hits),heuristic,1
+9e6e0755-a336-491f-ae44-003c1f01095a-02,A little bit expensive than the others but really good,pricing_policy,pricing keywords (1 hits),heuristic,5
+a7deb3e6-9b7b-4bf1-a06a-325b3f5b3c31-00,make website more clearer,praise_noise,"very short, no specific issue keywords",heuristic,4
+ae434f2c-ea34-4bd8-b95d-881b13106724-02,"I'm uninstalling their irritating App from all my family devices, stopping all purchases",praise_noise,no specific friction keywords found,heuristic,1

@@ -1,0 +1,911 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "query": "Repeat purchases from the same familiar categories; brand loyalty; routine reordering habits",
+      "coverage": "sufficient",
+      "theme_ids": [
+        "theme-0010",
+        "theme-0001",
+        "theme-0012",
+        "theme-0004",
+        "theme-0007",
+        "theme-0003",
+        "theme-0014",
+        "theme-0008",
+        "theme-0002",
+        "theme-0009",
+        "theme-0006",
+        "theme-0000"
+      ],
+      "theme_similarities": {
+        "theme-0010": 0.441,
+        "theme-0001": 0.36,
+        "theme-0012": 0.351,
+        "theme-0004": 0.345,
+        "theme-0007": 0.342,
+        "theme-0003": 0.335,
+        "theme-0014": 0.326,
+        "theme-0008": 0.325,
+        "theme-0002": 0.315,
+        "theme-0009": 0.313,
+        "theme-0006": 0.313,
+        "theme-0000": 0.308
+      },
+      "total_count": 10908,
+      "top_verbatims": [
+        "after some orders the items found missing",
+        "my order items were missing and even after complains not was done it happen many times",
+        "Also, several items are missing or not available after placing the order",
+        "worst app of all time they do always late delivery and second they did not give my money back despite they took the product from me and the amount was above rs1100😡😡😡😡😡 pls do not use this app",
+        "worst app ever i ordered but i didn't recived my order nd tht delivery guy cheated us don't use this app ever nd i even called to the customer care they didn't responded yet"
+      ],
+      "signal_ids": [
+        "signal-0017",
+        "signal-0022"
+      ],
+      "signal_support_total": 2,
+      "signal_confidence": "low"
+    },
+    {
+      "question_id": 2,
+      "query": "Barriers and reasons preventing exploration of new product categories",
+      "coverage": "insufficient",
+      "theme_ids": [],
+      "theme_similarities": {},
+      "total_count": 0,
+      "top_verbatims": [],
+      "signal_ids": [],
+      "signal_support_total": 0,
+      "signal_confidence": null
+    },
+    {
+      "question_id": 3,
+      "query": "How users discover new products: browsing, search, recommendations, banners, notifications",
+      "coverage": "insufficient",
+      "theme_ids": [],
+      "theme_similarities": {},
+      "total_count": 0,
+      "top_verbatims": [],
+      "signal_ids": [
+        "signal-0028",
+        "signal-0017",
+        "signal-0020",
+        "signal-0022"
+      ],
+      "signal_support_total": 4,
+      "signal_confidence": "low"
+    },
+    {
+      "question_id": 4,
+      "query": "Habitual, routine-driven shopping behavior and convenience",
+      "coverage": "insufficient",
+      "theme_ids": [],
+      "theme_similarities": {},
+      "total_count": 0,
+      "top_verbatims": [],
+      "signal_ids": [
+        "signal-0017",
+        "signal-0022"
+      ],
+      "signal_support_total": 2,
+      "signal_confidence": "low"
+    },
+    {
+      "question_id": 5,
+      "query": "Information, details, or trust signals needed before trying a new product category",
+      "coverage": "insufficient",
+      "theme_ids": [],
+      "theme_similarities": {},
+      "total_count": 0,
+      "top_verbatims": [],
+      "signal_ids": [
+        "signal-0022",
+        "signal-0023"
+      ],
+      "signal_support_total": 2,
+      "signal_confidence": "low"
+    },
+    {
+      "question_id": 6,
+      "query": "Recurring frustrations and complaints: delivery, quality, app experience, customer service",
+      "coverage": "sufficient",
+      "theme_ids": [
+        "theme-0001",
+        "theme-0008",
+        "theme-0013",
+        "theme-0012",
+        "theme-0006",
+        "theme-0005",
+        "theme-0002",
+        "theme-0014",
+        "theme-0011",
+        "theme-0004",
+        "theme-0007",
+        "theme-0003",
+        "theme-0000",
+        "theme-0010",
+        "theme-0009"
+      ],
+      "theme_similarities": {
+        "theme-0001": 0.649,
+        "theme-0008": 0.613,
+        "theme-0013": 0.57,
+        "theme-0012": 0.556,
+        "theme-0006": 0.545,
+        "theme-0005": 0.527,
+        "theme-0002": 0.527,
+        "theme-0014": 0.511,
+        "theme-0011": 0.46,
+        "theme-0004": 0.46,
+        "theme-0007": 0.457,
+        "theme-0003": 0.453,
+        "theme-0000": 0.418,
+        "theme-0010": 0.409,
+        "theme-0009": 0.35
+      },
+      "total_count": 12706,
+      "top_verbatims": [
+        "worst app of all time they do always late delivery and second they did not give my money back despite they took the product from me and the amount was above rs1100😡😡😡😡😡 pls do not use this app",
+        "worst app ever i ordered but i didn't recived my order nd tht delivery guy cheated us don't use this app ever nd i even called to the customer care they didn't responded yet",
+        "The worst app is the delivery agents asking for extra money for their delivery and saying if you don't give us extra money the order will be returned and the paid money won't come back and i tried to contact customer care but they don't respond",
+        "compared the other apps this app is charges more on every product they offer any coupon or discount infact have high delivery charges",
+        "the app is good but the items and the delivery cost and other costs are high compared to other apps"
+      ],
+      "signal_ids": [],
+      "signal_support_total": 0,
+      "signal_confidence": null
+    },
+    {
+      "question_id": 7,
+      "query": "User segments more open to trying new things versus sticking to routine",
+      "coverage": "insufficient",
+      "theme_ids": [],
+      "theme_similarities": {},
+      "total_count": 0,
+      "top_verbatims": [],
+      "signal_ids": [
+        "signal-0015"
+      ],
+      "signal_support_total": 1,
+      "signal_confidence": "low"
+    },
+    {
+      "question_id": 8,
+      "query": "Unmet needs, missing features, or product gaps mentioned repeatedly",
+      "coverage": "sufficient",
+      "theme_ids": [
+        "theme-0010",
+        "theme-0003"
+      ],
+      "theme_similarities": {
+        "theme-0010": 0.371,
+        "theme-0003": 0.353
+      },
+      "total_count": 1812,
+      "top_verbatims": [
+        "after some orders the items found missing",
+        "my order items were missing and even after complains not was done it happen many times",
+        "Also, several items are missing or not available after placing the order",
+        "multiple times bad products delivered and customer care also not great",
+        "from past 2-3 deliveries we are receiving bad quality products"
+      ],
+      "signal_ids": [],
+      "signal_support_total": 0,
+      "signal_confidence": null
+    }
+  ],
+  "uncategorized": {
+    "theme_ids": [],
+    "signal_ids": [
+      "signal-0016",
+      "signal-0018",
+      "signal-0019",
+      "signal-0021",
+      "signal-0024",
+      "signal-0025",
+      "signal-0026",
+      "signal-0027"
+    ]
+  },
+  "top_themes": [
+    {
+      "theme_id": "theme-0000",
+      "label": "customer / service / support / care",
+      "member_count": 1658,
+      "sentiment": "negative"
+    },
+    {
+      "theme_id": "theme-0001",
+      "label": "app / delivery / order / worst",
+      "member_count": 1424,
+      "sentiment": "negative"
+    },
+    {
+      "theme_id": "theme-0002",
+      "label": "delivery / service / bad / partner",
+      "member_count": 1258,
+      "sentiment": "negative"
+    },
+    {
+      "theme_id": "theme-0003",
+      "label": "product / products / quality / poor",
+      "member_count": 1104,
+      "sentiment": "negative"
+    },
+    {
+      "theme_id": "theme-0004",
+      "label": "delivery / charges / high / charge",
+      "member_count": 1043,
+      "sentiment": "negative"
+    }
+  ],
+  "theme_segment_stats": {
+    "theme-0000": {
+      "rating_distribution": {
+        "1": 1563,
+        "2": 66,
+        "3": 29
+      },
+      "time_cohort_distribution": {
+        "2026-01": 3,
+        "2026-02": 6,
+        "2026-03": 100,
+        "2026-04": 333,
+        "2026-05": 457,
+        "2026-06": 431,
+        "2026-07": 328
+      },
+      "source_distribution": {
+        "google_play": 1619,
+        "mouthshut": 39
+      }
+    },
+    "theme-0001": {
+      "rating_distribution": {
+        "1": 1236,
+        "2": 80,
+        "3": 108
+      },
+      "time_cohort_distribution": {
+        "2026-01": 1,
+        "2026-02": 2,
+        "2026-03": 81,
+        "2026-04": 304,
+        "2026-05": 443,
+        "2026-06": 354,
+        "2026-07": 239
+      },
+      "source_distribution": {
+        "google_play": 1410,
+        "mouthshut": 14
+      }
+    },
+    "theme-0002": {
+      "rating_distribution": {
+        "1": 1076,
+        "2": 78,
+        "3": 104
+      },
+      "time_cohort_distribution": {
+        "2026-01": 1,
+        "2026-03": 83,
+        "2026-04": 279,
+        "2026-05": 345,
+        "2026-06": 329,
+        "2026-07": 221
+      },
+      "source_distribution": {
+        "google_play": 1250,
+        "mouthshut": 8
+      }
+    },
+    "theme-0003": {
+      "rating_distribution": {
+        "1": 916,
+        "2": 102,
+        "3": 86
+      },
+      "time_cohort_distribution": {
+        "2026-03": 70,
+        "2026-04": 232,
+        "2026-05": 322,
+        "2026-06": 279,
+        "2026-07": 201
+      },
+      "source_distribution": {
+        "google_play": 1094,
+        "mouthshut": 10
+      }
+    },
+    "theme-0004": {
+      "rating_distribution": {
+        "1": 651,
+        "2": 162,
+        "3": 230
+      },
+      "time_cohort_distribution": {
+        "2026-02": 1,
+        "2026-03": 72,
+        "2026-04": 221,
+        "2026-05": 309,
+        "2026-06": 272,
+        "2026-07": 168
+      },
+      "source_distribution": {
+        "google_play": 1040,
+        "mouthshut": 3
+      }
+    },
+    "theme-0005": {
+      "rating_distribution": {
+        "1": 895,
+        "2": 59,
+        "3": 75
+      },
+      "time_cohort_distribution": {
+        "2026-01": 1,
+        "2026-02": 2,
+        "2026-03": 57,
+        "2026-04": 251,
+        "2026-05": 287,
+        "2026-06": 230,
+        "2026-07": 201
+      },
+      "source_distribution": {
+        "google_play": 1024,
+        "mouthshut": 5
+      }
+    },
+    "theme-0006": {
+      "rating_distribution": {
+        "1": 849,
+        "2": 64,
+        "3": 80
+      },
+      "time_cohort_distribution": {
+        "2026-01": 2,
+        "2026-02": 2,
+        "2026-03": 57,
+        "2026-04": 216,
+        "2026-05": 256,
+        "2026-06": 280,
+        "2026-07": 180
+      },
+      "source_distribution": {
+        "google_play": 972,
+        "mouthshut": 21
+      }
+    },
+    "theme-0007": {
+      "rating_distribution": {
+        "1": 637,
+        "2": 132,
+        "3": 142
+      },
+      "time_cohort_distribution": {
+        "2026-03": 64,
+        "2026-04": 236,
+        "2026-05": 268,
+        "2026-06": 194,
+        "2026-07": 149
+      },
+      "source_distribution": {
+        "google_play": 910,
+        "mouthshut": 1
+      }
+    },
+    "theme-0008": {
+      "rating_distribution": {
+        "1": 495,
+        "2": 103,
+        "3": 183
+      },
+      "time_cohort_distribution": {
+        "2026-03": 41,
+        "2026-04": 166,
+        "2026-05": 240,
+        "2026-06": 191,
+        "2026-07": 143
+      },
+      "source_distribution": {
+        "google_play": 777,
+        "mouthshut": 4
+      }
+    },
+    "theme-0009": {
+      "rating_distribution": {
+        "1": 653,
+        "2": 33,
+        "3": 33
+      },
+      "time_cohort_distribution": {
+        "2026-03": 41,
+        "2026-04": 135,
+        "2026-05": 213,
+        "2026-06": 200,
+        "2026-07": 130
+      },
+      "source_distribution": {
+        "google_play": 706,
+        "mouthshut": 13
+      }
+    },
+    "theme-0010": {
+      "rating_distribution": {
+        "1": 573,
+        "2": 62,
+        "3": 73
+      },
+      "time_cohort_distribution": {
+        "2026-01": 1,
+        "2026-03": 48,
+        "2026-04": 126,
+        "2026-05": 186,
+        "2026-06": 189,
+        "2026-07": 158
+      },
+      "source_distribution": {
+        "google_play": 699,
+        "mouthshut": 9
+      }
+    },
+    "theme-0011": {
+      "rating_distribution": {
+        "1": 537,
+        "2": 38,
+        "3": 54
+      },
+      "time_cohort_distribution": {
+        "2026-03": 36,
+        "2026-04": 141,
+        "2026-05": 167,
+        "2026-06": 162,
+        "2026-07": 123
+      },
+      "source_distribution": {
+        "google_play": 625,
+        "mouthshut": 4
+      }
+    },
+    "theme-0012": {
+      "rating_distribution": {
+        "1": 111,
+        "2": 25,
+        "3": 40
+      },
+      "time_cohort_distribution": {
+        "2026-03": 14,
+        "2026-04": 32,
+        "2026-05": 60,
+        "2026-06": 40,
+        "2026-07": 30
+      },
+      "source_distribution": {
+        "google_play": 176
+      }
+    },
+    "theme-0013": {
+      "rating_distribution": {
+        "1": 123,
+        "2": 5,
+        "3": 12
+      },
+      "time_cohort_distribution": {
+        "2026-03": 13,
+        "2026-04": 33,
+        "2026-05": 38,
+        "2026-06": 31,
+        "2026-07": 25
+      },
+      "source_distribution": {
+        "google_play": 139,
+        "mouthshut": 1
+      }
+    },
+    "theme-0014": {
+      "rating_distribution": {
+        "1": 92,
+        "2": 17,
+        "3": 24
+      },
+      "time_cohort_distribution": {
+        "2026-03": 8,
+        "2026-04": 25,
+        "2026-05": 41,
+        "2026-06": 37,
+        "2026-07": 22
+      },
+      "source_distribution": {
+        "google_play": 133
+      }
+    }
+  },
+  "category_graph": [
+    {
+      "theme_a": "theme-0000",
+      "theme_b": "theme-0011",
+      "similarity": 0.81
+    },
+    {
+      "theme_a": "theme-0000",
+      "theme_b": "theme-0009",
+      "similarity": 0.766
+    },
+    {
+      "theme_a": "theme-0000",
+      "theme_b": "theme-0002",
+      "similarity": 0.756
+    },
+    {
+      "theme_a": "theme-0000",
+      "theme_b": "theme-0003",
+      "similarity": 0.729
+    },
+    {
+      "theme_a": "theme-0000",
+      "theme_b": "theme-0010",
+      "similarity": 0.638
+    },
+    {
+      "theme_a": "theme-0001",
+      "theme_b": "theme-0005",
+      "similarity": 0.845
+    },
+    {
+      "theme_a": "theme-0001",
+      "theme_b": "theme-0012",
+      "similarity": 0.81
+    },
+    {
+      "theme_a": "theme-0001",
+      "theme_b": "theme-0008",
+      "similarity": 0.806
+    },
+    {
+      "theme_a": "theme-0001",
+      "theme_b": "theme-0014",
+      "similarity": 0.754
+    },
+    {
+      "theme_a": "theme-0001",
+      "theme_b": "theme-0009",
+      "similarity": 0.715
+    },
+    {
+      "theme_a": "theme-0002",
+      "theme_b": "theme-0007",
+      "similarity": 0.864
+    },
+    {
+      "theme_a": "theme-0002",
+      "theme_b": "theme-0000",
+      "similarity": 0.756
+    },
+    {
+      "theme_a": "theme-0002",
+      "theme_b": "theme-0004",
+      "similarity": 0.752
+    },
+    {
+      "theme_a": "theme-0002",
+      "theme_b": "theme-0012",
+      "similarity": 0.701
+    },
+    {
+      "theme_a": "theme-0002",
+      "theme_b": "theme-0009",
+      "similarity": 0.699
+    },
+    {
+      "theme_a": "theme-0003",
+      "theme_b": "theme-0010",
+      "similarity": 0.805
+    },
+    {
+      "theme_a": "theme-0003",
+      "theme_b": "theme-0009",
+      "similarity": 0.768
+    },
+    {
+      "theme_a": "theme-0003",
+      "theme_b": "theme-0000",
+      "similarity": 0.729
+    },
+    {
+      "theme_a": "theme-0003",
+      "theme_b": "theme-0002",
+      "similarity": 0.682
+    },
+    {
+      "theme_a": "theme-0003",
+      "theme_b": "theme-0014",
+      "similarity": 0.646
+    },
+    {
+      "theme_a": "theme-0004",
+      "theme_b": "theme-0002",
+      "similarity": 0.752
+    },
+    {
+      "theme_a": "theme-0004",
+      "theme_b": "theme-0008",
+      "similarity": 0.741
+    },
+    {
+      "theme_a": "theme-0004",
+      "theme_b": "theme-0012",
+      "similarity": 0.726
+    },
+    {
+      "theme_a": "theme-0004",
+      "theme_b": "theme-0007",
+      "similarity": 0.722
+    },
+    {
+      "theme_a": "theme-0004",
+      "theme_b": "theme-0009",
+      "similarity": 0.66
+    },
+    {
+      "theme_a": "theme-0005",
+      "theme_b": "theme-0001",
+      "similarity": 0.845
+    },
+    {
+      "theme_a": "theme-0005",
+      "theme_b": "theme-0008",
+      "similarity": 0.711
+    },
+    {
+      "theme_a": "theme-0005",
+      "theme_b": "theme-0014",
+      "similarity": 0.647
+    },
+    {
+      "theme_a": "theme-0005",
+      "theme_b": "theme-0012",
+      "similarity": 0.571
+    },
+    {
+      "theme_a": "theme-0005",
+      "theme_b": "theme-0013",
+      "similarity": 0.57
+    },
+    {
+      "theme_a": "theme-0006",
+      "theme_b": "theme-0001",
+      "similarity": 0.667
+    },
+    {
+      "theme_a": "theme-0006",
+      "theme_b": "theme-0009",
+      "similarity": 0.65
+    },
+    {
+      "theme_a": "theme-0006",
+      "theme_b": "theme-0000",
+      "similarity": 0.614
+    },
+    {
+      "theme_a": "theme-0006",
+      "theme_b": "theme-0008",
+      "similarity": 0.6
+    },
+    {
+      "theme_a": "theme-0006",
+      "theme_b": "theme-0013",
+      "similarity": 0.588
+    },
+    {
+      "theme_a": "theme-0007",
+      "theme_b": "theme-0002",
+      "similarity": 0.864
+    },
+    {
+      "theme_a": "theme-0007",
+      "theme_b": "theme-0004",
+      "similarity": 0.722
+    },
+    {
+      "theme_a": "theme-0007",
+      "theme_b": "theme-0010",
+      "similarity": 0.67
+    },
+    {
+      "theme_a": "theme-0007",
+      "theme_b": "theme-0012",
+      "similarity": 0.666
+    },
+    {
+      "theme_a": "theme-0007",
+      "theme_b": "theme-0009",
+      "similarity": 0.626
+    },
+    {
+      "theme_a": "theme-0008",
+      "theme_b": "theme-0001",
+      "similarity": 0.806
+    },
+    {
+      "theme_a": "theme-0008",
+      "theme_b": "theme-0004",
+      "similarity": 0.741
+    },
+    {
+      "theme_a": "theme-0008",
+      "theme_b": "theme-0012",
+      "similarity": 0.74
+    },
+    {
+      "theme_a": "theme-0008",
+      "theme_b": "theme-0014",
+      "similarity": 0.731
+    },
+    {
+      "theme_a": "theme-0008",
+      "theme_b": "theme-0005",
+      "similarity": 0.711
+    },
+    {
+      "theme_a": "theme-0009",
+      "theme_b": "theme-0010",
+      "similarity": 0.786
+    },
+    {
+      "theme_a": "theme-0009",
+      "theme_b": "theme-0003",
+      "similarity": 0.768
+    },
+    {
+      "theme_a": "theme-0009",
+      "theme_b": "theme-0000",
+      "similarity": 0.766
+    },
+    {
+      "theme_a": "theme-0009",
+      "theme_b": "theme-0001",
+      "similarity": 0.715
+    },
+    {
+      "theme_a": "theme-0009",
+      "theme_b": "theme-0002",
+      "similarity": 0.699
+    },
+    {
+      "theme_a": "theme-0010",
+      "theme_b": "theme-0003",
+      "similarity": 0.805
+    },
+    {
+      "theme_a": "theme-0010",
+      "theme_b": "theme-0009",
+      "similarity": 0.786
+    },
+    {
+      "theme_a": "theme-0010",
+      "theme_b": "theme-0007",
+      "similarity": 0.67
+    },
+    {
+      "theme_a": "theme-0010",
+      "theme_b": "theme-0002",
+      "similarity": 0.664
+    },
+    {
+      "theme_a": "theme-0010",
+      "theme_b": "theme-0001",
+      "similarity": 0.651
+    },
+    {
+      "theme_a": "theme-0011",
+      "theme_b": "theme-0000",
+      "similarity": 0.81
+    },
+    {
+      "theme_a": "theme-0011",
+      "theme_b": "theme-0002",
+      "similarity": 0.678
+    },
+    {
+      "theme_a": "theme-0011",
+      "theme_b": "theme-0003",
+      "similarity": 0.637
+    },
+    {
+      "theme_a": "theme-0011",
+      "theme_b": "theme-0009",
+      "similarity": 0.606
+    },
+    {
+      "theme_a": "theme-0011",
+      "theme_b": "theme-0001",
+      "similarity": 0.586
+    },
+    {
+      "theme_a": "theme-0012",
+      "theme_b": "theme-0001",
+      "similarity": 0.81
+    },
+    {
+      "theme_a": "theme-0012",
+      "theme_b": "theme-0008",
+      "similarity": 0.74
+    },
+    {
+      "theme_a": "theme-0012",
+      "theme_b": "theme-0004",
+      "similarity": 0.726
+    },
+    {
+      "theme_a": "theme-0012",
+      "theme_b": "theme-0002",
+      "similarity": 0.701
+    },
+    {
+      "theme_a": "theme-0012",
+      "theme_b": "theme-0009",
+      "similarity": 0.674
+    },
+    {
+      "theme_a": "theme-0013",
+      "theme_b": "theme-0001",
+      "similarity": 0.692
+    },
+    {
+      "theme_a": "theme-0013",
+      "theme_b": "theme-0008",
+      "similarity": 0.633
+    },
+    {
+      "theme_a": "theme-0013",
+      "theme_b": "theme-0012",
+      "similarity": 0.626
+    },
+    {
+      "theme_a": "theme-0013",
+      "theme_b": "theme-0000",
+      "similarity": 0.616
+    },
+    {
+      "theme_a": "theme-0013",
+      "theme_b": "theme-0002",
+      "similarity": 0.59
+    },
+    {
+      "theme_a": "theme-0014",
+      "theme_b": "theme-0001",
+      "similarity": 0.754
+    },
+    {
+      "theme_a": "theme-0014",
+      "theme_b": "theme-0008",
+      "similarity": 0.731
+    },
+    {
+      "theme_a": "theme-0014",
+      "theme_b": "theme-0005",
+      "similarity": 0.647
+    },
+    {
+      "theme_a": "theme-0014",
+      "theme_b": "theme-0003",
+      "similarity": 0.646
+    },
+    {
+      "theme_a": "theme-0014",
+      "theme_b": "theme-0012",
+      "similarity": 0.644
+    }
+  ],
+  "summary": {
+    "num_themes": 15,
+    "num_emerging_signals": 14,
+    "similarity_threshold": 0.3,
+    "num_questions_sufficient": 3,
+    "num_questions_insufficient": 5,
+    "num_uncategorized_themes": 0,
+    "num_uncategorized_signals": 8,
+    "num_category_graph_edges": 75
+  }
+}

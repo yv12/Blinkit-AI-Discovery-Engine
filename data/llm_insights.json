@@ -1,0 +1,933 @@
+{
+  "method": "llm_groq",
+  "model": "llama-3.1-8b-instant",
+  "sampled_unit_count": 3996,
+  "batches_ok": 200,
+  "batches_failed": 0,
+  "questions": [
+    {
+      "question_id": 1,
+      "raw_hit_count": 718,
+      "patterns": [
+        {
+          "pattern": "brand loyalty and routine reordering habits",
+          "support_count": 184,
+          "example_quotes": [
+            "i love tha blinkit 🫂🌹✨",
+            "Blinkit is vary nice job",
+            "Overall, I am very satisfied with the service and would definitely recommend Blinkit to others"
+          ],
+          "example_unit_ids": [
+            "bc936dba-67f3-48c1-b4ba-136371365d59-00",
+            "7cf7d965-f60b-451f-b746-89f178c8172a-00",
+            "ddc0f139-7032-4c91-9c68-1899f9745d56-04"
+          ]
+        },
+        {
+          "pattern": "loyalty to blinkit's ambulance service",
+          "support_count": 56,
+          "example_quotes": [
+            "very fast delivery and very quality product available in blinkit",
+            "blinkit is a great app for everything,every process is trustworthy",
+            "best friend like members of blinkit it members get delivery on time"
+          ],
+          "example_unit_ids": [
+            "c76bc687-7dee-45c6-b0fc-ab5fa987006e-00",
+            "c90dace4-4a86-41cd-8581-89d5c5068993-00",
+            "2fffa8b1-24ac-4a79-991e-eeb70ef9e1a7-00"
+          ]
+        },
+        {
+          "pattern": "loyalty to positive experiences",
+          "support_count": 44,
+          "example_quotes": [
+            "very good 👍 qwality thanks for blinkit",
+            "Thanks blinkit for the products",
+            "quality was sooo good at blinkit"
+          ],
+          "example_unit_ids": [
+            "e9dede3a-fbf0-41cf-9c82-33b467f5219c-00",
+            "3312578a-ce84-4111-b5e6-d7cb91b3dcec-00",
+            "479048a5-af6c-449e-9e87-268c541a3999-00"
+          ]
+        },
+        {
+          "pattern": "reliance on daily necessities for routine purchases",
+          "support_count": 30,
+          "example_quotes": [
+            "but the gift card system did not work",
+            "I've been very happy with Blanket",
+            "amazing for your moody behaviour"
+          ],
+          "example_unit_ids": [
+            "a4b02f99-87e3-41c9-9efe-e1605b808235-01",
+            "e7bc06a9-be75-4090-88c6-476a45134837-01",
+            "8e08a4fd-b649-45bb-95e5-1330655e6f61-00"
+          ]
+        },
+        {
+          "pattern": "prefers competing apps for routine purchases",
+          "support_count": 28,
+          "example_quotes": [
+            "It’s just not worth it when Zepto is providing a much better experience",
+            "Not any better than Zepto,",
+            "zepto and instamart is really good service"
+          ],
+          "example_unit_ids": [
+            "1f368d4e-9377-4382-afed-d7dde58ddfcb-02",
+            "30b7f5cc-634f-42e0-bb72-f621b5c48e54-00",
+            "6ebde9fc-d851-4ad4-9e80-a386f6bffdf6-01"
+          ]
+        },
+        {
+          "pattern": "repeat print orders driven by convenience and satisfaction",
+          "support_count": 21,
+          "example_quotes": [
+            "very good 👍keep up your great work",
+            "no words are compliment 😊",
+            "most of the time , good 4"
+          ],
+          "example_unit_ids": [
+            "b9cd51da-8857-4383-97e6-9fd4bf3392ee-00",
+            "0a3cc177-096a-4512-9f0c-7cd0f0654bf1-00",
+            "a8bd91a4-d591-4044-a720-7bbe5fb39c42-03"
+          ]
+        },
+        {
+          "pattern": "reliance on familiar app for routine tasks",
+          "support_count": 21,
+          "example_quotes": [
+            "just did it like it",
+            "this app is my saviour",
+            "truly an Last min app you can rely on"
+          ],
+          "example_unit_ids": [
+            "740967d0-4ca6-4626-9da2-7df78f954be7-00",
+            "0e0017db-aa01-46f7-a8c8-1210f10773e7-00",
+            "6f0aba84-0b6b-41d8-b783-77ec290d1e0c-00"
+          ]
+        },
+        {
+          "pattern": "prefers competitor's offerings over blinkit's",
+          "support_count": 17,
+          "example_quotes": [
+            "I am so glad I had Blinkit Services in my town",
+            "I am a regular customer of blinkit",
+            "unable to use blinkit money"
+          ],
+          "example_unit_ids": [
+            "68abccf2-c76a-46e7-ba77-b477ad61359e-00",
+            "1fe6ba1c-1a15-4906-919d-4f9ac66b1a69-00",
+            "7ea835ab-d69f-4e1c-96ef-b94126812bbd-00"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 2,
+      "raw_hit_count": 334,
+      "patterns": [
+        {
+          "pattern": "narrow, unstated product vocabulary suggesting routine-only usage",
+          "support_count": 90,
+          "example_quotes": [
+            "blinkit did not give me refund bcoz send me wrong product and they did not take return also all people remember blinkit is not good for cable and charger electric items other items this scam stupid",
+            "Initially I placed 2 to 3 orders which were received successfully, so I gave Blinkit a 5 star rating, after that I purchased a little costly product as I had urgent requirement",
+            "Maybe blink it will not have any affect losing 1 customer"
+          ],
+          "example_unit_ids": [
+            "6a921a10-926a-4b43-b1cb-1404dacb7951-00",
+            "mouthshut-a8c9222d68839ca6-01",
+            "cde59455-e369-49cd-9d0c-87561cb7dcd9-02"
+          ]
+        },
+        {
+          "pattern": "price sensitivity and unwillingness to explore",
+          "support_count": 30,
+          "example_quotes": [
+            "price of fruits and vegetables, groceries High comparing with zepto and Bigbasket",
+            "compare to zepto blinkit is High cost",
+            "prices are too high compared to others apps like Swiggy zepto"
+          ],
+          "example_unit_ids": [
+            "a3c75886-bb5b-4df8-9231-c507103c295a-00",
+            "df67c415-75a3-43c8-85de-79c7e9f5fadd-00",
+            "7016e772-d2be-4329-8a43-e4aeb2a52b19-00"
+          ]
+        },
+        {
+          "pattern": "barriers to exploration due to lack of clear information",
+          "support_count": 16,
+          "example_quotes": [
+            "comparing to all apps blanket is absolutely amazing superb",
+            "An immigrant action should be taken through feedback",
+            "he told me not vacancy here"
+          ],
+          "example_unit_ids": [
+            "94ee6e2e-c4e7-4d24-a927-02884e2a88f3-00",
+            "0eb0422c-0aea-4f87-9b5e-3c18df55e24e-01",
+            "cfb82e66-54ef-48f1-b478-0f9647e1b86b-02"
+          ]
+        },
+        {
+          "pattern": "hesitation to order milk and sweets due to quality concerns",
+          "support_count": 14,
+          "example_quotes": [
+            "Don't order food or drinks from Blanket, they come in bad condition, especially not milk, buttermilk or sweets"
+          ],
+          "example_unit_ids": [
+            "1b506045-d0d6-44c5-a6c9-cedaef9a0ba9-00"
+          ]
+        },
+        {
+          "pattern": "high delivery costs as a barrier",
+          "support_count": 13,
+          "example_quotes": [
+            "you will have to pay me extra money for me to deliver the items to your address",
+            "yrrr koi to cash on delivery wale option on unable kro hm order nhi kar paa rhe pehle to mene order Kiya tha av kyo nhi ho rha",
+            "delivery charge is too high"
+          ],
+          "example_unit_ids": [
+            "ce4f3d40-72e8-4d29-916e-8e12eede32d4-04",
+            "3e76f003-1357-4721-9517-37ec6fc83b04-00",
+            "a822e0c0-75da-4954-a41b-f92f075ec995-00"
+          ]
+        },
+        {
+          "pattern": "perceived unfairness of delivery charges discouraging exploration",
+          "support_count": 9,
+          "example_quotes": [
+            "after choosing snacks they are taking delivery charges this is not fair thats why I am giving one star",
+            "3 star because the surge and charge is too high and delivery charge is also too high why",
+            "now I am giving 1 star only bcoz of poor delivery experience, they do not come on time since a few months I have been experiencing same, also they are taking the handling charges and delevering so late is not acceptable bcoz of that product which comes from cold rooms they got spoiled bcoz of late delivery,which was very disappointing"
+          ],
+          "example_unit_ids": [
+            "71e0943b-bf7a-4142-a61f-f72ea84f10d6-01",
+            "64f5ec9c-1847-41f4-bfab-79a8779bf5d2-00",
+            "fdd24fab-043f-47eb-b6dc-b4acff60ffec-01"
+          ]
+        },
+        {
+          "pattern": "barriers to exploration: fear of receiving spoiled items",
+          "support_count": 8,
+          "example_quotes": [
+            "Don't order food or drinks from Blanket, they come in bad condition, especially not milk, buttermilk or sweets"
+          ],
+          "example_unit_ids": [
+            "1b506045-d0d6-44c5-a6c9-cedaef9a0ba9-00"
+          ]
+        },
+        {
+          "pattern": "barriers to adoption due to lack of preferred payment options",
+          "support_count": 8,
+          "example_quotes": [
+            "other my id dakshesh rathod ,any debit card ,credit card,amazon pay later,any payment faild option, maninagar area delivery,no costomer care agent ,not qureey short out,not satisfied,all option improve you're blinkit",
+            "I will switch to alternative as soon as available",
+            "cash on delivery nahi hota hee 150 ki order mee"
+          ],
+          "example_unit_ids": [
+            "a86dcbe9-ba73-4ae4-8dc0-efa35ecf6259-00",
+            "2b8315b7-661a-4839-9e31-bf5184e5e535-03",
+            "3dae5bcf-c424-45a0-ab5b-334932098b69-00"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 3,
+      "raw_hit_count": 105,
+      "patterns": [
+        {
+          "pattern": "discovery of new products through browsing",
+          "support_count": 31,
+          "example_quotes": [
+            "yesterday I order mi 10000 mh power bank",
+            "instamart , Bigbasket, flipkart minutes best",
+            "This time I am ordering because Zepto is showing me unavailable"
+          ],
+          "example_unit_ids": [
+            "b6af392e-bef1-4daa-9150-f764ecf10213-00",
+            "6b1e7390-1c43-451b-b8b0-3f5837dd48a1-00",
+            "432fd860-6e3f-4925-9845-688e492d4b98-02"
+          ]
+        },
+        {
+          "pattern": "discovery through positive word-of-mouth and reputation",
+          "support_count": 23,
+          "example_quotes": [
+            "very good,,I m trying it first time,but I like it,,very very good 👍😊",
+            "very good 👍keep up your great work",
+            "no words are compliment 😊"
+          ],
+          "example_unit_ids": [
+            "d0873b74-6d9d-4ef6-bbbc-09b991f67b52-00",
+            "b9cd51da-8857-4383-97e6-9fd4bf3392ee-00",
+            "0a3cc177-096a-4512-9f0c-7cd0f0654bf1-00"
+          ]
+        },
+        {
+          "pattern": "excitement about fast delivery and instant gratification",
+          "support_count": 3,
+          "example_quotes": [
+            "very nice very fast blinkit is the one of the app that gives all of the in minutes 💕🍜",
+            "Positives are that deliveries are fast and sometimes they may have certain items that the other apps don't",
+            "It's a really great experience, fast delivery"
+          ],
+          "example_unit_ids": [
+            "efded4da-a3a8-4004-a778-9a204299f9fa-00",
+            "e96b31e5-aa99-4c14-99e8-7712f8b04c98-01",
+            "fcd7dbdd-967e-45f2-97d8-670f29ae09a9-00"
+          ]
+        },
+        {
+          "pattern": "requests for new product categories through user suggestions",
+          "support_count": 3,
+          "example_quotes": [
+            "Edit: Please add Casio watches & men's t-shirts",
+            "Breezer Beer should also in the list",
+            "hey when will you add uno liar"
+          ],
+          "example_unit_ids": [
+            "201705ae-0570-44bf-a22d-11cc0835b896-01",
+            "acc9220d-386e-42b0-8c27-d31493c3f397-00",
+            "c845854d-d975-40cc-b650-f8927eb56a2a-00"
+          ]
+        },
+        {
+          "pattern": "mini browsing section facilitates discovery",
+          "support_count": 2,
+          "example_quotes": [
+            "recently i noticed laging in the previously order section, the mini browsing section is good",
+            "such a useful app,very easy to navigate,stuff is too cool i ordered an imported pen for a gift,such a quick delivery"
+          ],
+          "example_unit_ids": [
+            "fec372cd-ca72-445f-8168-b79c65d72440-01",
+            "05fe3024-252c-405b-b72b-bbd061084d50-00"
+          ]
+        },
+        {
+          "pattern": "positive experience discovered through first-time use",
+          "support_count": 2,
+          "example_quotes": [
+            "first time using it and great experience, i loved it",
+            "very good and good experience excellent"
+          ],
+          "example_unit_ids": [
+            "5b6f40ae-9e4b-44eb-8d96-d41615870972-00",
+            "6b9f91d5-62e3-4cdb-852f-aef94000c8de-00"
+          ]
+        },
+        {
+          "pattern": "discovery of new feature through user feedback",
+          "support_count": 2,
+          "example_quotes": [
+            "the best thing is that we can upload files and get a printout of it thanks for this",
+            "can u add more coupons for like Google pay, phone pay app"
+          ],
+          "example_unit_ids": [
+            "d7af1d39-48d7-4c77-bcba-6d77a016eacc-00",
+            "830042d2-5d95-46be-a27b-ee387ce048ff-00"
+          ]
+        },
+        {
+          "pattern": "new features like online doctor consultation attract users",
+          "support_count": 2,
+          "example_quotes": [
+            "They have an option of online doctor consultation",
+            "#printstore blink it as satisfied my expectations to the fullest the quality was amazing the delivery was amazing the paper was amazing expect such a delivery from blink it at a short period of time at the late night hats of to blink it for their amazing work"
+          ],
+          "example_unit_ids": [
+            "1381920e-67d3-4ce5-a31b-b9288063ef10-03",
+            "ce5b242b-66a6-4280-b4f2-2a6ff52084db-00"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 4,
+      "raw_hit_count": 372,
+      "patterns": [
+        {
+          "pattern": "convenience-driven impulse purchases",
+          "support_count": 73,
+          "example_quotes": [
+            "Well sometimes before I blink the order arrives, jokes apart, excellent service",
+            "this is the best app 10 minutes delivery Ho jaati Hai",
+            "bohot kaam ki cheez hai blinkit is the best option"
+          ],
+          "example_unit_ids": [
+            "5dfba3c6-ebb3-4287-8bbc-925b839dbba4-00",
+            "a6b29988-57c9-41f8-9fc7-64b1cd4829e2-00",
+            "3fa2e76b-a766-4aab-a1eb-782f9d22f9b3-00"
+          ]
+        },
+        {
+          "pattern": "app's convenience is a key motivator",
+          "support_count": 25,
+          "example_quotes": [
+            "osm app h 💞💞बहुत कमल का app h",
+            "ye aap bohot acha hai bhai",
+            "Bhai mast hai, bhot ease hai life me"
+          ],
+          "example_unit_ids": [
+            "ad7a7626-d11b-42f0-afc3-0fbf0681a80e-00",
+            "6175b275-d69b-495e-b480-1f8592355ae8-00",
+            "c0f60c20-a462-4029-822f-bd776a392e7b-00"
+          ]
+        },
+        {
+          "pattern": "habitual usage driven by exceptional experience",
+          "support_count": 23,
+          "example_quotes": [
+            "recently i noticed laging in the previously order section, the mini browsing section is good",
+            "Most of the time its good",
+            "most of the time works flawlessly"
+          ],
+          "example_unit_ids": [
+            "fec372cd-ca72-445f-8168-b79c65d72440-01",
+            "41fe865c-4431-457e-a29e-207c3d8f815e-00",
+            "60908f75-6e3c-4e19-a162-52d6e4460973-01"
+          ]
+        },
+        {
+          "pattern": "convenience and ease of use",
+          "support_count": 20,
+          "example_quotes": [
+            "jst blink and ur order is ready",
+            "this app is very good I always use oy whenever I need smth",
+            "I had a very good experience"
+          ],
+          "example_unit_ids": [
+            "fff67ef8-8138-4fbb-8500-2e704a72af4d-00",
+            "68842953-82df-40f2-9dcd-d01ed304a4be-00",
+            "673afe67-8fc8-4fd4-a1ba-fd1201f8305c-00"
+          ]
+        },
+        {
+          "pattern": "impatience with slow delivery eroding trust",
+          "support_count": 18,
+          "example_quotes": [
+            "time takes 25 min compare other competitors app dead slow",
+            "I was very thankful ☺️☺️",
+            "this is way too much"
+          ],
+          "example_unit_ids": [
+            "1befa911-4868-47b1-b7a4-e7b7b34cf8dd-00",
+            "445f8ffe-7a4d-47a5-9db0-0ade7e36d3d6-01",
+            "aa1fec7b-424a-4fc5-a7d8-8c34deba3600-04"
+          ]
+        },
+        {
+          "pattern": "appreciation for fast delivery",
+          "support_count": 17,
+          "example_quotes": [
+            "bahut acha hai fast delivery",
+            "bahut jaldi aa jata hai",
+            "badhiya h such me 10mint me aa jata h"
+          ],
+          "example_unit_ids": [
+            "4fab8835-0cd4-422f-b00c-351dd8926e67-00",
+            "53ed44c0-38ba-40cf-ab93-80216c0035e8-00",
+            "0bcbb623-0119-4e60-ade1-3f3eb29f87bf-00"
+          ]
+        },
+        {
+          "pattern": "search-driven discovery of print feature",
+          "support_count": 16,
+          "example_quotes": [
+            "best app, better delivery times than anyone else, and just the convenience of being able to order prints is the cherry on top",
+            "The print out feature is really very useful for me"
+          ],
+          "example_unit_ids": [
+            "344420a3-d71e-4af3-bb0e-7b84bf6625a2-00",
+            "988ca01e-4df6-4fef-9d03-2a53030dbe3d-00"
+          ]
+        },
+        {
+          "pattern": "frequent, rapid reordering driven by convenience",
+          "support_count": 14,
+          "example_quotes": [
+            "very good app I am so happy thank you",
+            "I personally like this app very much",
+            "the best app i find it cuz this app is available for me every time"
+          ],
+          "example_unit_ids": [
+            "68b0224d-96bc-4c02-bab9-4f7f162d8bb0-00",
+            "7016b9df-c390-48bd-9474-ed86cf5017c3-00",
+            "a43f7e2b-46d3-4b85-ac0f-04af6669f009-00"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 5,
+      "raw_hit_count": 92,
+      "patterns": [
+        {
+          "pattern": "trust in print quality and convenience",
+          "support_count": 15,
+          "example_quotes": [
+            "best app, better delivery times than anyone else, and just the convenience of being able to order prints is the cherry on top"
+          ],
+          "example_unit_ids": [
+            "344420a3-d71e-4af3-bb0e-7b84bf6625a2-00"
+          ]
+        },
+        {
+          "pattern": "trust in blinkit's ability to save time",
+          "support_count": 7,
+          "example_quotes": [
+            "in blinkit it's 177 only",
+            "thanks blinkit for saving our time and life",
+            "thank you blinkit you have made our lives really easy ❤️"
+          ],
+          "example_unit_ids": [
+            "4ae14bb6-5ba7-482f-8aab-66166b01ddbd-02",
+            "ce22d71b-52eb-452c-9721-85b4991e93d7-03",
+            "f2803137-d73c-456d-9a1a-4b273425608d-01"
+          ]
+        },
+        {
+          "pattern": "trust in app's quality and performance",
+          "support_count": 5,
+          "example_quotes": [
+            "comparing to all apps blanket is absolutely amazing superb",
+            "I've been very happy with Blanket",
+            "very impressive 👏 and professional keep it up guys all the best"
+          ],
+          "example_unit_ids": [
+            "94ee6e2e-c4e7-4d24-a927-02884e2a88f3-00",
+            "e7bc06a9-be75-4090-88c6-476a45134837-01",
+            "039ad182-3f3b-4826-b3bd-f18c4fb3c821-00"
+          ]
+        },
+        {
+          "pattern": "trusts product information without verifying measurements",
+          "support_count": 4,
+          "example_quotes": [
+            "And she said the measurements are already written in that",
+            "I have attached the relevant screenshots for reference",
+            "I've ordered the nail extensions on the description it says 24 pieces"
+          ],
+          "example_unit_ids": [
+            "0f4d71b4-2716-4c79-8496-19b014a09552-03",
+            "0f3e7176-2351-4011-a90f-c4ee1c82ce75-04",
+            "1ecec4b1-4e08-4f6d-a3f8-e8e19b23503f-00"
+          ]
+        },
+        {
+          "pattern": "hesitation to try new products due to perceived high prices",
+          "support_count": 4,
+          "example_quotes": [
+            "I need a scrunchy and it shows it so expensive",
+            "I ordered 35 rs doodh ka packet and total 85 rs pay krne ko bola",
+            "some items cost more high than other apps"
+          ],
+          "example_unit_ids": [
+            "8902afaa-c523-4ef6-8641-cf365c3efae1-00",
+            "5f720432-25b3-4f99-936e-e76b460f69a6-00",
+            "77676223-3e5a-48e2-a5b2-2f0258a78221-00"
+          ]
+        },
+        {
+          "pattern": "need for clear product information and quality assurance",
+          "support_count": 3,
+          "example_quotes": [
+            "I had a conversation with Muskan earlier today at around 9:45 PM regarding the poor quality of the fan I purchased from the Ecolink brand",
+            "I also uploaded an image of channa and a scale to show that it is less than 5mm each channa",
+            "I raised the issue in chat and it is asking me to attach photo by taking pic from camera"
+          ],
+          "example_unit_ids": [
+            "2b5b7a21-c03d-4090-b83c-2d24f62a03dc-00",
+            "cb124cf6-3c4b-417d-8bae-ad11dd6b091b-03",
+            "dd1df8b8-bf78-4496-ae82-4ae0c663ba30-02"
+          ]
+        },
+        {
+          "pattern": "deterred by declining product quality",
+          "support_count": 3,
+          "example_quotes": [
+            "qualities getting worse day by day",
+            "I ordered umbrella today and as per price ot is such a poor quality",
+            "product quality is very good fresh food"
+          ],
+          "example_unit_ids": [
+            "0a2e4b4e-46f4-4a60-b0b9-233e4e1bd613-00",
+            "9546d918-36a4-4454-a692-8c4ada9527af-01",
+            "e83e69b8-7969-4b02-ba71-31e46fbe1266-00"
+          ]
+        },
+        {
+          "pattern": "narrow, unstated product vocabulary suggesting routine-only usage",
+          "support_count": 3,
+          "example_quotes": [
+            "handling charges': ₹10 product price on MRP (No Discount) zepto gives 5-10% discount on every product + free delivery",
+            "डिलीवरी वाला मेरे मकान से दो मकानछोड़कर मेरे ऑर्डर को खुद ही उसे करके देख रहे थे",
+            "I am not getting the product of 1 or 2 kgs Govardhan cheese mozzarella, kindly let me know"
+          ],
+          "example_unit_ids": [
+            "1c3c885b-ae3d-47b5-8248-1c4e232ebac1-00",
+            "9be4e8d3-7939-4944-b913-4de8288c8cbe-00",
+            "7e248ccd-8049-4c40-8530-c1b86e3ea706-00"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 6,
+      "raw_hit_count": 1020,
+      "patterns": [
+        {
+          "pattern": "recurring frustration with product quality",
+          "support_count": 121,
+          "example_quotes": [
+            "Not happy at with the service of Blinkit I have order a product and it was wrong item in picture when I ask a a courier partner they said you can return it",
+            "Such a bad experience I had with blinkit meri beti nay watch order ki on the occasion of father day wo quality issue tha or customer care wale bewakoof Bana Rahe hum bol Rahe Hai ki we don't need anymore they are excuse to us I'll request to all that not dealing with tham because now they are get too much delivery charges also",
+            "I have placed an order for a wireless keyboard and mouse and I received wired product"
+          ],
+          "example_unit_ids": [
+            "mouthshut-a80e9968d513c378-01",
+            "84021d2c-03d3-4e43-9755-84fc57231bcb-00",
+            "b503a99d-cdb8-4a88-9153-bbf4a19f372b-01"
+          ]
+        },
+        {
+          "pattern": "recurring frustration with customer service",
+          "support_count": 103,
+          "example_quotes": [
+            "Now I am trying to customer service no way to contact not even got my refund so be careful paying online on Blinkit",
+            "sell person gives me 1 item only and the service charge will be 60 it is too expensive hate you blinkit after this I'll never order from blinkit and I'll suggest everyone that do not use blinkit 3rd class app",
+            "When I contacted Blinkit customer support within 5 minutes of receiving the order, hoping for a simple return or exchange, my request was flatly denied"
+          ],
+          "example_unit_ids": [
+            "mouthshut-30697248b02db69f-03",
+            "b476547b-b69e-4d08-a727-47b4f00aaac1-01",
+            "mouthshut-606868a3b10bf585-02"
+          ]
+        },
+        {
+          "pattern": "recurring frustration with app experience",
+          "support_count": 63,
+          "example_quotes": [
+            "very bad service in blinkit app",
+            "Not expected this, Don't purchase anything from blink it",
+            "I hope you look over this matter blinkit"
+          ],
+          "example_unit_ids": [
+            "d4a7e576-46ae-431a-a927-0a715a910d64-00",
+            "48f1cb1a-8890-43e5-b9a9-2c175e89b055-01",
+            "a4a9bebb-c6ee-4a52-bc96-3c6331212f08-03"
+          ]
+        },
+        {
+          "pattern": "frustration with high delivery charges",
+          "support_count": 60,
+          "example_quotes": [
+            "I feel Blinkit is taking extra money in the name of handling charges",
+            "bhot deri se delevery aa raha h urgent tha 50 m ke distance pe hu koi aa hi nahi Raha",
+            "very poor service, jo time dikhate hai us se aadha ghanta let aate hai"
+          ],
+          "example_unit_ids": [
+            "ae1a5db9-e257-409a-bd25-fa73c9d5e149-01",
+            "39a7e2c3-4781-490c-b471-ece1dd146432-00",
+            "58679632-00c7-4f63-8489-f2bbbdb6c49e-00"
+          ]
+        },
+        {
+          "pattern": "reliability and punctuality alleviate delivery frustrations",
+          "support_count": 48,
+          "example_quotes": [
+            "don't use this app , delivering default products, avoid using blinkit, it's my 3rd time facing this problem",
+            "kisi bhi delievery par agar change nahi hota hamare pass toh yeh bhi delivery vale ke sath change' nahi bhejte aur fir jab delevery krne aa jate ha toh paise ko leke bhes karte h aur Cancel krdo essa bolte ha hamare pass change nahi ap dekhlo apko ky Krna ha Essa bolte ha very Disappointing Services",
+            "hmne aaj pehli bar blinkit se order Kiya tha usme ek thumb ka order tha or vo bhi child ni aai matlab thandi ni aai or ye bat bhot buri lgiii esliye me aaj se es aap ko delete krta hun ,😡🤬"
+          ],
+          "example_unit_ids": [
+            "d67e7ce1-f541-4a55-9b61-9e704fea09e0-00",
+            "01613dd9-b77a-439a-be99-70b2471ee675-00",
+            "5bed620c-4971-4b44-ada3-2686c6829b9d-00"
+          ]
+        },
+        {
+          "pattern": "recurring satisfaction with delivery times and convenience",
+          "support_count": 45,
+          "example_quotes": [
+            "I'm fed-up with the phone numbers in different address, everytime it is picking up the mobile phone number from my previous ordered address, the delivery person is getting wrong number or the previous ordered phone number and make call to others in my Blinkit address list",
+            "odar aayega to ham checking karege tab ham batayege",
+            "time takes 25 min compare other competitors app dead slow"
+          ],
+          "example_unit_ids": [
+            "a1601526-39c7-4755-82f3-829149c404fb-00",
+            "7637c9c8-827d-43d5-ad50-6c79c66ba24e-00",
+            "1befa911-4868-47b1-b7a4-e7b7b34cf8dd-00"
+          ]
+        },
+        {
+          "pattern": "frustration with poor packaging",
+          "support_count": 34,
+          "example_quotes": [
+            "Dear Sir/Madam, This is my second time receiving a my orders with poor packaging from your Blinkit store (Sector 4, Noida)",
+            "bohot hi gande tarike se samaan packing kar k bhejte hai ghar tak aate aate kuch samaan bekaar kar deti hai inki packing ek hi lifaafe me aapka 1000 ka samaan daal denge sirf apna ek 1 rupiye ka lifaafa bachaane k liye",
+            "The milk received is curdled spoiled even"
+          ],
+          "example_unit_ids": [
+            "7f18ffaa-bddb-43f5-a5d2-61741efda624-00",
+            "1a3df906-8875-48db-b72f-bf5ce141e69a-00",
+            "0100a5fd-a040-47f0-a8f3-d11de30a4293-02"
+          ]
+        },
+        {
+          "pattern": "frustration with delayed refunds",
+          "support_count": 29,
+          "example_quotes": [
+            "haven't received a single refund, blinkit is running a scam in which they accept payment through upi and then claim the ordered item is unavailable and that refund will be sent",
+            "refund nhi kiya abhi tk",
+            "Blinkit mer a refund amount nhi aya abhi tak"
+          ],
+          "example_unit_ids": [
+            "a2fdb7a7-2951-46c0-8908-c07c7cdf036b-00",
+            "1f5a8936-0e09-4cca-b5b0-da12de696710-01",
+            "72b86543-f697-41ff-bb11-c3e1b65c9437-00"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 7,
+      "raw_hit_count": 86,
+      "patterns": [
+        {
+          "pattern": "users with high convenience needs are more open to trying new features",
+          "support_count": 18,
+          "example_quotes": [
+            "excellent application, especially if you want essentials in 10 minutes you can get anything you desire in just a flick I really recommend this now that it is in kashmir",
+            "best app, better delivery times than anyone else, and just the convenience of being able to order prints is the cherry on top",
+            "i love the concept, the work efficiency and they even change the address automatically for me when I keep traveling it's just so good 💖 love your work, I just y'all could expand your range further I've been waiting for lash glue since forever 🐥🐥🐥"
+          ],
+          "example_unit_ids": [
+            "1691c14c-7f12-4848-80f0-4fba42eadfb8-00",
+            "344420a3-d71e-4af3-bb0e-7b84bf6625a2-00",
+            "be07985b-065c-4bb2-800f-4859fcec85ee-00"
+          ]
+        },
+        {
+          "pattern": "user segment prioritizing speed and convenience",
+          "support_count": 14,
+          "example_quotes": [
+            "this app is what all I needed, rn whenever I need anything last minute I just blikit it ,hehe",
+            "thank you blinkit you have made our lives really easy ❤️",
+            "Friend plenty of alternates in Market"
+          ],
+          "example_unit_ids": [
+            "5544074e-c9d2-419c-a832-06c64926202b-00",
+            "f2803137-d73c-456d-9a1a-4b273425608d-01",
+            "02bcf065-c55f-4a2e-9de9-a9b91aa5533c-01"
+          ]
+        },
+        {
+          "pattern": "habitual, routine-driven shopping behavior for daily essentials",
+          "support_count": 7,
+          "example_quotes": [
+            "sorry say bt sometimes blinkit have non cooperative staff i booked order bt te delivery partner didn't cooperate",
+            "For daily groceries and home needs I totally rely on Blinkit",
+            "I AM SATISFIED WITH BLINKIT 🫶"
+          ],
+          "example_unit_ids": [
+            "82af3578-124b-4cc6-9edc-9464b85a4892-00",
+            "411a3356-a10a-4c9a-92f2-4a12f053c482-00",
+            "286e4869-bed5-4bd8-b474-4ff447e09c77-00"
+          ]
+        },
+        {
+          "pattern": "user segment open to trying new features",
+          "support_count": 7,
+          "example_quotes": [
+            "Team blinkit iam so happy for your work today I got to know that you do free ambulance service without any charges",
+            "The work these people are doing, I salute them from the heart and the new feature of ambulance, Blinkit has done a great job, many lives are being saved because of it, the service of these is excellent",
+            "thanks for your free ambulance you save much life's thanks and allthebest 👌😉"
+          ],
+          "example_unit_ids": [
+            "7b4c1c08-d97f-4514-ab89-0ce8efe2bd41-00",
+            "e3e15c01-82de-40e4-8b95-9be7cc39ac7b-00",
+            "456c6ade-7699-44e6-bf11-ffb904469119-00"
+          ]
+        },
+        {
+          "pattern": "loyal user segment with high engagement",
+          "support_count": 5,
+          "example_quotes": [
+            "comparing to all apps blanket is absolutely amazing superb",
+            "blanket is the best app",
+            "I've been very happy with Blanket"
+          ],
+          "example_unit_ids": [
+            "94ee6e2e-c4e7-4d24-a927-02884e2a88f3-00",
+            "77b9d16e-f1b5-4666-946e-7cd80b2bec70-00",
+            "e7bc06a9-be75-4090-88c6-476a45134837-01"
+          ]
+        },
+        {
+          "pattern": "identifies as a price-conscious user",
+          "support_count": 4,
+          "example_quotes": [
+            "but not like others Sgy, Zpt etc",
+            "amazon and flipkart is best, both are delivering free of cost",
+            "they don't do like this it is a humble request to add free delivery above the order of ₹100"
+          ],
+          "example_unit_ids": [
+            "d93bb3f5-320c-4eb5-9476-fb1554083770-00",
+            "eaa5a7b0-e84f-4538-983c-d42f4b970d49-00",
+            "bad9a550-2356-4100-b28a-2a04c675317d-02"
+          ]
+        },
+        {
+          "pattern": "families more open to trying new things",
+          "support_count": 3,
+          "example_quotes": [
+            "this app is very good I always use oy whenever I need smth",
+            "Super fast delivery, fresh products, great discounts, and excellent packaging every time",
+            "Very good for family needs"
+          ],
+          "example_unit_ids": [
+            "68842953-82df-40f2-9dcd-d01ed304a4be-00",
+            "9cdaea37-90e3-44f0-9bbb-9be2411e725b-01",
+            "c67fa23b-cc1d-4c93-a661-febe76290f81-00"
+          ]
+        },
+        {
+          "pattern": "user segment preferring established brands",
+          "support_count": 2,
+          "example_quotes": [
+            "zepto and Instamart is better for shopping",
+            "I always prefer ordering from zepto and I hardly use blinkit in case something is not available on zepto"
+          ],
+          "example_unit_ids": [
+            "d3a54392-a65a-4dfa-998b-99258e1b5f5d-04",
+            "ae1a5db9-e257-409a-bd25-fa73c9d5e149-02"
+          ]
+        }
+      ]
+    },
+    {
+      "question_id": 8,
+      "raw_hit_count": 246,
+      "patterns": [
+        {
+          "pattern": "unmet need for reliable quality control",
+          "support_count": 43,
+          "example_quotes": [
+            "Otherwise i am not interesting to continue this app and will tell to  my friends and relations my experience",
+            "it is very helpfull app",
+            "bad service, expired product delivered"
+          ],
+          "example_unit_ids": [
+            "mouthshut-529d86b6b833efb2-04",
+            "f6a8a911-2fca-44ad-9c57-70b69f9a4234-00",
+            "75c90dfe-f972-4b54-bc95-a9390a3c13be-00"
+          ]
+        },
+        {
+          "pattern": "unmet need for specific product categories",
+          "support_count": 19,
+          "example_quotes": [
+            "but please add more hot wheels in the app",
+            "this is the most useless app because SS butterfly pen also not available and refill also SS butterfly not available it's not showing only the option to buy the pen of SS butterfly",
+            "Hello, I purchased this blanket for fish cutting purposes,"
+          ],
+          "example_unit_ids": [
+            "af3fc84d-1db6-47e5-8272-986a33b9ff09-01",
+            "ebcc4838-a247-47bc-9d6d-0773922174be-00",
+            "d5e0b09c-5d3e-41b7-9ba9-9fc771928278-03"
+          ]
+        },
+        {
+          "pattern": "requests for specific product additions",
+          "support_count": 14,
+          "example_quotes": [
+            "Boss (Founder), please get into some manufacturing",
+            "please add rat glue pad also in your cart",
+            "Can't even find Begova Corba"
+          ],
+          "example_unit_ids": [
+            "305dca5b-4aec-4fca-a73e-251c94d762b8-01",
+            "30f48c5c-50d7-44e6-8a74-2334ea96015a-00",
+            "32a7c4f2-51d0-4972-a617-729c9615fec6-01"
+          ]
+        },
+        {
+          "pattern": "unmet need for competitive pricing",
+          "support_count": 12,
+          "example_quotes": [
+            "price of fruits and vegetables, groceries High comparing with zepto and Bigbasket",
+            "compare to zepto blinkit is High cost",
+            "prices are too high compared to others apps like Swiggy zepto"
+          ],
+          "example_unit_ids": [
+            "a3c75886-bb5b-4df8-9231-c507103c295a-00",
+            "df67c415-75a3-43c8-85de-79c7e9f5fadd-00",
+            "7016e772-d2be-4329-8a43-e4aeb2a52b19-00"
+          ]
+        },
+        {
+          "pattern": "request for improved product packaging",
+          "support_count": 9,
+          "example_quotes": [
+            "Can you please change the packaging for the products",
+            "In heavy rains items are given in paper bags which obviously has been soaked in rain water and torn in pieces",
+            "there's a problem The new plastic package says it is 100% compostable"
+          ],
+          "example_unit_ids": [
+            "9700dbe6-2e0e-498d-a2c8-a3afd5915a71-01",
+            "83a1ed0b-8212-4155-ada9-e6519262d09e-00",
+            "dc24dac3-819c-4d38-876f-491274279a0a-01"
+          ]
+        },
+        {
+          "pattern": "unmet need for fast, reliable grocery delivery met by blinkit",
+          "support_count": 8,
+          "example_quotes": [
+            "it was the best app which have with affordable prices and fresh products as it has mention that it will delivered in 10 minutes was true it take perfect time",
+            "delivery is super fast amazing",
+            "really best experience with blinkit and very fast delivery in any area and let night also thank you soo much 🙏 😊"
+          ],
+          "example_unit_ids": [
+            "93a2a8bd-e7bb-411f-8d20-f658872f1ab3-00",
+            "86c44247-f0d8-4b83-a0d8-6922171f99e5-00",
+            "30d4b083-9fcc-4a0d-b080-a2d4785b740d-00"
+          ]
+        },
+        {
+          "pattern": "unmet need for product information",
+          "support_count": 7,
+          "example_quotes": [
+            "the camera was worth 2k fyi",
+            "whoever had the idea of making it",
+            "A common man how he know's that cheery taomatoes will be that much small"
+          ],
+          "example_unit_ids": [
+            "0b3a4ad3-4d50-439e-b74e-c3f0d1a5552c-03",
+            "80e40763-3783-4cdd-9204-49069dc84156-02",
+            "83824f08-482f-4acc-92b1-c97c00de6881-01"
+          ]
+        },
+        {
+          "pattern": "unmet need for cash on delivery option",
+          "support_count": 6,
+          "example_quotes": [
+            "idhar 100 rupe ke under me kuch bhi cash on delivery nhi hoti hai baki sab accha hai 😆",
+            "It is soo disappointing😞 that I can't order anything by option cash on delivery and non of your options work to be honest Please fix this",
+            "It's telling currently unavailable all the time no cash on delivery how can we order then fix it🙄"
+          ],
+          "example_unit_ids": [
+            "08756c70-779a-47ca-a31b-1be71fdb2082-00",
+            "fcaa90e0-3180-4fee-bb40-38642cc99f58-00",
+            "a2f90768-cdf0-4d04-b4e3-e69d90ed5b82-00"
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_patterns": 64,
+    "total_raw_hits": 2973
+  }
+}
