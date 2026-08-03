@@ -1,9 +1,17 @@
 import gradio as gr
+import spaces
 from api import app as fastapi_app, _load_state
 import threading
 
 # Load heavy data in the background so Uvicorn can bind to port 7860 instantly!
 threading.Thread(target=_load_state, daemon=True).start()
+
+# Hugging Face ZeroGPU environments strictly require at least one function
+# decorated with @spaces.GPU, otherwise they crash the container on startup.
+@spaces.GPU
+def dummy_gpu_function():
+    pass
+
 
 # We MUST serve a real Gradio app at the root ("/") for Hugging Face to detect it
 # and pass the health check. We embed our React app using a full-screen iframe!
