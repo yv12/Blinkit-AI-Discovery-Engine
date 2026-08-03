@@ -100,7 +100,8 @@ def startup_event():
         try:
             _load_state()
             logger.info("STATE LOADED OK")
-        except Exception:
+        except Exception as e:
+            app.state.startup_error = str(e)
             logger.error("Failed to load state", exc_info=True)
     threading.Thread(target=_safe_load, daemon=True).start()
 
@@ -344,7 +345,12 @@ def _load_state() -> None:
 
 @app.get("/api/health")
 def get_health():
-    return {"ready": READY}
+    if not READY:
+        error = getattr(app.state, "startup_error", None)
+        if error:
+            return {"ready": False, "error": error}
+        raise HTTPException(status_code=503, detail="Server is starting up (loading artifacts)...")
+    return {"ready": True}
 
 
 @app.get("/api/overview")
