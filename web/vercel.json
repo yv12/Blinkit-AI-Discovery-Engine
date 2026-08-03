@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://blinkit-ai-discovery-engine-production.up.railway.app/api/$1"
+    }
+  ]
+}

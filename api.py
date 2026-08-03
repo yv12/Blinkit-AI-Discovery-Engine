@@ -22,10 +22,33 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
+import os
+import requests
+import threading
 import numpy as np
 from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+HF_TOKEN = os.environ.get("HF_TOKEN")
+EMBED_URL = (
+    "https://router.huggingface.co/hf-inference/models/"
+    "sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction"
+)
+
+def encode_query(text: str) -> np.ndarray:
+    r = requests.post(
+        EMBED_URL,
+        headers={"Authorization": f"Bearer {HF_TOKEN}" if HF_TOKEN else {}},
+        json={"inputs": [text]},
+        timeout=20,
+    )
+    r.raise_for_status()
+    vec = np.asarray(r.json(), dtype=np.float32).reshape(-1)
+    norm = np.linalg.norm(vec)
+    if norm > 0:
+        vec = vec / norm
+    return vec
 
 from src.ask_synthesis import SYNTHESIS_FALLBACK, strip_em_dashes, synthesize_answer
 from src.config import load_config
@@ -62,6 +85,24 @@ ASK_REVIEWS_PER_THEME = 7  # diversify context across matched themes (not only g
 MIN_UNIT_WORDS = 4  # skip near-empty fragments as citations (same spirit as units.min_words)
 
 app = FastAPI(title="Discovery Engine API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.on_event("startup")
+def startup_event():
+    def _safe_load():
+        try:
+            _load_state()
+            logger.info("STATE LOADED OK")
+        except Exception:
+            logger.error("Failed to load state", exc_info=True)
+    threading.Thread(target=_safe_load, daemon=True).start()
 
 _STATE: dict = {}
 
@@ -182,16 +223,7 @@ def _load_state() -> None:
     embeddings = np.load(config.paths.embeddings, mmap_mode="r")
     log_mem("After embeddings mmap")
 
-    # Import torch directly *before* sentence-transformers/transformers pull it in
-    # transitively - see src/embed.py / README.md §3 / edgecases.md S4-01 for the
-    # real Windows DLL-init conflict this avoids.
-    import torch  # noqa: F401
-    torch.set_num_threads(1)
-    from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(config.models.embedding_model, device="cpu")
-    model.eval()
-    log_mem("After SentenceTransformer")
 
     logger.info("Counting corpus stats...")
     source_counts: Dict[str, int] = {}
@@ -293,7 +325,6 @@ def _load_state() -> None:
             "unit_by_id": unit_by_id,
             "row_unit_ids": row_unit_ids,
             "embeddings": embeddings,
-            "model": model,
             "overview": overview,
         }
     )
@@ -311,7 +342,7 @@ def _load_state() -> None:
 # API routes
 # --------------------------------------------------------------------------- #
 
-@app.get("/health")
+@app.get("/api/health")
 def get_health():
     return {"ready": READY}
 
@@ -536,9 +567,12 @@ def ask(req: AskRequest):
             "citations": [],
         }
 
-    model = _STATE["model"]
     embeddings: np.ndarray = _STATE["embeddings"]
-    q_emb = model.encode([query], normalize_embeddings=True)[0].astype(embeddings.dtype)
+    try:
+        q_emb = encode_query(query).astype(embeddings.dtype)
+    except Exception as e:
+        logger.error(f"Failed to fetch embeddings: {e}", exc_info=True)
+        raise HTTPException(status_code=503, detail="Free-text search is unavailable (embedding API failed).")
     sims = embeddings @ q_emb  # both L2-normalized -> dot product == cosine similarity
     top_idx = np.argsort(-sims)[:80]
 
