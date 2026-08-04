@@ -212,26 +212,47 @@ def synthesize_answer(
     }
 
     print(f"[ask_synthesis] calling Groq model={llm_model!r}", flush=True)
-    try:
-        resp = requests.post(GROQ_CHAT_URL, headers=headers, json=payload, timeout=timeout_s)
-    except requests.exceptions.Timeout as exc:
-        print(f"[ask_synthesis] TIMEOUT after {timeout_s}s: {exc!r}", flush=True)
-        logger.warning("Groq ask synthesis timed out after %ss", timeout_s)
-        return None
-    except requests.exceptions.RequestException as exc:
-        print(f"[ask_synthesis] REQUEST EXCEPTION: {exc!r}", flush=True)
-        logger.warning("Groq ask synthesis request failed: %s", exc, exc_info=True)
-        return None
-    except Exception as exc:
-        print(f"[ask_synthesis] UNEXPECTED EXCEPTION: {exc!r}", flush=True)
-        logger.exception("Unexpected error during Groq ask synthesis")
-        return None
+    import time
+    max_retries = 3
+    if config and getattr(config, "llm_synthesis", None):
+        max_retries = getattr(config.llm_synthesis, "max_retries", 3)
 
-    if resp.status_code != 200:
-        print(
-            f"[ask_synthesis] HTTP {resp.status_code}: {resp.text[:500]}",
-            flush=True,
-        )
+    resp = None
+    for attempt in range(max_retries):
+        try:
+            resp = requests.post(GROQ_CHAT_URL, headers=headers, json=payload, timeout=timeout_s)
+        except requests.exceptions.Timeout as exc:
+            if attempt == max_retries - 1:
+                print(f"[ask_synthesis] TIMEOUT after {timeout_s}s: {exc!r}", flush=True)
+                logger.warning("Groq ask synthesis timed out after %ss", timeout_s)
+                return None
+            time.sleep(2 ** attempt)
+            continue
+        except requests.exceptions.RequestException as exc:
+            if attempt == max_retries - 1:
+                print(f"[ask_synthesis] REQUEST EXCEPTION: {exc!r}", flush=True)
+                logger.warning("Groq ask synthesis request failed: %s", exc, exc_info=True)
+                return None
+            time.sleep(2 ** attempt)
+            continue
+        except Exception as exc:
+            print(f"[ask_synthesis] UNEXPECTED EXCEPTION: {exc!r}", flush=True)
+            logger.exception("Unexpected error during Groq ask synthesis")
+            return None
+
+        if resp.status_code == 200:
+            break
+
+        if resp.status_code in {429, 500, 502, 503, 504}:
+            if attempt == max_retries - 1:
+                print(f"[ask_synthesis] HTTP {resp.status_code}: {resp.text[:500]}", flush=True)
+                logger.warning("Groq ask synthesis HTTP %d: %s", resp.status_code, resp.text[:300])
+                return None
+            time.sleep(2 ** attempt)
+            continue
+
+        # Non-retryable error
+        print(f"[ask_synthesis] HTTP {resp.status_code}: {resp.text[:500]}", flush=True)
         logger.warning("Groq ask synthesis HTTP %d: %s", resp.status_code, resp.text[:300])
         return None
 
