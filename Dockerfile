@@ -1,27 +1,17 @@
-# Use a lightweight Python base image
 FROM python:3.10-slim
 
-# Hugging Face Spaces run as a non-root user (uid 1000) by default.
-# It's good practice to set this up explicitly.
-RUN useradd -m -u 1000 user
-USER user
-ENV PATH="/home/user/.local/bin:$PATH"
+# Install git and git-lfs to pull the large data files
+RUN apt-get update && apt-get install -y git git-lfs && apt-get clean
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the requirements file first to leverage Docker cache
-COPY --chown=user requirements.txt .
-
-# Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
-# Assuming the data folder with generated artifacts is committed/copied here
-COPY --chown=user . .
+# Copy the source code (including .git folder so we can run git lfs pull)
+COPY . .
 
-# Hugging Face Spaces expose port 7860 by default
-EXPOSE 7860
+# Run git lfs pull to fetch the actual large files from GitHub
+RUN git lfs install && git lfs pull
 
-# Command to run the application
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD uvicorn api:app --host 0.0.0.0 --port $PORT
