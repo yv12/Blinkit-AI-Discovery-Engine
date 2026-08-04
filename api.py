@@ -113,7 +113,10 @@ def _resolve_lfs_pointers():
     data_dir = "data"
     if not os.path.exists(data_dir):
         return
+    skip_files = {"embeddings_raw.npy", "raw_reviews.jsonl", "reviews.jsonl", "units_raw.jsonl"}
     for filename in os.listdir(data_dir):
+        if filename in skip_files:
+            continue
         path = os.path.join(data_dir, filename)
         if os.path.isfile(path) and os.path.getsize(path) < 1000:
             with open(path, "r", encoding="utf-8", errors="ignore") as f:
@@ -366,7 +369,7 @@ def _load_state() -> None:
 # API routes
 # --------------------------------------------------------------------------- #
 
-@app.get("/api/health")
+@app.get("/health")
 def get_health():
     if not READY:
         error = getattr(app.state, "startup_error", None)
@@ -374,6 +377,10 @@ def get_health():
             return {"ready": False, "error": error}
         raise HTTPException(status_code=503, detail="Server is starting up (loading artifacts)...")
     return {"ready": True}
+
+@app.get("/api/health")
+def api_health():
+    return {"ready": READY}
 
 
 @app.get("/api/overview")

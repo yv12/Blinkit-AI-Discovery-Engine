@@ -645,7 +645,7 @@ import {
   Send, Sparkles, Info, Zap,
 } from "lucide-react";
 
-const API_BASE = "/api";
+const API_BASE = "https://blinkit-ai-discovery-engine-production.up.railway.app/api";
 const RESEARCH_QUESTIONS = [
   "Why do users repeatedly buy from the same categories?",
   "What prevents users from exploring new categories?",
@@ -819,9 +819,13 @@ function App() {
 
   useEffect(() => {
     let timer;
+    let attempts = 0;
     async function checkHealthAndLoad() {
+      attempts++;
+      let statusInfo = "Network Error (or CORS)";
       try {
         const res = await fetch(API_BASE + "/health");
+        statusInfo = `HTTP ${res.status}`;
         if (res.ok) {
           const data = await res.json();
           if (data.ready) {
@@ -842,7 +846,14 @@ function App() {
             return;
           }
         }
-      } catch (err) {}
+      } catch (err) {
+        statusInfo = String(err);
+      }
+      
+      if (attempts >= 15) {
+        setLoadError(`Backend warming up failed after 15 attempts. Last status: ${statusInfo} at ${API_BASE}/health`);
+        return;
+      }
       timer = setTimeout(checkHealthAndLoad, 2000);
     }
     checkHealthAndLoad();
