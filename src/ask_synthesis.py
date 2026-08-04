@@ -213,9 +213,10 @@ def synthesize_answer(
 
     print(f"[ask_synthesis] calling Groq model={llm_model!r}", flush=True)
     import time
-    max_retries = 3
-    if config and getattr(config, "llm_synthesis", None):
-        max_retries = getattr(config.llm_synthesis, "max_retries", 3)
+    # Hardcode a higher retry limit (8) for live Ask synthesis instead of using the
+    # offline pipeline's config (which is tuned for batching). 8 retries gives an
+    # exponential backoff of ~120 seconds, fully overcoming 1-minute rate limits.
+    max_retries = 8
 
     resp = None
     for attempt in range(max_retries):
