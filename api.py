@@ -702,13 +702,24 @@ def ask(req: AskRequest):
         f"themes={len(themes_for_synthesis)} citations={len(citations)}",
         flush=True,
     )
-    answer = synthesize_answer(
-        query,
-        themes_for_synthesis,
-        citations,
-        model=config.llm_synthesis.model,
-        seed=config.seed,
-    )
+    try:
+        answer = synthesize_answer(
+            query,
+            themes_for_synthesis,
+            citations,
+            model=config.llm_synthesis.model,
+            seed=config.seed,
+        )
+    except ValueError as e:
+        if str(e).startswith("RATE_LIMIT:"):
+            import re
+            m = re.match(r"RATE_LIMIT:(\d+)", str(e))
+            secs = 60
+            if m:
+                secs = int(m.group(1))
+            raise HTTPException(status_code=429, detail={"retry_after": secs, "message": "Rate limit reached"})
+        raise e
+
     if not answer:
         print("[api.ask] synthesis returned None - using SYNTHESIS_FALLBACK", flush=True)
         answer = SYNTHESIS_FALLBACK

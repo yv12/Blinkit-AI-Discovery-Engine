@@ -248,6 +248,9 @@ def synthesize_answer(
             if attempt == max_retries - 1:
                 print(f"[ask_synthesis] HTTP {resp.status_code}: {resp.text[:500]}", flush=True)
                 logger.warning("Groq ask synthesis HTTP %d: %s", resp.status_code, resp.text[:300])
+                if resp.status_code == 429:
+                    retry_after = resp.headers.get("Retry-After", "60")
+                    raise ValueError(f"RATE_LIMIT:{retry_after}")
                 return None
             time.sleep(2 ** attempt)
             continue

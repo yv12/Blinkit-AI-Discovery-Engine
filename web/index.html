@@ -673,6 +673,11 @@ async function apiAsk(query) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query }),
   });
+  if (res.status === 429) {
+    const errorData = await res.json().catch(() => ({}));
+    const retryAfter = errorData.detail?.retry_after || 60;
+    throw { isRateLimit: true, retryAfter };
+  }
   if (!res.ok) throw new Error(`/ask -> HTTP ${res.status}`);
   return res.json();
 }
@@ -807,6 +812,7 @@ function App() {
   const [quotesOpen, setQuotesOpen] = useState({});
   const [loadError, setLoadError] = useState(null);
   const [ready, setReady] = useState(false);
+  const [rateLimitCountdown, setRateLimitCountdown] = useState(null);
 
   const [messages, setMessages] = useState([INTRO_MESSAGE]);
   const [input, setInput] = useState("");
@@ -864,6 +870,23 @@ function App() {
     if (bottomRef.current) bottomRef.current.scrollIntoView({behavior:"smooth"});
   },[messages, loading]);
 
+  useEffect(() => {
+    if (rateLimitCountdown > 0) {
+      const t = setTimeout(() => {
+        setRateLimitCountdown(r => r - 1);
+        setMessages(prev => {
+           const newMsg = [...prev];
+           const last = newMsg[newMsg.length-1];
+           if (last && last.error && last.text.startsWith("Rate limit reached")) {
+              last.text = `Rate limit reached. Please wait ${rateLimitCountdown - 1} seconds before retrying.`;
+           }
+           return newMsg;
+        });
+      }, 1000);
+      return () => clearTimeout(t);
+    }
+  }, [rateLimitCountdown]);
+
   const sentimentById = React.useMemo(()=>{
     const m={};
     themes.forEach(t=>(m[t.id]=t.sentiment));
@@ -877,7 +900,7 @@ function App() {
   }
   function handleSend(text) {
     const q = (text!==undefined?text:input).trim();
-    if (!q||loading) return;
+    if (!q||loading||rateLimitCountdown>0) return;
     const tokens = tokenize(q);
     setMessages(prev=>[...prev,{id:Date.now(),role:"user",text:q,citations:[]}]);
     setInput("");
@@ -890,11 +913,20 @@ function App() {
         }]);
       })
       .catch(err=>{
-        setMessages(prev=>[...prev,{
-          id:Date.now()+1, role:"assistant",
-          text:"Something went wrong: "+String(err),
-          citations:[], error:true,
-        }]);
+        if (err.isRateLimit) {
+          setRateLimitCountdown(err.retryAfter);
+          setMessages(prev=>[...prev,{
+            id:Date.now()+1, role:"assistant",
+            text:`Rate limit reached. Please wait ${err.retryAfter} seconds before retrying.`,
+            citations:[], error:true
+          }]);
+        } else {
+          setMessages(prev=>[...prev,{
+            id:Date.now()+1, role:"assistant",
+            text:"Something went wrong: "+String(err),
+            citations:[], error:true
+          }]);
+        }
       })
       .finally(()=>setLoading(false));
   }
@@ -1068,8 +1100,9 @@ function App() {
                   placeholder="Ask a question about Blinkit customer reviews…"
                   onChange={e=>setInput(e.target.value)}
                   onKeyDown={e=>{if(e.key==="Enter")handleSend();}}
+                  disabled={loading || rateLimitCountdown > 0}
                 />
-                <button className="send-btn" onClick={()=>handleSend()} disabled={loading}>
+                <button className="send-btn" onClick={()=>handleSend()} disabled={loading || rateLimitCountdown > 0}>
                   <Send size={13}/> Send
                 </button>
               </div>
@@ -1082,7 +1115,7 @@ function App() {
               <p className="ask-side-label">Research questions</p>
               <div className="ask-side-qs">
                 {RESEARCH_QUESTIONS.map(q=>(
-                  <button key={q} type="button" className="ask-side-q" onClick={()=>handleSend(q)} disabled={loading}>
+                  <button key={q} type="button" className="ask-side-q" onClick={()=>handleSend(q)} disabled={loading || rateLimitCountdown > 0}>
                     {q}
                   </button>
                 ))}
@@ -1193,6 +1226,10 @@ function App() {
                 <li><strong>Praise / Noise:</strong> Generic sentiment ("best app ever") with no specific issue.</li>
                 <li><strong>App UX:</strong> Friction inside the app — search, cart, checkout, glitches, recommendations. <em>This is the pool we act on.</em></li>
               </ul>
+              <div style={{marginTop:"12px", padding:"12px 16px", background:"var(--bg-hover)", borderRadius:"8px", borderLeft:"3px solid var(--blinkit-yellow)", fontSize:"13px", lineHeight:"1.5", color:"var(--text-secondary)"}}>
+                <strong>Why do we ignore the huge volume of complaints in other buckets?</strong><br/>
+                While operational issues (like delivery delays or missing items) form the highest volume of user complaints, they require supply-chain and business-level interventions. Software features alone cannot fix a delayed rider. By filtering these out, the Discovery Engine isolates friction that product and engineering teams can actually resolve through App UX.
+              </div>
             </div>
 
             <div className="method-section">
@@ -1216,6 +1253,13 @@ function App() {
             <div className="method-section">
               <h3><span className="method-num">6</span> Auditable Traceability</h3>
               <p>Every number in this dashboard is fully auditable. We never use LLMs to estimate volumes. When a theme shows a review count, it's the exact sum of member units in that cluster — every quote traces back to a real <code>review_id</code> from the source data.</p>
+            </div>
+
+            <div className="method-section" style={{marginBottom:"20px"}}>
+              <h3><span className="method-num">7</span> Why Prioritize Recommendations?</h3>
+              <p style={{lineHeight:"1.5"}}>
+                Although the "Recommendations" theme ranks 4th in raw volume within App UX, it was prioritized for the Discovery Engine because it directly targets our core growth metrics. While checkout bugs or search friction (higher volume themes) are important for basic conversion, improving product discovery actively drives <strong>Category Exploration</strong>, increases <strong>Average Order Value (AOV)</strong>, and changes long-term purchasing habits. Data shows users are stuck in habitual buying loops; overhauling Recommendations is the highest-leverage UX lever to break them out.
+              </p>
             </div>
           </div>
         )}
