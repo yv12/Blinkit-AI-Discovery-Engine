@@ -601,20 +601,40 @@ def ask(req: AskRequest):
         return {
             "text": "Ask me something about the review dataset - a behavior, complaint, or category.",
             "citations": [],
+            "retrieval_path": "none",
         }
 
     embeddings: np.ndarray = _STATE["embeddings"]
+    retrieval_path = "semantic"
     try:
         q_emb = encode_query(query).astype(embeddings.dtype)
+        sims = embeddings @ q_emb  # both L2-normalized -> dot product == cosine similarity
+        top_idx = np.argsort(-sims)[:80]
+        theme_scores, candidates = _collect_ask_matches(top_idx, sims, min_sim=MIN_ASK_SIMILARITY)
     except Exception as e:
-        logger.error(f"Failed to fetch embeddings: {e}", exc_info=True)
-        raise HTTPException(status_code=503, detail="Free-text search is unavailable (embedding API failed).")
-    sims = embeddings @ q_emb  # both L2-normalized -> dot product == cosine similarity
-    top_idx = np.argsort(-sims)[:80]
+        logger.warning(f"Failed to fetch embeddings, falling back to keyword search: {e}")
+        retrieval_path = "keyword"
+        import re
+        STOPWORDS = {"the","a","an","is","are","do","does","did","why","what","how","who","which","users","user","people","say","says","said","about","on","in","to","of","for","and","or","with","that","this","my","you","your","it","its","them","they","their","from","have","has","had","be","been","being","as","at","by","not","but","so","if","can","could","would","should","will","just","get","gets","getting"}
+        tokens = {w for w in re.findall(r"[a-z']+", query.lower()) if len(w) > 2 and w not in STOPWORDS}
+        if not tokens:
+            raise HTTPException(status_code=503, detail="Free-text search is unavailable (embedding API failed and query lacks keywords).")
+        
+        row_unit_ids = _STATE["row_unit_ids"]
+        unit_by_id = _STATE["unit_by_id"]
+        
+        sims = np.zeros(len(row_unit_ids), dtype=np.float32)
+        for i, uid in enumerate(row_unit_ids):
+            u = unit_by_id.get(uid)
+            if not u:
+                continue
+            text = u["text"].lower()
+            sims[i] = sum(1 for t in tokens if t in text)
+            
+        top_idx = np.argsort(-sims)[:80]
+        theme_scores, candidates = _collect_ask_matches(top_idx, sims, min_sim=1.0)
 
     theme_by_id = _STATE["theme_by_id"]
-
-    theme_scores, candidates = _collect_ask_matches(top_idx, sims, min_sim=MIN_ASK_SIMILARITY)
 
     if not theme_scores:
         top_labels = ", ".join(
@@ -626,10 +646,11 @@ def ask(req: AskRequest):
                 f"{top_labels}."
             ),
             "citations": [],
+            "retrieval_path": retrieval_path,
         }
 
     # Thin context: widen the similarity floor so synthesis still has enough evidence.
-    if len(candidates) < ASK_MIN_REVIEWS_FOR_CONTEXT:
+    if len(candidates) < ASK_MIN_REVIEWS_FOR_CONTEXT and retrieval_path == "semantic":
         _, candidates = _collect_ask_matches(top_idx, sims, min_sim=ASK_WIDENED_SIMILARITY)
 
     top_theme_ids = sorted(theme_scores, key=lambda k: -theme_scores[k])[:ASK_MAX_THEMES]
@@ -694,7 +715,7 @@ def ask(req: AskRequest):
     else:
         print(f"[api.ask] synthesis OK ({len(answer)} chars)", flush=True)
 
-    return {"text": strip_em_dashes(answer), "citations": citations}
+    return {"text": strip_em_dashes(answer), "citations": citations, "retrieval_path": retrieval_path}
 
 
 # --------------------------------------------------------------------------- #
