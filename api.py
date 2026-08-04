@@ -98,12 +98,35 @@ app.add_middleware(
 def startup_event():
     def _safe_load():
         try:
+            _resolve_lfs_pointers()
             _load_state()
             logger.info("STATE LOADED OK")
         except Exception as e:
             app.state.startup_error = str(e)
             logger.error("Failed to load state", exc_info=True)
     threading.Thread(target=_safe_load, daemon=True).start()
+
+def _resolve_lfs_pointers():
+    """If the platform (like Railway) didn't pull Git LFS files, download them manually."""
+    import os
+    import requests
+    data_dir = "data"
+    if not os.path.exists(data_dir):
+        return
+    for filename in os.listdir(data_dir):
+        path = os.path.join(data_dir, filename)
+        if os.path.isfile(path) and os.path.getsize(path) < 1000:
+            with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read(200)
+            if "version https://git-lfs.github.com/spec" in content:
+                logger.info(f"Downloading LFS file directly from GitHub: {filename}")
+                url = f"https://media.githubusercontent.com/media/yv12/Blinkit-AI-Discovery-Engine/main/data/{filename}"
+                r = requests.get(url, stream=True)
+                r.raise_for_status()
+                with open(path, "wb") as f_out:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        f_out.write(chunk)
+                logger.info(f"Downloaded {filename} successfully.")
 
 _STATE: dict = {}
 
